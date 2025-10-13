@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shunyu Yao – 姚顺宇</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1 class="name">Shunyu Yao</h1>
+            <p class="subtitle">姚顺宇</p>
+            <div class="header-controls">
+                <div class="social-links">
+                    <a href="mailto:ysy2017@sjtu.edu.cn" title="Email">📧</a>
+                    <a href="https://www.onestory.art" target="_blank" title="OneStory">🎬</a>
+                </div>
+                <div class="language-switch">
+                    <button id="lang-btn" onclick="toggleLanguage()">
+                        <span id="lang-text">EN</span>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <main>
+            <!-- 中文版本 -->
+            <div id="content-zh" class="content-section active">
+                <section class="about">
+                    <h2>我的简介</h2>
+                    <p>我是一名 AIGC 研究者和产品负责人。</p>
+                    <p>我专注于 AI 驱动的内容创作、数字人技术和多智能体系统研究。</p>
+                </section>
+
+                <section class="selected-work">
+                    <h2>我的工作</h2>
+
+                    <div class="work-item">
+                        <h3>OneStory</h3>
+                        <p class="affiliation">创壹科技</p>
+                        <p class="description">面向垂类创作者的 AI 原生视觉叙事平台，服务导演、分镜师和内容创作者。构建从创意到脚本、分镜、视频的完整 AI 创作流程。</p>
+                        <div class="links">
+                            <a href="https://www.onestory.art" target="_blank">产品</a>
+                        </div>
+                    </div>
+
+                    <div class="work-item">
+                        <h3>AIGC 内容创作项目</h3>
+                        <p class="affiliation">创壹科技</p>
+                        <p class="description">产出多部百万级及千万级播放量的 AIGC 爆款视频，展示 AI 驱动的叙事能力和角色动画技术。</p>
+                        <div class="video-links">
+                            <a href="https://v.douyin.com/bm6CUjA-BXY/" target="_blank">李幼斌跨时空对话李云龙</a> | 
+                            <a href="https://v.douyin.com/7wI0ypsYzAw/" target="_blank">工厂地球</a> | 
+                            <a href="https://v.douyin.com/-iWs04uF6Pg/" target="_blank">AI版柳夜熙回归</a>
+                        </div>
+                    </div>
+
+                    <div class="work-item">
+                        <h3>多角色一致性的区域注意力机制</h3>
+                        <p class="affiliation">创壹科技</p>
+                        <p class="description">提出新颖的方法用于多角色图像生成中的角色一致性保持和空间控制，实现单张图像中的多 LoRA 注入。</p>
+                        <div class="links">
+                            <a href="https://arxiv.org/abs/2508.00477">论文（AAAI 2026 审稿中）</a>
+                        </div>
+                    </div>
+
+                    <div class="work-item">
+                        <h3>Voka 全身动捕直播软件</h3>
+                        <p class="affiliation">我咖科技</p>
+                        <p class="description">使用普通摄像头进行面部、手部和身体动作捕捉的实时虚拟直播软件，已部署在 PC 和移动端平台。</p>
+                        <div class="links">
+                            <a href="https://pan.quark.cn/s/cddbaf0b31c4">视频demo</a>
+                        </div>
+                    </div>
+
+                    <div class="work-item">
+                        <h3>基于 NeRF 的超写实数字人</h3>
+                        <p class="affiliation">我咖科技</p>
+                        <p class="description">使用神经辐射场（NeRF）和 GAN 技术实现语音驱动的超写实数字人生成。</p>
+                        <div class="links">
+                            <a href="https://arxiv.org/abs/2201.00791">论文</a>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="publications">
+                    <h2>论文发表</h2>
+
+                    <div class="pub-item">
+                        <p class="pub-title">LAMIC: Layout-Aware Multi-Image Composition via Scalability of Multimodal Diffusion Transformer</p>
+                        <p class="pub-authors">Yuzhuo Chen, Zehua Ma, Jianhua Wang, Kai Kang, <strong>Shunyu Yao</strong>, Weiming Zhang</p>
+                        <p class="pub-venue">arXiv 预印本 2025（通讯作者）</p>
+                        <div class="links">
+                            <a href="https://arxiv.org/abs/2508.00477" target="_blank">论文</a> |
+                            <a href="https://github.com/Suchenl/LAMIC" target="_blank">代码</a>
+                        </div>
+                    </div>
+
+                    <div class="pub-item">
+                        <p class="pub-title">DialogueNeRF: Towards Realistic Avatar Face-to-face Conversation Video Generation</p>
+                        <p class="pub-authors">Zanwei Zhou, Zi Wang, <strong>Shunyu Yao</strong>, et al.</p>
+                        <p class="pub-venue">arXiv 预印本 2022</p>
+                        <div class="links">
+                            <a href="https://arxiv.org/abs/2203.07931" target="_blank">论文</a>
+                        </div>
+                    </div>
+
+                    <div class="pub-item">
+                        <p class="pub-title">DFA-NeRF: Personalized Talking Head Generation via Disentangled Face Attributes Neural Rendering</p>
+                        <p class="pub-authors"><strong>Shunyu Yao</strong>, et al.</p>
+                        <p class="pub-venue">arXiv 预印本 2022</p>
+                        <div class="links">
+                            <a href="https://arxiv.org/abs/2201.00791" target="_blank">论文</a> | 
+                            <a href="https://github.com/ShunyuYao/DFA-NeRF" target="_blank">代码</a>
+                        </div>
+                    </div>
+
+                    <div class="pub-item">
+                        <p class="pub-title">Poxture: Human Posture Imitation Using Neural Texture</p>
+                        <p class="pub-authors">Yang Chen, <strong>Shunyu Yao</strong>, et al.</p>
+                        <p class="pub-venue">IEEE Transactions on Circuits and Systems for Video Technology 2022</p>
+                        <div class="links">
+                            <a href="https://ieeexplore.ieee.org/document/9829868" target="_blank">论文</a>
+                        </div>
+                    </div>
+
+                    <div class="pub-item">
+                        <p class="pub-title">Deep Audio-Visual Fusion Neural Network for Saliency Estimation</p>
+                        <p class="pub-authors"><strong>Shunyu Yao</strong>, Xiongkuo Min, Guangtao Zhai</p>
+                        <p class="pub-venue">IEEE International Conference on Image Processing (ICIP) 2021</p>
+                        <div class="links">
+                            <a href="https://ieeexplore.ieee.org/document/9506089" target="_blank">论文</a>
+                        </div>
+                    </div>
+
+                    <div class="pub-item">
+                        <p class="pub-title">HPOF: 3D Human Pose Recovery from Monocular Video with Optical Flow</p>
+                        <p class="pub-authors">Ji Bin, Yang Chen, <strong>Shunyu Yao</strong>, et al.</p>
+                        <p class="pub-venue">International Conference on Multimedia Retrieval (ICMR) 2021</p>
+                        <div class="links">
+                            <a href="https://dl.acm.org/doi/10.1145/3460426.3463605" target="_blank">论文</a>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="awards">
+                    <h2>获奖荣誉</h2>
+                    <ul>
+                        <li>2024 华为昇腾 AI 创新大赛湖南赛区冠军（创壹科技）</li>
+                        <li>2020 上海市最具投资潜力 50 佳创业企业（我咖科技）</li>
+                        <li>2020 深圳市最具投资价值团队（我咖科技）</li>
+                        <li>2019 互联网+创新创业大赛银奖</li>
+                        <li>2019 第四届"创汇青春"国际赛一等奖</li>
+                        <li>2019 OPPO TOP 高校创新挑战赛 THE BEST 奖</li>
+                        <li>2018 华为 ICT 创新大赛一等奖</li>
+                    </ul>
+                </section>
+
+                <section class="education">
+                    <h2>教育背景</h2>
+                    <ul>
+                        <li><strong>上海交通大学</strong> - 信息与通信工程博士（2020-2024）</li>
+                        <li><strong>上海交通大学</strong> - 仪器科学与工程硕士（2017-2020）</li>
+                        <li><strong>西安交通大学</strong> - 机械工程及自动化学士（2012-2016）</li>
+                    </ul>
+                </section>
+            </div>
+
+            <!-- 英文版本 -->
+            <div id="content-en" class="content-section">
+                <section class="about">
+                    <h2>About</h2>
+                    <p>I am an AIGC researcher and product leader.</p>
+                    <p>I study AI-powered content creation, digital humans, and multi-agent systems.</p>
+                </section>
+
+                <section class="selected-work">
+                    <h2>Selected Work</h2>
+
+                    <div class="work-item">
+                        <h3>OneStory</h3>
+                        <p class="affiliation">Chuangyi Technology</p>
+                        <p class="description">An AI-native platform for visual storytelling, serving directors, storyboard artists, and content creators. Building the complete AI pipeline from creative ideas to scripts, storyboards, and videos.</p>
+                        <div class="links">
+                            <a href="https://www.onestory.art" target="_blank">product</a>
+                        </div>
+                        <div class="achievements">
+                            <p>• 250K+ registered users in one year</p>
+                            <p>• Revenue exceeds compute costs</p>
+                            <p>• Reduced production costs by 30% for Liu Yexi IP</p>
+                        </div>
+                    </div>
+
+                    <div class="work-item">
+                        <h3>AI Content Creation Projects</h3>
+                        <p class="affiliation">Chuangyi Technology</p>
+                        <p class="description">Multiple viral AIGC videos with millions of views, showcasing AI-powered storytelling and character animation.</p>
+                        <div class="video-links">
+                            <a href="https://v.douyin.com/bm6CUjA-BXY/" target="_blank">Li Youbin's Cross-Time Dialogue (12M+ views)</a> | 
+                            <a href="https://v.douyin.com/7wI0ypsYzAw/" target="_blank">Factory Earth (7.6M+ views)</a> | 
+                            <a href="https://v.douyin.com/-iWs04uF6Pg/" target="_blank">AI Liu Yexi Returns (1M+ views)</a>
+                        </div>
+                    </div>
+
+                    <div class="work-item">
+                        <h3>Region Attention for Multi-Character Consistency</h3>
+                        <p class="affiliation">Chuangyi Technology</p>
+                        <p class="description">A novel approach for maintaining character consistency and spatial control in multi-character image generation, enabling multiple LoRA injection in a single image.</p>
+                        <div class="links">
+                            <a href="#">paper (AAAI 2026 under review)</a>
+                        </div>
+                    </div>
+
+                    <div class="work-item">
+                        <h3>Voka Full-Body Motion Capture Software</h3>
+                        <p class="affiliation">Voka Technology</p>
+                        <p class="description">Real-time virtual streaming software using ordinary cameras for face, hand, and body motion capture. Deployed on PC and mobile platforms.</p>
+                        <div class="links">
+                            <a href="#">product</a>
+                        </div>
+                    </div>
+
+                    <div class="work-item">
+                        <h3>NeRF-based Photorealistic Digital Human</h3>
+                        <p class="affiliation">Voka Technology</p>
+                        <p class="description">Audio-driven photorealistic digital human generation using Neural Radiance Fields (NeRF) and GANs.</p>
+                        <div class="links">
+                            <a href="#">paper</a>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="publications">
+                    <h2>Publications</h2>
+
+                    <div class="pub-item">
+                        <p class="pub-title">LAMIC: Layout-Aware Multi-Image Composition via Scalability of Multimodal Diffusion Transformer</p>
+                        <p class="pub-authors">Yuzhuo Chen, Zehua Ma, Jianhua Wang, Kai Kang, <strong>Shunyu Yao</strong>, Weiming Zhang</p>
+                        <p class="pub-venue">arXiv preprint 2025 (Corresponding author)</p>
+                        <div class="links">
+                            <a href="https://arxiv.org/abs/2508.00477" target="_blank">paper</a> | 
+                            <a href="https://github.com/Suchenl/LAMIC" target="_blank">code</a>
+                        </div>
+                    </div>
+
+                    <div class="pub-item">
+                        <p class="pub-title">DialogueNeRF: Towards Realistic Avatar Face-to-face Conversation Video Generation</p>
+                        <p class="pub-authors">Zanwei Zhou, Zi Wang, <strong>Shunyu Yao</strong>, et al.</p>
+                        <p class="pub-venue">arXiv preprint 2022</p>
+                        <div class="links">
+                            <a href="https://arxiv.org/abs/2203.07931" target="_blank">paper</a>
+                        </div>
+                    </div>
+
+                    <div class="pub-item">
+                        <p class="pub-title">DFA-NeRF: Personalized Talking Head Generation via Disentangled Face Attributes Neural Rendering</p>
+                        <p class="pub-authors"><strong>Shunyu Yao</strong>, et al.</p>
+                        <p class="pub-venue">arXiv preprint 2022</p>
+                        <div class="links">
+                            <a href="https://arxiv.org/abs/2201.00791" target="_blank">paper</a> | 
+                            <a href="https://github.com/ShunyuYao/DFA-NeRF" target="_blank">code</a>
+                        </div>
+                    </div>
+
+                    <div class="pub-item">
+                        <p class="pub-title">Poxture: Human Posture Imitation Using Neural Texture</p>
+                        <p class="pub-authors">Yang Chen, <strong>Shunyu Yao</strong>, et al.</p>
+                        <p class="pub-venue">IEEE Transactions on Circuits and Systems for Video Technology 2022</p>
+                        <div class="links">
+                            <a href="https://ieeexplore.ieee.org/document/9829868" target="_blank">paper</a>
+                        </div>
+                    </div>
+
+                    <div class="pub-item">
+                        <p class="pub-title">Deep Audio-Visual Fusion Neural Network for Saliency Estimation</p>
+                        <p class="pub-authors"><strong>Shunyu Yao</strong>, Xiongkuo Min, and Guangtao Zhai</p>
+                        <p class="pub-venue">IEEE International Conference on Image Processing (ICIP) 2021</p>
+                        <div class="links">
+                            <a href="https://ieeexplore.ieee.org/document/9506089" target="_blank">paper</a>
+                        </div>
+                    </div>
+
+                    <div class="pub-item">
+                        <p class="pub-title">HPOF: 3D Human Pose Recovery from Monocular Video with Optical Flow</p>
+                        <p class="pub-authors">Ji Bin, Yang Chen, <strong>Shunyu Yao</strong>, et al.</p>
+                        <p class="pub-venue">International Conference on Multimedia Retrieval (ICMR) 2021</p>
+                        <div class="links">
+                            <a href="https://dl.acm.org/doi/10.1145/3460426.3463605" target="_blank">paper</a>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="awards">
+                    <h2>Awards & Honors</h2>
+                    <ul>
+                        <li>2024 Huawei Ascend AI Innovation Competition - Hunan Regional Champion (Chuangyi Technology)</li>
+                        <li>2020 Shanghai Top 50 Most Investment-Worthy Startups (Voka Technology)</li>
+                        <li>2020 Shenzhen Most Investment-Worthy Team (Voka Technology)</li>
+                        <li>2019 Internet+ Innovation and Entrepreneurship Competition - Silver Award</li>
+                        <li>2019 4th "Chuanghui Youth" International Competition - First Prize</li>
+                        <li>2019 OPPO TOP Campus Innovation Challenge - THE BEST Award</li>
+                        <li>2018 Huawei ICT Innovation Competition - First Prize</li>
+                    </ul>
+                </section>
+
+                <section class="education">
+                    <h2>Education</h2>
+                    <ul>
+                        <li><strong>Shanghai Jiao Tong University</strong> - PhD in Information and Communication Engineering (2020-2024)</li>
+                        <li><strong>Shanghai Jiao Tong University</strong> - M.S. in Instrument Science and Engineering (2017-2020)</li>
+                        <li><strong>Xi'an Jiaotong University</strong> - B.S. in Mechanical Engineering and Automation (2012-2016)</li>
+                    </ul>
+                </section>
+            </div>
+        </main>
+
+        <footer>
+            <p id="footer-text">(最后更新：2025年10月)</p>
+        </footer>
+    </div>
+
+    <script>
+        // 默认语言为中文
+        let currentLang = 'zh';
+
+        // 从 localStorage 读取用户上次选择的语言
+        if (localStorage.getItem('preferredLang')) {
+            currentLang = localStorage.getItem('preferredLang');
+            if (currentLang === 'en') {
+                switchToEnglish();
+            }
+        }
+
+        function toggleLanguage() {
+            if (currentLang === 'zh') {
+                switchToEnglish();
+            } else {
+                switchToChinese();
+            }
+        }
+
+        function switchToEnglish() {
+            currentLang = 'en';
+            document.getElementById('content-zh').classList.remove('active');
+            document.getElementById('content-en').classList.add('active');
+            document.getElementById('lang-text').textContent = '中文';
+            document.getElementById('footer-text').textContent = '(last updated: October 2025)';
+            document.documentElement.lang = 'en';
+            localStorage.setItem('preferredLang', 'en');
+        }
+
+        function switchToChinese() {
+            currentLang = 'zh';
+            document.getElementById('content-en').classList.remove('active');
+            document.getElementById('content-zh').classList.add('active');
+            document.getElementById('lang-text').textContent = 'EN';
+            document.getElementById('footer-text').textContent = '(最后更新：2025年10月)';
+            document.documentElement.lang = 'zh-CN';
+            localStorage.setItem('preferredLang', 'zh');
+        }
+    </script>
+</body>
+</html>
+
