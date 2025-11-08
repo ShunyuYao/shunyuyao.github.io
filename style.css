@@ -310,3 +310,16 @@ footer {
     color: #fff;
 }
 
+/* Override link styles for work-item links using pipe separators */
+.work-item .links a {
+    border: 1px solid #0066cc;
+    padding: 2px 8px; /* 紧凑按钮，避免靠近竖线显得拥挤 */
+    margin: 0; /* 去除左右外边距，由竖线两侧空格控制间距 */
+    display: inline-block;
+}
+
+.work-item .links a:hover {
+    background-color: #0066cc;
+    color: #fff;
+}
+
