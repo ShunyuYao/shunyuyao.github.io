@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Geist_Mono, Ma_Shan_Zheng } from "next/font/google";
+import { Inter, Geist_Mono } from "next/font/google";
 import { NextIntlClientProvider } from "next-intl";
 import {
   getMessages,
@@ -13,8 +13,9 @@ import PersonSchema from "@/app/components/PersonSchema";
 const BASE_URL = "https://shunyuyao.github.io";
 
 const inter = Inter({
-  subsets: ["latin", "latin-ext"],
+  subsets: ["latin"],
   display: "swap",
+  weight: ["400", "500", "600", "700"],
   variable: "--font-inter",
 });
 
@@ -22,13 +23,6 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
   display: "swap",
   variable: "--font-geist-mono",
-});
-
-const maShanZheng = Ma_Shan_Zheng({
-  weight: "400",
-  subsets: ["latin"],
-  display: "swap",
-  variable: "--font-ma-shan-zheng",
 });
 
 export function generateStaticParams() {
@@ -94,8 +88,20 @@ export default async function LocaleLayout({
   return (
     <html
       lang={locale}
-      className={`${inter.variable} ${geistMono.variable} ${maShanZheng.variable}`}
+      className={`${inter.variable} ${geistMono.variable}`}
     >
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link
+          rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossOrigin="anonymous"
+        />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&display=swap"
+          rel="stylesheet"
+        />
+      </head>
       <body className="antialiased min-h-screen">
         <PersonSchema />
         <FluidCursorWrapper />
