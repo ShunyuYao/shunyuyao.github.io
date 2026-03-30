@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Inter, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
@@ -19,6 +19,11 @@ export const metadata: Metadata = {
   description: "Personal website of Shunyu Yao",
 };
 
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+};
+
 export default function RootLayout({
   children,
 }: {
@@ -26,7 +31,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${inter.variable} ${geistMono.variable}`}>
-      <body>{children}</body>
+      <body className="antialiased min-h-screen">{children}</body>
     </html>
   );
 }
