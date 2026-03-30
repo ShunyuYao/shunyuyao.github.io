@@ -1,4 +1,7 @@
+"use client";
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import AnimatedSignature from "./AnimatedSignature";
 import LanguageSwitch from "./LanguageSwitch";
 
@@ -29,7 +32,8 @@ function Breadcrumbs({ pathname }: { pathname: string }) {
   );
 }
 
-export function Header({ pathname }: { pathname: string }) {
+export function Header() {
+  const pathname = usePathname();
   return (
     <header className="relative py-8">
       <Link href="/" className="inline-block w-40 sm:w-48">
