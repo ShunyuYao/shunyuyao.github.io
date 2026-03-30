@@ -1134,34 +1134,34 @@ const useFluidCursor = () => {
     }
 
     if (isTouchDevice) {
-      // Mobile: ambient fluid animation along random smooth trajectories
+      // Mobile: fast ambient fluid animation along random smooth trajectories
       update();
 
       let t = Math.random() * 1000;
       let prevX = 0.5, prevY = 0.5;
 
-      const ax1 = 0.30, fx1 = 0.47, px1 = Math.random() * Math.PI * 2;
-      const ay1 = 0.25, fy1 = 0.31, py1 = Math.random() * Math.PI * 2;
-      const ax2 = 0.12, fx2 = 1.13, px2 = Math.random() * Math.PI * 2;
-      const ay2 = 0.10, fy2 = 0.87, py2 = Math.random() * Math.PI * 2;
+      const ax1 = 0.35, fx1 = 1.70, px1 = Math.random() * Math.PI * 2;
+      const ay1 = 0.30, fy1 = 1.10, py1 = Math.random() * Math.PI * 2;
+      const ax2 = 0.15, fx2 = 4.30, px2 = Math.random() * Math.PI * 2;
+      const ay2 = 0.12, fy2 = 3.20, py2 = Math.random() * Math.PI * 2;
 
       setInterval(() => {
-        t += 0.12;
+        t += 0.5;
 
         const x = 0.5 + ax1 * Math.sin(fx1 * t + px1) + ax2 * Math.sin(fx2 * t + px2);
         const y = 0.5 + ay1 * Math.cos(fy1 * t + py1) + ay2 * Math.cos(fy2 * t + py2);
-        const dx = (x - prevX) * config.SPLAT_FORCE * 0.3;
-        const dy = -(y - prevY) * config.SPLAT_FORCE * 0.3;
+        const dx = (x - prevX) * config.SPLAT_FORCE * 0.5;
+        const dy = -(y - prevY) * config.SPLAT_FORCE * 0.5;
 
         const color = generateColor();
-        color.r *= 2.0;
-        color.g *= 2.0;
-        color.b *= 2.0;
+        color.r *= 3.0;
+        color.g *= 3.0;
+        color.b *= 3.0;
         splat(x, y, dx, dy, color);
 
         prevX = x;
         prevY = y;
-      }, 80);
+      }, 50);
     } else {
       // Desktop: mouse-driven fluid
       window.addEventListener('mousedown', (e) => {
