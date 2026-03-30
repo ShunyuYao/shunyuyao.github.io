@@ -15,9 +15,15 @@ interface PressItem {
 
 const pressData = rawPressData as PressItem[];
 
-export const metadata: Metadata = {
-  title: "Press | Shunyu Yao",
-};
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "press" });
+  return { title: t("heading") };
+}
 
 export default async function PressPage({
   params,

@@ -11,6 +11,7 @@
   --font-sans: var(--font-inter), -apple-system, "PingFang SC",
     "Noto Sans CJK SC", "Microsoft YaHei", sans-serif;
   --font-mono: var(--font-geist-mono), "Fira Code", monospace;
+  --font-ma-shan-zheng: "Ma Shan Zheng", cursive;
 }
 
 html,

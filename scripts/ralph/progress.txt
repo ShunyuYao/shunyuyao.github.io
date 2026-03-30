@@ -1,68 +1,114 @@
 # Ralph Progress Log
-Started: Mon Mar 30 21:03:06 CST 2026
----
+Started: Mon Mar 30 21:11:39 CST 2026
 
 ## Codebase Patterns
-- Footer is a named export in `app/components/footer.tsx`, used by PageLayout
-- All bilingual components accept `lang?: "zh" | "en"` prop with `useLocale()` from next-intl as fallback
-- Use `Link` from `@/i18n/navigation` for locale-aware links (auto-prefixes locale)
-- Components using next-intl hooks (`useLocale`, `usePathname`) need `"use client"` directive
-- AnimatedSignature is a default export (exception to the named export convention)
-- Nav links need `relative z-10` to be clickable over any background effects
-- Content JSON files in `content/` use `title`/`titleEn` pattern for bilingual data
-
----
-
-## 2026-03-30 - US-005
-- Added `<ArchivePreview lang={lang} />` to homepage content grid
-- Footer already rendered in both HomeLayout and PageLayout (no changes needed)
-- Verified: `npm run build` succeeds, all 24 routes generated including `/zh/archive` and `/en/archive`
-- Files changed: `app/[locale]/(home)/page.tsx`
-- **Learnings for future iterations:**
-  - Footer is already wired in both `(home)/layout.tsx` (HomeLayout) and `PageLayout.tsx` — no need to add it again
-  - Build generates 24 static pages; archive route was auto-discovered by Next.js static export
-  - Homepage grid uses responsive `grid-cols-1 lg:grid-cols-2 xl:grid-cols-3` — new sections just go inside
----
-
-## 2026-03-30 - US-004
-- Built `ArchivePreview` component showing 5 most recent archive entries
-- Wrapped in `SectionContainer` with title/subtitle/description/linkText
-- Each entry shows: YYYY-MM date, type emoji, localized truncated title
-- Files changed: `app/components/ArchivePreview.tsx`
-- **Learnings for future iterations:**
-  - Section preview components follow consistent pattern: import data, slice, wrap in SectionContainer
-  - `SectionContainer` accepts `titleZh` for Chinese section headings
----
-
-## 2026-03-30 - US-003
-- Built `/archive` page at `app/[locale]/archive/page.tsx`
-- Entries grouped by year, sorted descending; within year sorted by month descending
-- Type emoji mapping: paper→📄, product→🚀, award→🏆, press→🎙️, event→📅
-- External links open in new tab; entries without URL render as plain text
-- Files changed: `app/[locale]/archive/page.tsx`
-- **Learnings for future iterations:**
-  - Sub-pages follow pattern: `async function Page({ params })` with `await params` and `setRequestLocale(locale)`
-  - Use `PageLayout` with `pathname="/archive"` (without locale prefix)
-  - JSON imports typed inline via `interface` + `as Type[]` cast
----
-
-## 2026-03-30 - US-002
-- Created `content/archive.json` with 10 entries covering papers, products, awards, press, and events
-- Entries sorted by date descending, covering 2022-2026
-- Fields: `date` (YYYY-MM), `type`, `title`, `titleEn`, `url`
-- Files changed: `content/archive.json`
-- **Learnings for future iterations:**
-  - Content JSON files don't need TypeScript types to import — Next.js resolves them via `@/content/` alias
-  - `type` field uses lowercase enum: `paper | product | award | press | event`
-  - Entries with no external link use `url: null` (not empty string)
+- Sub-pages use `generateMetadata` with `getTranslations({ locale, namespace })` for locale-aware titles (template in layout adds ` | Name` suffix)
+- Translation files are at `i18n/messages/{locale}.json` with namespaces like `site`, `nav`, `about`, etc.
+- The archive page has no dedicated translation namespace — use `nav.archive` for its heading
+- `params` in Next.js 15 App Router is a `Promise<{ locale: string }>` that must be awaited
+- When switching a `next/font/google` font to a Google Fonts `<link>` stylesheet, define the CSS variable manually in `globals.css` (e.g. `--font-ma-shan-zheng: "Ma Shan Zheng", cursive`)
+- The `@next/next/no-page-custom-font` lint rule is a Pages Router rule — in App Router, `<link>` tags in `<head>` for external fonts trigger a warning but it's a false positive
+- Metadata route files (`app/sitemap.ts`, `app/robots.ts`) need `export const dynamic = "force-static"` when using `output: "export"` in Next.js
+- On dark backgrounds (#0a0a0a), `text-neutral-600` (#525252) fails WCAG AA contrast (3.29:1) — use `text-neutral-500` (#737373, 4.97:1) as minimum
+- SVG-only links (e.g. AnimatedSignature in header/footer) need `aria-label` on the wrapping `<Link>` or `<a>` tag
+- Decorative elements (e.g. scroll arrows) should have `aria-hidden="true"` to avoid screen reader noise
 ---
 
 ## 2026-03-30 - US-001
-- Implemented full Footer component with bilingual support (zh/en)
-- Added: vertical divider, small AnimatedSignature linked to `/`, tagline, 7 nav links, copyright
-- Files changed: `app/components/footer.tsx`
+- Implemented complete metadata in `app/[locale]/layout.tsx`: added `authors`, `openGraph` (type, url, locale, siteName), `twitter` (card: summary_large_image), extended descriptions to 60-160 chars
+- Converted all 7 sub-page static `metadata` exports to `generateMetadata` functions for locale-aware titles
+- Updated translation files (`i18n/messages/zh.json`, `en.json`) with longer descriptions
+- Files changed: `app/[locale]/layout.tsx`, all 7 sub-page `page.tsx` files, both message JSON files
 - **Learnings for future iterations:**
-  - Footer is a client component (`"use client"`) because it uses `useLocale` from next-intl and `Link` from next-intl navigation
-  - The `navLinks` array includes `/archive` route which doesn't exist yet — will be created in US-003
-  - `mx-auto` on `inline-block` doesn't center in CSS; use `block` or rely on parent `text-center`
+  - Static `export const metadata` cannot be locale-aware — must use `generateMetadata` with params for i18n sites
+  - The layout template `%s | Name` means sub-pages should only export the page name, not the full "Page | Name" string
+  - Archive page doesn't have its own translation namespace, used `nav` namespace instead
+---
+
+## 2026-03-30 - US-002
+- Created `app/components/PersonSchema.tsx` as a server component with default export
+- Renders `<script type="application/ld+json">` with Person schema including name, alternateName, url, jobTitle, worksFor, alumniOf (SJTU, XJTU), email, sameAs
+- Mounted `<PersonSchema />` in `app/[locale]/layout.tsx` inside `<body>` before other content
+- Files changed: `app/components/PersonSchema.tsx` (new), `app/[locale]/layout.tsx`
+- **Learnings for future iterations:**
+  - JSON-LD scripts in Next.js can be rendered as server components using `dangerouslySetInnerHTML` with `JSON.stringify`
+  - `PersonSchema` uses a default export (per AC requirement) unlike most other components that use named exports
+---
+
+## 2026-03-30 - US-003
+- Created static OG image at `public/og/default.png` (1200×630px) using sharp + SVG overlay
+- Image has dark gradient background with name "Shunyu Yao", "姚顺宇", tagline "AIGC Researcher & Product Builder", and site URL
+- Updated `app/[locale]/layout.tsx` openGraph.images and twitter.images to point to `https://shunyuyao.github.io/og/default.png`
+- Files changed: `public/og/default.png` (new), `app/[locale]/layout.tsx`
+- **Learnings for future iterations:**
+  - `sharp` is available in this project and can generate images from SVG buffers — useful for programmatic image creation
+  - OG images use `${BASE_URL}/og/default.png` pattern — BASE_URL is defined at top of layout.tsx
+  - Both `openGraph.images` and `twitter.images` should be set for full social sharing coverage
+---
+
+## 2026-03-30 - US-004
+- Optimized Inter font: changed subsets to `['latin']`, added explicit weights `['400', '500', '600', '700']`
+- Switched Ma Shan Zheng from `next/font/google` to Google Fonts `<link>` stylesheet with preconnect tags
+- Added `--font-ma-shan-zheng: "Ma Shan Zheng", cursive` CSS variable in `globals.css`
+- Removed `Ma_Shan_Zheng` import and instance from locale layout
+- No Noto Sans SC loaded globally — system font fallback already correct
+- Font stack already matches AC: `Inter → -apple-system → PingFang SC → Noto Sans CJK SC → Microsoft YaHei → sans-serif`
+- Files changed: `app/[locale]/layout.tsx`, `app/globals.css`
+- **Learnings for future iterations:**
+  - When removing a `next/font/google` font, remember to also define the CSS variable manually in globals.css if components reference it via `var(--font-name)`
+  - `@next/next/no-page-custom-font` warns about `<link>` font tags but it's a Pages Router rule — safe to ignore in App Router
+  - The `header.tsx` component uses `font-[var(--font-ma-shan-zheng)]` Tailwind arbitrary value — ensure the CSS variable resolves to a valid font-family string
+---
+
+## 2026-03-30 - US-005
+- Added `priority` prop to the avatar `<Image>` on `/about` page (above the fold)
+- Verified: all images already use `next/image` (no `<img>` tags in codebase)
+- Verified: all Work section logo images already have `width` and `height` props (32x32, 40x40, 48x48 across components)
+- Verified: `public/images/` has `.gitkeep` and `avatar.jpg`
+- Files changed: `app/[locale]/about/page.tsx`
+- **Learnings for future iterations:**
+  - The codebase was already using `next/image` throughout — previous modules likely set this up
+  - Above-the-fold images (like avatar) should use `priority` prop for LCP optimization
+  - Work section logos are conditionally rendered with `{item.logo && (...)}` — missing logo files won't crash but will show broken images
+  - Logo files referenced in `content/work.json` (`onestory-logo.png`, `voka-logo.png`) don't exist yet in `public/images/`
+---
+
+## 2026-03-30 - US-006
+- Created `app/sitemap.ts` with `MetadataRoute.Sitemap` covering all 8 pages × 2 locales (16 entries)
+- Added `export const dynamic = "force-static"` required for `output: "export"` mode
+- Homepage entries have `priority: 1.0`, all others `priority: 0.8`, `changeFrequency: "weekly"`
+- Build verified: `out/sitemap.xml` generated successfully
+- Files changed: `app/sitemap.ts` (new)
+- **Learnings for future iterations:**
+  - Next.js metadata route files (`sitemap.ts`, `robots.ts`) must include `export const dynamic = "force-static"` when the project uses `output: "export"` — otherwise build fails with "export const dynamic not configured" error
+  - `MetadataRoute.Sitemap` is the correct return type for the sitemap function
+  - Sitemap URLs should include the locale prefix (e.g. `/zh/work`, `/en/work`) for i18n sites
+---
+
+## 2026-03-30 - US-007
+- Created `app/robots.ts` exporting a `MetadataRoute.Robots` return type
+- Allows all crawlers (`User-agent: *`, `Allow: /`) and references sitemap at `https://shunyuyao.github.io/sitemap.xml`
+- Added `export const dynamic = "force-static"` per codebase pattern for static export
+- Build verified: `out/robots.txt` generated with correct content
+- Files changed: `app/robots.ts` (new)
+- **Learnings for future iterations:**
+  - `MetadataRoute.Robots` is the correct return type for `app/robots.ts` (parallels `MetadataRoute.Sitemap` for sitemap)
+  - The robots.ts pattern is nearly identical to sitemap.ts — both need `force-static` and both generate files in `out/`
+---
+
+## 2026-03-30 - US-008
+- Audited codebase for Lighthouse accessibility, SEO, performance, and best practices issues
+- Fixed color contrast: replaced all `text-neutral-600` with `text-neutral-500` on dark backgrounds (footer, archive page, NowSection markers, ArchivePreview dates)
+- Added `aria-label` to LanguageSwitch button for screen reader support
+- Added `aria-label="Home"` to signature links in header and footer (SVG-only links)
+- Added `aria-hidden="true"` to decorative scroll arrow in HeroSection
+- Removed `console.trace()` calls from `lib/hooks/useFluidCursor.ts` (WebGL error handlers)
+- Build verified: all 26 pages generated, typecheck and lint pass
+- Files changed: `app/components/footer.tsx`, `app/components/LanguageSwitch.tsx`, `app/components/HeroSection.tsx`, `app/components/header.tsx`, `app/components/NowSection.tsx`, `app/components/ArchivePreview.tsx`, `app/[locale]/archive/page.tsx`, `lib/hooks/useFluidCursor.ts`
+- **Learnings for future iterations:**
+  - `text-neutral-600` (#525252) on `#0a0a0a` background has only 3.29:1 contrast ratio — fails WCAG AA (4.5:1 for normal text). Use `text-neutral-500` (#737373, 4.97:1) as minimum
+  - SVG-only links (like AnimatedSignature) need explicit `aria-label` on the wrapping anchor — the SVG's internal `aria-label` doesn't satisfy link accessibility
+  - `console.trace()` in WebGL error handlers causes Lighthouse "Browser errors logged to console" deduction — remove or use conditional dev-only logging
+  - Decorative/non-semantic UI elements (scroll indicators, dividers) should be marked `aria-hidden="true"`
+  - Note: Manual Lighthouse testing in Chrome DevTools still needed for actual score verification
 ---

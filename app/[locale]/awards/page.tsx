@@ -12,9 +12,15 @@ interface Award {
 
 const awardsData = (rawAwardsData as Award[]).sort((a, b) => b.year - a.year);
 
-export const metadata: Metadata = {
-  title: "Awards | Shunyu Yao",
-};
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "awards" });
+  return { title: t("heading") };
+}
 
 export default async function AwardsPage({
   params,

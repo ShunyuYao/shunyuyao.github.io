@@ -20,9 +20,15 @@ interface Paper {
 
 const papersData = rawPapersData as Paper[];
 
-export const metadata: Metadata = {
-  title: "Papers | Shunyu Yao",
-};
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "papers" });
+  return { title: t("heading") };
+}
 
 export default async function PapersPage({
   params,

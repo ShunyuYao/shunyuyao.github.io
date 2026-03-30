@@ -16,6 +16,7 @@ export function LanguageSwitch() {
   return (
     <button
       onClick={handleClick}
+      aria-label={locale === "zh" ? "Switch to English" : "切换到中文"}
       className="relative z-10 text-sm font-medium hover:opacity-70 transition-opacity"
     >
       {locale === "zh" ? "EN" : "中文"}

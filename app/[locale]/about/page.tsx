@@ -4,9 +4,15 @@ import { setRequestLocale, getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { PageLayout } from "@/app/components/PageLayout";
 
-export const metadata: Metadata = {
-  title: "About | Shunyu Yao",
-};
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "about" });
+  return { title: t("heading") };
+}
 
 export default async function AboutPage({
   params,
@@ -32,6 +38,7 @@ export default async function AboutPage({
             alt="Shunyu Yao"
             width={120}
             height={120}
+            priority
             className="rounded-full"
           />
           <div className="space-y-2 text-center sm:text-left">

@@ -36,7 +36,7 @@ export function Header({ pathname: pathnameProp }: { pathname?: string } = {}) {
   const pathname = pathnameProp ?? pathnameHook;
   return (
     <header className="relative py-8">
-      <Link href="/" className="inline-block w-40 sm:w-48">
+      <Link href="/" aria-label="Home" className="inline-block w-40 sm:w-48">
         <AnimatedSignature />
       </Link>
       <p className="mt-1 text-sm tracking-widest text-[var(--foreground)]/60 font-[var(--font-ma-shan-zheng)]">
