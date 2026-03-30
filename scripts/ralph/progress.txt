@@ -1,120 +1,68 @@
 # Ralph Progress Log
-Started: Mon Mar 30 20:36:47 CST 2026
+Started: Mon Mar 30 21:03:06 CST 2026
 ---
 
 ## Codebase Patterns
-- next-intl v4.8.3 is used with Next.js 15; plugin configured via `createNextIntlPlugin("./i18n/request.ts")` in `next.config.ts`
-- Translation messages live in `i18n/messages/{locale}.json`; imported dynamically in `i18n/request.ts`
-- `i18n/routing.ts` defines locales `['zh', 'en']` with `defaultLocale: 'zh'`
-- For static export, `setRequestLocale(locale)` must be called in every server component that uses translations
-- `generateStaticParams` must return `[{ locale: 'zh' }, { locale: 'en' }]` for `[locale]` segment
-- Translation keys are organized by section: `site.*`, `nav.*`, `hero.*`, `now.*`, `work.*`, `papers.*`, `press.*`, `awards.*`, `about.*`, `footer.*`
-- `i18n/navigation.ts` exports locale-aware `Link`, `usePathname`, `useRouter`, `redirect` via `createNavigation(routing)`
-- Components using `Link` should import from `@/i18n/navigation` (not `next/link`) for automatic locale prefixing
-- `app/layout.tsx` is a bare pass-through (returns just children); the `app/[locale]/layout.tsx` provides `<html>`, `<body>`, fonts, and `NextIntlClientProvider`
-- `useRouter().push(path, { locale })` from `@/i18n/navigation` switches locales; `usePathname()` returns path without locale prefix
-- `generateMetadata` in `app/[locale]/layout.tsx` uses `getTranslations({ locale, namespace })` for locale-aware SEO metadata
+- Footer is a named export in `app/components/footer.tsx`, used by PageLayout
+- All bilingual components accept `lang?: "zh" | "en"` prop with `useLocale()` from next-intl as fallback
+- Use `Link` from `@/i18n/navigation` for locale-aware links (auto-prefixes locale)
+- Components using next-intl hooks (`useLocale`, `usePathname`) need `"use client"` directive
+- AnimatedSignature is a default export (exception to the named export convention)
+- Nav links need `relative z-10` to be clickable over any background effects
+- Content JSON files in `content/` use `title`/`titleEn` pattern for bilingual data
 
----
-
-## 2026-03-30 - US-001
-- Installed next-intl v4.8.3
-- Created `i18n/routing.ts` with `defineRouting({ locales: ['zh', 'en'], defaultLocale: 'zh', localeDetection: true })`
-- Created `i18n/request.ts` with `getRequestConfig` that loads messages from `i18n/messages/{locale}.json`
-- Updated `next.config.ts` to use `createNextIntlPlugin`
-- Created placeholder `i18n/messages/zh.json` and `i18n/messages/en.json`
-- Files changed: `next.config.ts`, `package.json`, `package-lock.json`, `i18n/routing.ts`, `i18n/request.ts`, `i18n/messages/zh.json`, `i18n/messages/en.json`
-- **Learnings for future iterations:**
-  - `createNextIntlPlugin` takes the path to `request.ts` as argument (e.g., `"./i18n/request.ts"`)
-  - For static export (`output: "export"`), middleware cannot be used; language detection must be client-side
-  - Empty `{}` JSON files are valid placeholder messages for initial setup
----
-
-## 2026-03-30 - US-002
-- Created comprehensive Chinese (`i18n/messages/zh.json`) and English (`i18n/messages/en.json`) translation files
-- Keys include: `site.*`, `nav.*`, `hero.*`, `now.*`, `work.*`, `papers.*`, `press.*`, `awards.*`, `about.*`, `footer.*`
-- Used `{year}` and `{date}` ICU message format placeholders for dynamic values
-- About section includes `education` as an array of objects (period, school, degree) for structured data
-- Files changed: `i18n/messages/zh.json`, `i18n/messages/en.json`
-- **Learnings for future iterations:**
-  - next-intl supports ICU message format: use `{varName}` for interpolation in translation strings
-  - Translation JSON supports nested objects and arrays; arrays work well for structured repeating data like education entries
-  - Content data (work, papers, press, awards) already has bilingual fields (`titleZh`/`title`, `textEn`/`text`); translation files cover UI chrome, not content data
-  - Keep translation keys organized by page/section for easy maintenance
----
-
-## 2026-03-30 - US-003
-- Restructured all app routes under `app/[locale]/` dynamic segment
-- Created `app/[locale]/layout.tsx` with `<html lang={locale}>`, `NextIntlClientProvider`, `generateStaticParams`, fonts, `FluidCursorWrapper`
-- Moved `app/(home)/` → `app/[locale]/(home)/`, `app/about/` → `app/[locale]/about/`, etc. for all pages
-- Stripped `app/layout.tsx` to bare-minimum pass-through (no `<html>`/`<body>`)
-- Created `i18n/navigation.ts` with `createNavigation(routing)` for locale-aware `Link`, `usePathname`, `useRouter`
-- Updated `Header`, `SectionContainer`, `HeroSection` to use `@/i18n/navigation` Link instead of `next/link`
-- All pages now accept `params: Promise<{ locale: string }>`, call `setRequestLocale(locale)`, and use `getTranslations` for UI strings
-- Content data fields selected by locale (e.g., `locale === "zh" ? item.nameZh : item.name`)
-- `work/[id]` `generateStaticParams` returns `{id}` array; parent `[locale]` layout returns `{locale}` array; Next.js handles the cross product
-- Added `about.viewAwards` key to both translation JSON files
-- Build produces both `/zh/` and `/en/` directories with all pages
-- Files changed: `app/layout.tsx`, `app/[locale]/layout.tsx`, `app/[locale]/(home)/layout.tsx`, `app/[locale]/(home)/page.tsx`, `app/[locale]/about/page.tsx`, `app/[locale]/awards/page.tsx`, `app/[locale]/now/page.tsx`, `app/[locale]/papers/page.tsx`, `app/[locale]/press/page.tsx`, `app/[locale]/work/page.tsx`, `app/[locale]/work/[id]/page.tsx`, `app/components/header.tsx`, `app/components/SectionContainer.tsx`, `app/components/HeroSection.tsx`, `i18n/navigation.ts`, `i18n/messages/zh.json`, `i18n/messages/en.json`
-- **Learnings for future iterations:**
-  - `app/layout.tsx` can return just `children` (no html/body) when `app/[locale]/layout.tsx` provides the root HTML structure — Next.js allows this with dynamic segments
-  - `createNavigation(routing)` from `next-intl/navigation` creates locale-aware Link that auto-prefixes hrefs with current locale
-  - For static export, nested `generateStaticParams` don't need to include parent params — Next.js computes the cross product automatically
-  - When using `t.raw()` for array data from translations (like education entries), the key must exist in the translation JSON
-  - Header breadcrumb locale stripping regex must handle ALL locales: `pathname.replace(/^\/(zh|en)/, "")`
-  - `PageLayout` sub-pages don't need locale prefix in their `pathname` prop — the Header component handles stripping it
-- Root `app/page.tsx` is outside `[locale]` — use `next/navigation` (not `@/i18n/navigation`) since no NextIntlClientProvider wraps it
----
-
-## 2026-03-30 - US-004
-- Created `app/page.tsx` as a "use client" root redirect component
-- Detects `navigator.language` on mount; redirects to `/zh` if Chinese, `/en` otherwise
-- Uses `useRouter().replace()` from `next/navigation` for client-side redirect
-- Returns `null` for minimal/blank loading state during redirect
-- Build succeeds; `out/index.html` generated for root route alongside `/zh/` and `/en/` directories
-- Files changed: `app/page.tsx`
-- **Learnings for future iterations:**
-  - Root `app/page.tsx` (outside `[locale]`) works with the bare pass-through root layout — Next.js generates proper HTML in static export even without explicit html/body in root layout
-  - For static export, use `next/navigation` router (not `@/i18n/navigation`) for the root page since it's outside the NextIntlClientProvider
-  - `navigator.language` returns BCP 47 tags like "zh-CN", "en-US"; using `.startsWith("zh")` covers all Chinese variants
 ---
 
 ## 2026-03-30 - US-005
-- Updated `LanguageSwitch.tsx` to use `useLocale()` from `next-intl` instead of manually parsing pathname
-- Uses `usePathname()` and `useRouter()` from `@/i18n/navigation` for locale-aware navigation
-- `router.push(pathname, { locale: targetLocale })` handles locale switching cleanly — no manual URL prefix manipulation needed
-- Changed from default export to named export to match project conventions; updated import in `header.tsx`
-- Button shows `EN` when locale is `zh`, `中文` when locale is `en`
-- Files changed: `app/components/LanguageSwitch.tsx`, `app/components/header.tsx`
+- Added `<ArchivePreview lang={lang} />` to homepage content grid
+- Footer already rendered in both HomeLayout and PageLayout (no changes needed)
+- Verified: `npm run build` succeeds, all 24 routes generated including `/zh/archive` and `/en/archive`
+- Files changed: `app/[locale]/(home)/page.tsx`
 - **Learnings for future iterations:**
-  - `useRouter()` from `@/i18n/navigation` accepts `{ locale }` option in `push`/`replace` to switch locales — no need to manually construct locale-prefixed URLs
-  - `usePathname()` from `@/i18n/navigation` returns the path WITHOUT locale prefix, which is exactly what `router.push` expects
-  - `useLocale()` from `next-intl` is the canonical way to detect current locale in client components
+  - Footer is already wired in both `(home)/layout.tsx` (HomeLayout) and `PageLayout.tsx` — no need to add it again
+  - Build generates 24 static pages; archive route was auto-discovered by Next.js static export
+  - Homepage grid uses responsive `grid-cols-1 lg:grid-cols-2 xl:grid-cols-3` — new sections just go inside
 ---
 
-## 2026-03-30 - US-006
-- Added `generateMetadata` async function to `app/[locale]/layout.tsx`
-- Title uses `site.title` from translations: `姚顺宇` for zh, `Shunyu Yao` for en; template: `%s | {title}`
-- Description uses `site.description` from translations
-- `alternates.canonical` set to `https://shunyuyao.github.io/{locale}`
-- `alternates.languages` includes both `zh-CN` and `en-US` URLs
-- `<html lang>` was already set correctly from US-003
-- Files changed: `app/[locale]/layout.tsx`
+## 2026-03-30 - US-004
+- Built `ArchivePreview` component showing 5 most recent archive entries
+- Wrapped in `SectionContainer` with title/subtitle/description/linkText
+- Each entry shows: YYYY-MM date, type emoji, localized truncated title
+- Files changed: `app/components/ArchivePreview.tsx`
 - **Learnings for future iterations:**
-  - `getTranslations({ locale, namespace })` works in `generateMetadata` — no need for `setRequestLocale` since metadata generation has its own context
-  - `Metadata` type from `next` supports `title.default` + `title.template` for hierarchical page titles
-  - `alternates.languages` keys should be full BCP 47 tags (`zh-CN`, `en-US`), not short codes
+  - Section preview components follow consistent pattern: import data, slice, wrap in SectionContainer
+  - `SectionContainer` accepts `titleZh` for Chinese section headings
 ---
 
-## 2026-03-30 - US-007
-- Verified full build pipeline: typecheck, lint, and `npm run build` all pass
-- Confirmed `out/` directory contains both `zh/` and `en/` folders with all expected pages
-- Pages verified: `/zh/`, `/zh/about`, `/zh/awards`, `/zh/now`, `/zh/papers`, `/zh/press`, `/zh/work`, `/zh/work/onestory`, `/zh/work/voka` (and identical set under `/en/`)
-- Root `out/index.html` exists with client-side language detection redirect via `navigator.language`
-- No code changes needed — all prior stories built correctly
-- Files changed: `scripts/ralph/prd.json`, `scripts/ralph/progress.txt`
+## 2026-03-30 - US-003
+- Built `/archive` page at `app/[locale]/archive/page.tsx`
+- Entries grouped by year, sorted descending; within year sorted by month descending
+- Type emoji mapping: paper→📄, product→🚀, award→🏆, press→🎙️, event→📅
+- External links open in new tab; entries without URL render as plain text
+- Files changed: `app/[locale]/archive/page.tsx`
 - **Learnings for future iterations:**
-  - Build output with `trailingSlash: true` generates `{route}/index.html` for each page, plus `.txt` variants
-  - The `navigator.language` redirect logic is bundled into the client-side JS chunks, not inlined in `index.html` — verify by checking the source component, not the raw HTML
-  - For static export verification, `ls -R out/{locale}/` is the fastest way to confirm all routes exist
+  - Sub-pages follow pattern: `async function Page({ params })` with `await params` and `setRequestLocale(locale)`
+  - Use `PageLayout` with `pathname="/archive"` (without locale prefix)
+  - JSON imports typed inline via `interface` + `as Type[]` cast
+---
+
+## 2026-03-30 - US-002
+- Created `content/archive.json` with 10 entries covering papers, products, awards, press, and events
+- Entries sorted by date descending, covering 2022-2026
+- Fields: `date` (YYYY-MM), `type`, `title`, `titleEn`, `url`
+- Files changed: `content/archive.json`
+- **Learnings for future iterations:**
+  - Content JSON files don't need TypeScript types to import — Next.js resolves them via `@/content/` alias
+  - `type` field uses lowercase enum: `paper | product | award | press | event`
+  - Entries with no external link use `url: null` (not empty string)
+---
+
+## 2026-03-30 - US-001
+- Implemented full Footer component with bilingual support (zh/en)
+- Added: vertical divider, small AnimatedSignature linked to `/`, tagline, 7 nav links, copyright
+- Files changed: `app/components/footer.tsx`
+- **Learnings for future iterations:**
+  - Footer is a client component (`"use client"`) because it uses `useLocale` from next-intl and `Link` from next-intl navigation
+  - The `navLinks` array includes `/archive` route which doesn't exist yet — will be created in US-003
+  - `mx-auto` on `inline-block` doesn't center in CSS; use `block` or rely on parent `text-center`
 ---
