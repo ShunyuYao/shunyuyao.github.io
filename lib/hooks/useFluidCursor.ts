@@ -1,6 +1,7 @@
 // @ts-nocheck
 const useFluidCursor = () => {
     const canvas = document.getElementById('fluid');
+    if (!canvas) return;
     resizeCanvas();
 
     // Mobile performance degradation: reduce resolution on touch devices
@@ -40,7 +41,9 @@ const useFluidCursor = () => {
     const pointers = [];
     pointers.push(new pointerPrototype());
 
-    const { gl, ext } = getWebGLContext(canvas);
+    const result = getWebGLContext(canvas);
+    if (!result) return;
+    const { gl, ext } = result;
 
     if (!ext.supportLinearFiltering) {
       config.DYE_RESOLUTION = 256;
@@ -62,6 +65,8 @@ const useFluidCursor = () => {
         gl =
           canvas.getContext('webgl', params) ||
           canvas.getContext('experimental-webgl', params);
+
+      if (!gl) return null;
 
       let halfFloat;
       let supportLinearFiltering;
