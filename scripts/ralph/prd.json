@@ -1,139 +1,100 @@
 {
   "project": "shunyuyao.github.io",
-  "branchName": "ralph/module-1-init",
-  "description": "Module 1: Project Initialization & Base Architecture — Set up a Next.js 15 + Tailwind CSS v4 + TypeScript project skeleton for GitHub Pages static export, with dark theme, font loading, shell layout components, content data scaffolding, and CI/CD deployment.",
+  "branchName": "ralph/module-2-fluid-cursor",
+  "description": "Fluid Cursor Effect — Add a WebGL-based fluid cursor effect (rainbow smoke/fluid animation) overlaid on all content. The effect follows mouse/touch interactions, lazy-loads on first interaction, and never blocks page interactivity.",
   "userStories": [
     {
       "id": "US-001",
-      "title": "Initialize Next.js 15 project with TypeScript and Tailwind CSS v4",
-      "description": "As a developer, I need a working Next.js 15 project with TypeScript and Tailwind CSS v4 so that I have a foundation to build upon.",
+      "title": "Copy and configure the WebGL fluid simulation hook",
+      "description": "As a developer, I need the fluid simulation engine in the codebase so that other components can invoke it to render the effect.",
       "acceptanceCriteria": [
-        "package.json exists with next@15, react@19, react-dom@19, typescript, tailwindcss v4, and @tailwindcss/postcss as dependencies",
-        "tsconfig.json is configured for Next.js with strict mode enabled",
-        "next.config.ts exports config with output: 'export', trailingSlash: true, images: { unoptimized: true }",
-        "tailwind.config.ts exists and is configured to scan app/ directory for classes",
-        "npm run dev starts the dev server without errors",
-        "npm run build generates an out/ directory successfully"
+        "`lib/hooks/useFluidCursor.ts` exists, copied from Lorenzo Maiuri's repo (https://github.com/lorenzomaiuri-dev/lorenzo-maiuri-website/blob/main/lib/hooks/useFluidCursor.ts)",
+        "Config params are set: `TRANSPARENT: true`, `DENSITY_DISSIPATION: 3.5`, `VELOCITY_DISSIPATION: 2`, `COLOR_UPDATE_SPEED: 10`, `SPLAT_RADIUS: 0.2`, `SPLAT_FORCE: 6000`",
+        "Mobile performance degradation is added near the top of the hook: on touch devices (`pointer: coarse`), set `SIM_RESOLUTION: 64` and `DYE_RESOLUTION: 720`",
+        "The hook targets a canvas element with `id=\"fluid\"`",
+        "Typecheck passes (`npx tsc --noEmit`)",
+        "Lint passes (`npm run lint`)"
       ],
       "priority": 1,
-      "passes": true,
-      "notes": "This is the foundation story. Start fresh — do not modify the existing HTML/CSS site files. Use Next.js 15 App Router (not Pages Router)."
+      "passes": false,
+      "notes": ""
     },
     {
       "id": "US-002",
-      "title": "Set up global CSS variables and dark theme",
-      "description": "As a visitor, I want the site to display a dark theme with consistent design tokens so the visual foundation matches the design spec.",
+      "title": "Create the FluidCursor component",
+      "description": "As a developer, I need a component that renders the full-screen canvas and initializes the WebGL simulation so the fluid effect is displayed.",
       "acceptanceCriteria": [
-        "app/globals.css exists and is imported in the root layout",
-        "CSS custom properties defined: --background (#0a0a0a), --foreground (#ededed), --muted (#737373), --border (#1f1f1f), --card (#111111), --accent (#e8d5c4)",
-        "CSS custom properties defined: --font-sans and --font-mono with correct fallback chains",
-        "html and body have background-color: var(--background) and color: var(--foreground)",
-        "Tailwind theme is extended to reference the CSS custom properties",
-        "Page renders with dark background (#0a0a0a) in the browser",
-        "Verify in browser using dev-browser skill"
+        "`app/components/FluidCursor.tsx` exists as a `\"use client\"` component with a default export",
+        "Component renders a `<div className=\"fixed inset-0 z-[2] pointer-events-none\">` containing a `<canvas id=\"fluid\">` with `pointer-events: none`",
+        "Component calls `fluidCursor()` via `useEffect` on mount",
+        "Typecheck passes (`npx tsc --noEmit`)",
+        "Lint passes (`npm run lint`)"
       ],
       "priority": 2,
-      "passes": true,
-      "notes": "Font-face declarations go here but actual next/font loading is in the next story."
+      "passes": false,
+      "notes": ""
     },
     {
       "id": "US-003",
-      "title": "Configure font loading with next/font",
-      "description": "As a visitor, I want the site to use Inter and Geist Mono fonts with proper Chinese fallbacks so that text renders beautifully in both English and Chinese.",
+      "title": "Create the FluidCursorWrapper lazy-loading component",
+      "description": "As a user, I want the fluid effect to only initialize after I first interact with the page so that initial page load is fast.",
       "acceptanceCriteria": [
-        "Inter font loaded via next/font/google with latin and latin-ext subsets",
-        "Geist Mono font loaded via next/font/google or next/font/local",
-        "app/layout.tsx applies Inter as the default sans-serif font via CSS variable or className",
-        "app/layout.tsx applies Geist Mono as the monospace font via CSS variable or className",
-        "--font-sans fallback chain includes: 'Inter', -apple-system, 'PingFang SC', 'Noto Sans CJK SC', 'Microsoft YaHei', sans-serif",
-        "--font-mono fallback chain includes: 'Geist Mono', 'Fira Code', monospace",
-        "Fonts load without layout shift (font-display: swap)",
-        "Typecheck passes"
+        "`app/components/FluidCursorWrapper.tsx` exists as a `\"use client\"` component with a default export",
+        "Uses `next/dynamic` to lazy-import `FluidCursor` with `ssr: false`",
+        "Renders nothing until the first `mousemove` or `touchstart` event fires",
+        "After the first interaction event, renders the `LazyFluidCursor` component",
+        "Event listeners are cleaned up on unmount and after first trigger",
+        "Typecheck passes (`npx tsc --noEmit`)",
+        "Lint passes (`npm run lint`)"
       ],
       "priority": 3,
-      "passes": true,
-      "notes": "Chinese fonts (PingFang SC, Noto Sans CJK, 微软雅黑) are system fonts — do not attempt to load them via next/font. They go in the CSS fallback chain only."
+      "passes": false,
+      "notes": ""
     },
     {
       "id": "US-004",
-      "title": "Create root layout with metadata",
-      "description": "As a visitor, I want proper HTML structure and metadata so the site is well-formed and SEO-friendly.",
+      "title": "Mount FluidCursorWrapper in the root layout",
+      "description": "As a user, I want the fluid effect available on every page of the site so the visual signature is consistent.",
       "acceptanceCriteria": [
-        "app/layout.tsx sets html lang='en'",
-        "app/layout.tsx exports metadata with title ('Shunyu Yao'), description, and viewport settings",
-        "Body element has antialiased text rendering class",
-        "Layout wraps children in a minimal full-height structure (min-h-screen)",
-        "Typecheck passes",
-        "npm run build succeeds"
+        "`FluidCursorWrapper` is imported in `app/layout.tsx`",
+        "`<FluidCursorWrapper />` is rendered inside `<body>` (alongside `{children}`)",
+        "Typecheck passes (`npx tsc --noEmit`)",
+        "Lint passes (`npm run lint`)"
       ],
       "priority": 4,
-      "passes": true,
-      "notes": "Keep the layout minimal — no navigation or footer in the layout itself. Those will be composed in page.tsx."
+      "passes": false,
+      "notes": ""
     },
     {
       "id": "US-005",
-      "title": "Create shell layout components",
-      "description": "As a developer, I need reusable container, header, and footer components so that pages have consistent structure.",
+      "title": "Apply z-index rules to ensure clickability",
+      "description": "As a user, I want to be able to click all links, buttons, and interactive elements without the fluid canvas blocking them.",
       "acceptanceCriteria": [
-        "app/components/container.tsx exports a Container component that centers content with max-width and horizontal padding",
-        "app/components/header.tsx exports a Header component with the site name/title as a minimal placeholder",
-        "app/components/footer.tsx exports a Footer component with a minimal copyright placeholder",
-        "All components are typed with React.FC or equivalent TypeScript types",
-        "All components accept children or are self-contained as appropriate",
-        "Typecheck passes"
+        "The fluid canvas sits at `z-[2]` with `pointer-events: none`",
+        "All clickable links and buttons across the site have `z-10` or higher (above the canvas)",
+        "Modals, toasts, and menus use `z-50` or higher",
+        "Clicking any link or button on the page works as expected with the fluid effect active",
+        "Typecheck passes (`npx tsc --noEmit`)",
+        "Verify in browser using dev-browser skill"
       ],
       "priority": 5,
-      "passes": true,
-      "notes": "These are skeleton components — keep them minimal. They will be fleshed out in later modules."
+      "passes": false,
+      "notes": ""
     },
     {
       "id": "US-006",
-      "title": "Assemble homepage with shell components",
-      "description": "As a visitor, I want to see a minimal dark-themed homepage so I can confirm the site is live and styled correctly.",
+      "title": "Verify full integration and performance",
+      "description": "As a user, I want to see rainbow fluid smoke when I move my mouse, with no performance penalty on initial load.",
       "acceptanceCriteria": [
-        "app/page.tsx renders Header, Container (with placeholder content), and Footer",
-        "Page displays correctly at localhost:3000 with dark background, light text",
-        "Header shows site name, Footer shows copyright",
-        "Layout is responsive — no horizontal overflow on mobile viewports",
-        "Typecheck passes",
+        "Moving mouse anywhere on the page produces rainbow fluid smoke",
+        "Touch on mobile also produces fluid effect",
+        "Chrome DevTools Performance recording shows no WebGL initialization cost on first paint (WebGL only starts after first interaction)",
+        "`npm run build` succeeds (static export works)",
         "Verify in browser using dev-browser skill"
       ],
       "priority": 6,
-      "passes": true,
-      "notes": "Placeholder content can be a single line like 'Coming soon' or just the name."
-    },
-    {
-      "id": "US-007",
-      "title": "Create content data file scaffolding",
-      "description": "As a developer, I need structured JSON data files and utility directories so that content can be loaded in future modules.",
-      "acceptanceCriteria": [
-        "content/work.json exists with an empty array []",
-        "content/papers.json exists with an empty array []",
-        "content/awards.json exists with an empty array []",
-        "content/press.json exists with an empty array []",
-        "lib/hooks/ directory exists (can contain a placeholder .gitkeep or empty index.ts)",
-        "public/images/ directory exists (can contain a .gitkeep)",
-        "Typecheck passes"
-      ],
-      "priority": 7,
-      "passes": true,
-      "notes": "These are empty scaffolding files. Actual content and TypeScript types for the JSON schemas will be added in later modules."
-    },
-    {
-      "id": "US-008",
-      "title": "Set up GitHub Actions deployment workflow",
-      "description": "As a developer, I want automated deployment to GitHub Pages on every push to main so the site stays up-to-date without manual deploys.",
-      "acceptanceCriteria": [
-        ".github/workflows/deploy.yml exists",
-        "Workflow triggers on push to main branch",
-        "Workflow uses Node.js 20 and runs npm ci then npm run build",
-        "Workflow uses peaceiris/actions-gh-pages to publish the out/ directory",
-        "Workflow YAML is valid (no syntax errors)",
-        "npm run build still succeeds (sanity check)"
-      ],
-      "priority": 8,
-      "passes": true,
-      "notes": "The workflow publishes from the out/ directory to the gh-pages branch. Use peaceiris/actions-gh-pages@v4. The actual deployment will only work once the branch is merged and GitHub Pages is configured to serve from gh-pages branch."
+      "passes": false,
+      "notes": ""
     }
   ]
 }
