@@ -8,6 +8,7 @@ import {
 } from "next-intl/server";
 import { routing } from "@/i18n/routing";
 import FluidCursorWrapper from "@/app/components/FluidCursorWrapper";
+import PersonSchema from "@/app/components/PersonSchema";
 
 const BASE_URL = "https://shunyuyao.github.io";
 
@@ -87,6 +88,7 @@ export default async function LocaleLayout({
       className={`${inter.variable} ${geistMono.variable} ${maShanZheng.variable}`}
     >
       <body className="antialiased min-h-screen">
+        <PersonSchema />
         <FluidCursorWrapper />
         <NextIntlClientProvider messages={messages}>
           {children}
