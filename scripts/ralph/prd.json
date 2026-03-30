@@ -1,20 +1,25 @@
 {
   "project": "shunyuyao.github.io",
-  "branchName": "ralph/module-8-footer-archive",
-  "description": "Build the site-wide footer component and /archive timeline page with chronological activity entries grouped by year.",
+  "branchName": "ralph/module-9-seo-performance",
+  "description": "Final polish module to maximize discoverability and page speed via complete metadata, structured data, OG image, font/image optimization, sitemap, robots.txt, and Lighthouse score targets.",
   "userStories": [
     {
       "id": "US-001",
-      "title": "Build the Footer component",
-      "description": "As a user, I want to see a footer on every page with navigation links and copyright so I can easily navigate the site from the bottom.",
+      "title": "Configure complete metadata in layout",
+      "description": "As a developer, I need comprehensive metadata on every page so search engines and social platforms correctly index and display the site.",
       "acceptanceCriteria": [
-        "`app/components/footer.tsx` is updated with a `Footer` component accepting `lang?: 'zh' | 'en'` prop",
-        "Footer contains a small `<AnimatedSignature>` (or static SVG) at `w-16 mx-auto`, linked to `/`",
-        "Footer tagline: `AIGC 研究者 & 产品负责人 · 上海` (zh) or `AIGC Researcher & Product Builder · Shanghai` (en), in `text-xs uppercase font-mono tracking-wider text-neutral-600`",
-        "Footer navigation includes links to: Now/近况, Work/工作, Papers/论文, Press/媒体, Awards/荣誉, About/关于, Archive/存档",
-        "All footer nav links have `relative z-10` so they are clickable",
-        "Copyright line: `© 2026 Shunyu Yao · Last updated: March 2026` / `© 2026 姚顺宇 · 最后更新：2026年3月`",
-        "Footer has a vertical divider `div` (1px, `bg-neutral-800`, `h-16`) above the signature",
+        "`app/[locale]/layout.tsx` exports `generateMetadata` function accepting `{ params: { locale: string } }`",
+        "`title.default`: `姚顺宇` (zh) or `Shunyu Yao` (en)",
+        "`title.template`: `%s | 姚顺宇` (zh) or `%s | Shunyu Yao` (en)",
+        "`description` set in the correct language (60–160 chars)",
+        "`authors`: `[{ name: 'Shunyu Yao', url: 'https://shunyuyao.github.io' }]`",
+        "`openGraph.type`: `website`",
+        "`openGraph.url`: `https://shunyuyao.github.io`",
+        "`openGraph.locale`: `zh_CN` or `en_US`",
+        "`twitter.card`: `summary_large_image`",
+        "`alternates.canonical`: `https://shunyuyao.github.io/{locale}`",
+        "`alternates.languages`: includes both `zh-CN` and `en-US` URLs",
+        "Each sub-page's `page.tsx` exports a `metadata` object with a page-specific `title`",
         "Typecheck passes (`npx tsc --noEmit`)",
         "Lint passes (`npm run lint`)"
       ],
@@ -24,14 +29,14 @@
     },
     {
       "id": "US-002",
-      "title": "Create content/archive.json data file",
-      "description": "As a developer, I need a single `archive.json` file with all timeline entries so the archive page and homepage preview can read from a single source of truth.",
+      "title": "Add Schema.org structured data",
+      "description": "As a developer, I need a JSON-LD `Person` schema so search engines understand who this site is about.",
       "acceptanceCriteria": [
-        "`content/archive.json` exists as a JSON array",
-        "Each entry has: `date` (YYYY-MM format), `type` (one of: `paper` | `product` | `award` | `press` | `event`), `title` (Chinese), `titleEn` (English), `url` (string or null)",
-        "At least 8 entries covering: LAMIC AAAI 2026, OneStory 25万用户, 华为昇腾大赛冠军, 周鸿祎对谈, other awards/milestones",
-        "Entries are sorted by `date` descending in the file",
-        "Valid JSON, TypeScript can import it via `@/content/archive.json`"
+        "`app/components/PersonSchema.tsx` exists as a server component with a default export",
+        "Renders a `<script type=\"application/ld+json\">` tag with correct JSON-LD",
+        "Schema includes: `@type: Person`, `name: Shunyu Yao`, `alternateName: 姚顺宇`, `url`, `jobTitle`, `worksFor.name: Chuangyi Technology`, `alumniOf` array (SJTU, XJTU), `email: ysy2017@sjtu.edu.cn`, `sameAs` array (onestory.art, github.com/ShunyuYao)",
+        "`PersonSchema` is mounted in `app/[locale]/layout.tsx`",
+        "Typecheck passes, lint passes"
       ],
       "priority": 2,
       "passes": true,
@@ -39,20 +44,14 @@
     },
     {
       "id": "US-003",
-      "title": "Build the /archive page",
-      "description": "As a user, I want to see all of Shunyu Yao's activities at `/archive` grouped by year so I can quickly understand his trajectory.",
+      "title": "Create static OG image",
+      "description": "As a user sharing the site on WeChat or Twitter, I want a branded preview image to appear so the link looks professional.",
       "acceptanceCriteria": [
-        "`app/archive/page.tsx` (or `app/[locale]/archive/page.tsx` if Module 7 is merged) exists with a default export",
-        "Reads from `content/archive.json`",
-        "Entries grouped by year (extracted from `date` field), years shown as `text-xs font-mono uppercase tracking-wider text-neutral-600` headings",
-        "Each entry shows: month number (2-char, `text-neutral-600 font-mono text-xs w-8`), type emoji icon, title as link (if `url` is non-null) or plain text",
-        "Type-to-emoji mapping: `paper → 📄`, `product → 🚀`, `award → 🏆`, `press → 🎙️`, `event → 📅`",
-        "Years sorted descending, entries within each year sorted by month descending",
-        "Language: shows `title` or `titleEn` based on current lang",
-        "External links: `target=\"_blank\" rel=\"noopener noreferrer\"`, `relative z-10`",
-        "Uses `PageLayout` with `pathname=\"/archive\"`",
-        "Page `<title>` set to `Archive | Shunyu Yao`",
-        "Typecheck passes, lint passes"
+        "A static OG image exists at `public/og/default.png` (1200×630px)",
+        "Image shows: name \"Shunyu Yao · 姚顺宇\", tagline \"AIGC Researcher & Product Builder\", site URL `shunyuyao.github.io`, dark background",
+        "Image can be created manually (e.g. using Figma or a design tool) and committed as a static asset",
+        "`app/[locale]/layout.tsx` `openGraph.images` points to `https://shunyuyao.github.io/og/default.png`",
+        "`twitter.images` also points to the OG image"
       ],
       "priority": 3,
       "passes": true,
@@ -60,14 +59,13 @@
     },
     {
       "id": "US-004",
-      "title": "Build the ArchivePreview component for the homepage",
-      "description": "As a user, I want to see the 5 most recent archive entries on the homepage so I get a quick sense of recent activities.",
+      "title": "Optimize fonts",
+      "description": "As a user on a slow connection, I want the page to load quickly even with custom fonts loaded.",
       "acceptanceCriteria": [
-        "`app/components/ArchivePreview.tsx` exists",
-        "Reads `content/archive.json`, takes the first 5 entries (most recent)",
-        "Each entry shows: date string (YYYY-MM format, `font-mono text-neutral-600 text-xs w-16`), type emoji, title (localized, truncated with `truncate`)",
-        "Items as a `<ul className=\"space-y-3\">` with flex row layout",
-        "Wrapped in `SectionContainer` with `title=\"archive\"`, `subtitle=\"/archive\"`, appropriate description/linkText",
+        "Inter font is loaded via `next/font/google` in `app/layout.tsx` (outside `[locale]`) with `subsets: ['latin']`, `display: 'swap'`, weights `['400', '500', '600', '700']`",
+        "`Ma Shan Zheng` (calligraphy font for 姚顺宇 subtitle) is loaded with Google Fonts `preconnect` + stylesheet link, `display=swap`",
+        "NO full Noto Sans SC loaded globally — use system font fallback for Chinese body text: `\"PingFang SC\", \"Noto Sans CJK SC\", \"Microsoft YaHei\", sans-serif`",
+        "CSS `font-family` stack in `globals.css` or Tailwind config is: `Inter → -apple-system → PingFang SC → Noto Sans CJK SC → Microsoft YaHei → sans-serif`",
         "Typecheck passes, lint passes"
       ],
       "priority": 4,
@@ -76,18 +74,66 @@
     },
     {
       "id": "US-005",
-      "title": "Mount Footer and ArchivePreview in the homepage and verify",
-      "description": "As a user, I want the footer and archive preview to appear on the homepage and all sub-pages.",
+      "title": "Optimize images",
+      "description": "As a developer, I need all images to use `next/image` so they are automatically converted to WebP and lazy-loaded.",
       "acceptanceCriteria": [
-        "`app/page.tsx` (or `app/[locale]/page.tsx`) renders `<ArchivePreview />` inside the content grid",
-        "`<Footer />` is rendered at the bottom of the homepage and all sub-page `PageLayout`s",
-        "Footer navigation links all work (no 404s for existing routes)",
-        "Archive page shows all entries correctly grouped by year",
-        "`npm run build` succeeds",
-        "Typecheck passes (`npx tsc --noEmit`)",
-        "Lint passes (`npm run lint`)"
+        "All `<img>` tags in the codebase replaced with `next/image` `<Image>` component",
+        "Avatar image on `/about` page uses `priority` prop (above the fold)",
+        "All logo images in Work section use appropriate `width` and `height` props",
+        "`public/images/` directory has a `.gitkeep` or at least a placeholder avatar if no real photo yet",
+        "Typecheck passes, lint passes"
       ],
       "priority": 5,
+      "passes": true,
+      "notes": ""
+    },
+    {
+      "id": "US-006",
+      "title": "Generate sitemap.xml",
+      "description": "As a developer, I need a `sitemap.xml` so search engines can discover all pages in both languages.",
+      "acceptanceCriteria": [
+        "`app/sitemap.ts` exists and exports a default function returning a `MetadataRoute.Sitemap` array",
+        "Covers all pages: `''`, `/now`, `/work`, `/papers`, `/press`, `/awards`, `/about`, `/archive` for both `zh` and `en` locales",
+        "Each entry has `url`, `lastModified`, `changeFrequency`, and `priority` (homepage: 1.0, others: 0.8)",
+        "`npm run build` generates `out/sitemap.xml` (verify file exists in build output)",
+        "Typecheck passes, lint passes"
+      ],
+      "priority": 6,
+      "passes": true,
+      "notes": ""
+    },
+    {
+      "id": "US-007",
+      "title": "Add robots.txt",
+      "description": "As a developer, I need `robots.txt` to allow full crawling and reference the sitemap.",
+      "acceptanceCriteria": [
+        "`app/robots.ts` exists (or `public/robots.txt`) allowing all crawlers (`User-agent: *`, `Allow: /`)",
+        "References sitemap URL: `Sitemap: https://shunyuyao.github.io/sitemap.xml`",
+        "`npm run build` generates `out/robots.txt`",
+        "Typecheck passes if using `app/robots.ts`"
+      ],
+      "priority": 7,
+      "passes": true,
+      "notes": ""
+    },
+    {
+      "id": "US-008",
+      "title": "Run Lighthouse and fix top issues",
+      "description": "As a developer, I need to verify performance and SEO scores meet targets and fix any blocking issues.",
+      "acceptanceCriteria": [
+        "Run Lighthouse on the production build (serve `out/` with `npx serve out` and run Lighthouse in Chrome DevTools)",
+        "Desktop Performance score > 90",
+        "Mobile Performance score > 85",
+        "SEO score = 100",
+        "Accessibility score > 95",
+        "Best Practices score = 100",
+        "All images have `alt` text",
+        "All interactive elements have accessible labels",
+        "No console errors in production",
+        "Fix any issues found until scores meet targets",
+        "`npm run build` succeeds"
+      ],
+      "priority": 8,
       "passes": true,
       "notes": ""
     }
