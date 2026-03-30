@@ -92,7 +92,7 @@ for i in $(seq 1 $MAX_ITERATIONS); do
     OUTPUT=$(cat "$SCRIPT_DIR/prompt.md" | amp --dangerously-allow-all 2>&1 | tee /dev/stderr) || true
   else
     # Claude Code: use --dangerously-skip-permissions for autonomous operation, --print for output
-    OUTPUT=$(claude --dangerously-skip-permissions --print < "$SCRIPT_DIR/CLAUDE.md" 2>&1 | tee /dev/stderr) || true
+    OUTPUT=$(claude --permission-mode bypassPermissions --print < "$SCRIPT_DIR/CLAUDE.md" 2>&1 | tee /dev/stderr) || true
   fi
   
   # Check for completion signal
@@ -100,6 +100,31 @@ for i in $(seq 1 $MAX_ITERATIONS); do
     echo ""
     echo "Ralph completed all tasks!"
     echo "Completed at iteration $i of $MAX_ITERATIONS"
+
+    # Auto-merge the feature branch into main via Claude Code
+    FEATURE_BRANCH=$(jq -r '.branchName // empty' "$PRD_FILE" 2>/dev/null || echo "")
+    if [ -n "$FEATURE_BRANCH" ]; then
+      echo ""
+      echo "==============================================================="
+      echo "  Auto-merging $FEATURE_BRANCH into main"
+      echo "==============================================================="
+      if [[ "$TOOL" == "claude" ]]; then
+        claude --permission-mode bypassPermissions --print "
+Merge the feature branch into main. Steps:
+1. Run: git status (confirm working tree is clean)
+2. Run: git checkout main
+3. Run: git merge --no-ff $FEATURE_BRANCH -m \"merge: $FEATURE_BRANCH into main\"
+4. Run: git push origin main
+5. Report the result (commit hash, files changed).
+If there are merge conflicts, resolve them by accepting the feature branch changes.
+" 2>&1
+      else
+        amp --dangerously-allow-all "Merge branch $FEATURE_BRANCH into main and push." 2>&1
+      fi
+      echo ""
+      echo "Merge complete. Branch $FEATURE_BRANCH has been merged into main."
+    fi
+
     exit 0
   fi
   
