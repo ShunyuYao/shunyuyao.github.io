@@ -48,7 +48,7 @@ export default function HeroSection({
         </Link>
       </div>
 
-      <span className="absolute bottom-8 animate-bounce text-lg text-neutral-600">
+      <span aria-hidden="true" className="absolute bottom-8 animate-bounce text-lg text-neutral-500">
         ↓
       </span>
     </section>

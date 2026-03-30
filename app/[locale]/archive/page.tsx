@@ -61,7 +61,7 @@ export default async function ArchivePage({
       <section className="space-y-10">
         {grouped.map(({ year, items }) => (
           <div key={year} className="space-y-3">
-            <h2 className="text-xs font-mono uppercase tracking-wider text-neutral-600">
+            <h2 className="text-xs font-mono uppercase tracking-wider text-neutral-500">
               {year}
             </h2>
             <ul className="space-y-2">
@@ -72,7 +72,7 @@ export default async function ArchivePage({
 
                 return (
                   <li key={i} className="flex items-baseline gap-2 text-sm">
-                    <span className="text-neutral-600 font-mono text-xs w-8 shrink-0">
+                    <span className="text-neutral-500 font-mono text-xs w-8 shrink-0">
                       {month}
                     </span>
                     <span className="shrink-0">{typeEmoji[entry.type]}</span>

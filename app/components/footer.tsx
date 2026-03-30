@@ -22,11 +22,11 @@ export function Footer({ lang }: { lang?: "zh" | "en" } = {}) {
     <footer className="py-16 text-center">
       <div className="mx-auto w-px h-16 bg-neutral-800" />
 
-      <Link href="/" className="block w-16 mx-auto mt-8">
+      <Link href="/" aria-label="Home" className="block w-16 mx-auto mt-8">
         <AnimatedSignature />
       </Link>
 
-      <p className="mt-4 text-xs uppercase font-mono tracking-wider text-neutral-600">
+      <p className="mt-4 text-xs uppercase font-mono tracking-wider text-neutral-500">
         {l === "zh"
           ? "AIGC 研究者 & 产品负责人 · 上海"
           : "AIGC Researcher & Product Builder · Shanghai"}
@@ -44,7 +44,7 @@ export function Footer({ lang }: { lang?: "zh" | "en" } = {}) {
         ))}
       </nav>
 
-      <p className="mt-6 text-xs text-neutral-600">
+      <p className="mt-6 text-xs text-neutral-500">
         {l === "zh"
           ? "© 2026 姚顺宇 · 最后更新：2026年3月"
           : "© 2026 Shunyu Yao · Last updated: March 2026"}

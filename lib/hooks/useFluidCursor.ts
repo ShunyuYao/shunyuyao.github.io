@@ -218,8 +218,9 @@ const useFluidCursor = () => {
       gl.attachShader(program, fragmentShader);
       gl.linkProgram(program);
 
-      if (!gl.getProgramParameter(program, gl.LINK_STATUS))
-        console.trace(gl.getProgramInfoLog(program));
+      if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
+        // WebGL program link failed - silently ignore in production
+      }
 
       return program;
     }
@@ -241,8 +242,9 @@ const useFluidCursor = () => {
       gl.shaderSource(shader, source);
       gl.compileShader(shader);
 
-      if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS))
-        console.trace(gl.getShaderInfoLog(shader));
+      if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
+        // WebGL shader compile failed - silently ignore in production
+      }
 
       return shader;
     }
