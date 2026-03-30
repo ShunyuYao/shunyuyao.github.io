@@ -1215,34 +1215,34 @@ const useFluidCursor = () => {
       }
     });
 
-    // Mobile-only: generate fluid splats from scroll events
+    // Mobile-only: ambient fluid animation along random smooth trajectories
     if (isTouchDevice) {
-      let lastScrollY = window.scrollY;
+      let t = Math.random() * 1000;
+      let prevX = 0.5, prevY = 0.5;
 
-      window.addEventListener('scroll', () => {
-        const scrollY = window.scrollY;
-        const scrollDelta = scrollY - lastScrollY;
+      // Composite sine waves for organic Lissajous-like movement
+      const ax1 = 0.30, fx1 = 0.47, px1 = Math.random() * Math.PI * 2;
+      const ay1 = 0.25, fy1 = 0.31, py1 = Math.random() * Math.PI * 2;
+      const ax2 = 0.12, fx2 = 1.13, px2 = Math.random() * Math.PI * 2;
+      const ay2 = 0.10, fy2 = 0.87, py2 = Math.random() * Math.PI * 2;
 
-        if (Math.abs(scrollDelta) > 2) {
-          const speed = Math.min(Math.abs(scrollDelta), 60);
-          const direction = scrollDelta > 0 ? -1 : 1;
+      setInterval(() => {
+        t += 0.12;
 
-          const numSplats = speed > 20 ? 2 : 1;
-          for (let i = 0; i < numSplats; i++) {
-            const x = 0.15 + Math.random() * 0.7;
-            const y = 0.2 + Math.random() * 0.6;
-            const dx = (Math.random() - 0.5) * speed * 2;
-            const dy = direction * speed * 3;
-            const color = generateColor();
-            color.r *= 5.0;
-            color.g *= 5.0;
-            color.b *= 5.0;
-            splat(x, y, dx, dy, color);
-          }
-        }
+        const x = 0.5 + ax1 * Math.sin(fx1 * t + px1) + ax2 * Math.sin(fx2 * t + px2);
+        const y = 0.5 + ay1 * Math.cos(fy1 * t + py1) + ay2 * Math.cos(fy2 * t + py2);
+        const dx = (x - prevX) * config.SPLAT_FORCE * 0.3;
+        const dy = -(y - prevY) * config.SPLAT_FORCE * 0.3;
 
-        lastScrollY = scrollY;
-      }, { passive: true });
+        const color = generateColor();
+        color.r *= 2.0;
+        color.g *= 2.0;
+        color.b *= 2.0;
+        splat(x, y, dx, dy, color);
+
+        prevX = x;
+        prevY = y;
+      }, 80);
     }
 
     function updatePointerDownData(pointer, id, posX, posY) {
