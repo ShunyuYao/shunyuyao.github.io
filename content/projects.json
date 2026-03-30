@@ -1,0 +1,56 @@
+[
+  {
+    "id": "onestory",
+    "name": "OneStory",
+    "nameZh": "OneStory",
+    "category": "product",
+    "description": "An AI-native platform for visual storytelling, serving directors, storyboard artists, and content creators. Building the complete AI pipeline from creative ideas to scripts, storyboards, and videos.",
+    "descriptionZh": "面向垂类创作者的 AI 原生视觉叙事平台，服务导演、分镜师和内容创作者。构建从创意到脚本、分镜、视频的完整 AI 创作流程。",
+    "highlights": ["250K+ registered users in one year", "Revenue exceeds compute costs", "Reduced production costs by 30% for Liu Yexi IP"],
+    "highlightsZh": ["一年内注册用户超 25 万", "营收超过算力成本", "为柳夜熙 IP 降低 30% 制作成本"],
+    "links": [
+      { "label": "海外版", "labelEn": "Global", "url": "https://global.onestory.art" },
+      { "label": "国内版", "labelEn": "China", "url": "https://www.onestory.art" }
+    ],
+    "org": "Chuangyi Technology",
+    "orgZh": "创壹科技",
+    "period": "2022 – present",
+    "periodZh": "2022 至今"
+  },
+  {
+    "id": "aigc-videos",
+    "name": "AIGC Viral Videos",
+    "nameZh": "AIGC 爆款视频",
+    "category": "creative",
+    "description": "Multiple viral AIGC videos with millions of views, showcasing AI-powered storytelling and character animation.",
+    "descriptionZh": "产出多部百万级及千万级播放量的 AIGC 爆款视频，展示 AI 驱动的叙事能力和角色动画技术。",
+    "highlights": ["Li Youbin Cross-Time Dialogue – 12M+ views", "Factory Earth – 7.6M+ views", "AI Liu Yexi Returns – 1M+ views"],
+    "highlightsZh": ["李幼斌跨时空对话李云龙 – 1200万+播放", "工厂地球 – 760万+播放", "AI版柳夜熙回归 – 100万+播放"],
+    "links": [
+      { "label": "李幼斌跨时空对话", "labelEn": "Li Youbin Cross-Time Dialogue", "url": "https://v.douyin.com/bm6CUjA-BXY/" },
+      { "label": "工厂地球", "labelEn": "Factory Earth", "url": "https://v.douyin.com/7wI0ypsYzAw/" },
+      { "label": "AI版柳夜熙回归", "labelEn": "AI Liu Yexi Returns", "url": "https://v.douyin.com/-iWs04uF6Pg/" }
+    ],
+    "org": "Chuangyi Technology",
+    "orgZh": "创壹科技",
+    "period": "2022 – 2024",
+    "periodZh": "2022 – 2024"
+  },
+  {
+    "id": "voka",
+    "name": "Voka – Full-Body Motion Capture",
+    "nameZh": "Voka 全身动捕直播软件",
+    "category": "product",
+    "description": "Real-time virtual streaming software using ordinary cameras for face, hand, and full-body motion capture. Deployed on PC and mobile platforms.",
+    "descriptionZh": "使用普通摄像头进行面部、手部和全身动作捕捉的实时虚拟直播软件，已部署在 PC 和移动端平台。",
+    "highlights": [],
+    "highlightsZh": [],
+    "links": [
+      { "label": "视频 Demo", "labelEn": "Video Demo", "url": "https://pan.quark.cn/s/cddbaf0b31c4" }
+    ],
+    "org": "Voka Technology",
+    "orgZh": "我咖科技",
+    "period": "2019 – 2022",
+    "periodZh": "2019 – 2022"
+  }
+]

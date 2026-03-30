@@ -14,6 +14,7 @@ const pages = [
   "/awards",
   "/about",
   "/archive",
+  "/projects",
 ];
 
 export default function sitemap(): MetadataRoute.Sitemap {
