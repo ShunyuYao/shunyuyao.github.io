@@ -1215,6 +1215,36 @@ const useFluidCursor = () => {
       }
     });
 
+    // Mobile-only: generate fluid splats from scroll events
+    if (isTouchDevice) {
+      let lastScrollY = window.scrollY;
+
+      window.addEventListener('scroll', () => {
+        const scrollY = window.scrollY;
+        const scrollDelta = scrollY - lastScrollY;
+
+        if (Math.abs(scrollDelta) > 2) {
+          const speed = Math.min(Math.abs(scrollDelta), 60);
+          const direction = scrollDelta > 0 ? -1 : 1;
+
+          const numSplats = speed > 20 ? 2 : 1;
+          for (let i = 0; i < numSplats; i++) {
+            const x = 0.15 + Math.random() * 0.7;
+            const y = 0.2 + Math.random() * 0.6;
+            const dx = (Math.random() - 0.5) * speed * 2;
+            const dy = direction * speed * 3;
+            const color = generateColor();
+            color.r *= 5.0;
+            color.g *= 5.0;
+            color.b *= 5.0;
+            splat(x, y, dx, dy, color);
+          }
+        }
+
+        lastScrollY = scrollY;
+      }, { passive: true });
+    }
+
     function updatePointerDownData(pointer, id, posX, posY) {
       pointer.id = id;
       pointer.down = true;
