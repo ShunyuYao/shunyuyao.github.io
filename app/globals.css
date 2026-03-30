@@ -8,9 +8,9 @@
   --card: #111111;
   --accent: #e8d5c4;
 
-  --font-sans: -apple-system, "PingFang SC", "Noto Sans CJK SC",
-    "Microsoft YaHei", sans-serif;
-  --font-mono: "Fira Code", monospace;
+  --font-sans: var(--font-inter), -apple-system, "PingFang SC",
+    "Noto Sans CJK SC", "Microsoft YaHei", sans-serif;
+  --font-mono: var(--font-geist-mono), "Fira Code", monospace;
 }
 
 html,
