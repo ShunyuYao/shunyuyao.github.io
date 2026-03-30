@@ -7,10 +7,10 @@ const useFluidCursor = () => {
     // Mobile performance degradation: reduce resolution on touch devices
     const isTouchDevice = window.matchMedia('(pointer: coarse)').matches;
 
-    // --- Trajectory recording (desktop only, dev tool) ---
+    // --- Trajectory recording (dev tool) ---
     // Press R to start/stop recording mouse trajectory.
     // Output is normalized (0-1) coordinates logged to console.
-    if (!isTouchDevice) {
+    {
       let recording = false;
       let trajectory = [];
       let recStart = 0;
@@ -1168,10 +1168,23 @@ const useFluidCursor = () => {
     }
 
     if (isTouchDevice) {
-      // Mobile: touch-driven fluid, same params as desktop
-      // Start render loop immediately (component loads after first touch,
-      // so we can't rely on a touch event to start it)
+      // Mobile: touch + mouse driven fluid (mouse needed for DevTools simulation)
       update();
+
+      window.addEventListener('mousedown', (e) => {
+        let pointer = pointers[0];
+        let posX = scaleByPixelRatio(e.clientX);
+        let posY = scaleByPixelRatio(e.clientY);
+        updatePointerDownData(pointer, -1, posX, posY);
+        clickSplat(pointer);
+      });
+
+      window.addEventListener('mousemove', (e) => {
+        let pointer = pointers[0];
+        let posX = scaleByPixelRatio(e.clientX);
+        let posY = scaleByPixelRatio(e.clientY);
+        updatePointerMoveData(pointer, posX, posY, pointer.color);
+      });
 
       window.addEventListener('touchstart', (e) => {
         const touches = e.targetTouches;
