@@ -6,6 +6,7 @@ import { PapersSection } from "@/app/components/PapersSection";
 import { PressSection } from "@/app/components/PressSection";
 import { AwardsSection } from "@/app/components/AwardsSection";
 import { ArchivePreview } from "@/app/components/ArchivePreview";
+import FluidCursorWrapper from "@/app/components/FluidCursorWrapper";
 
 export default async function Home({
   params,
@@ -17,7 +18,8 @@ export default async function Home({
   const lang = locale as "zh" | "en";
 
   return (
-    <main className="space-y-32">
+    <main className="relative space-y-32">
+      <FluidCursorWrapper />
       <HeroSection lang={lang} />
       <div className="max-w-lg mx-auto">
         <NowSection lang={lang} />
