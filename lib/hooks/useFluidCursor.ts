@@ -1134,35 +1134,57 @@ const useFluidCursor = () => {
     }
 
     if (isTouchDevice) {
-      // Mobile: ambient fluid animation, same splat params as desktop mouse movement
-      update();
+      // Mobile: touch-driven fluid, same params as desktop
+      document.body.addEventListener(
+        'touchstart',
+        function handleFirstTouchStart(e) {
+          const touches = e.targetTouches;
+          let pointer = pointers[0];
 
-      let t = Math.random() * 1000;
-      let prevX = 0.5, prevY = 0.5;
+          for (let i = 0; i < touches.length; i++) {
+            let posX = scaleByPixelRatio(touches[i].clientX);
+            let posY = scaleByPixelRatio(touches[i].clientY);
 
-      const ax1 = 0.30, fx1 = 0.52, px1 = Math.random() * Math.PI * 2;
-      const ay1 = 0.25, fy1 = 0.36, py1 = Math.random() * Math.PI * 2;
-      const ax2 = 0.12, fx2 = 1.30, px2 = Math.random() * Math.PI * 2;
-      const ay2 = 0.10, fy2 = 0.98, py2 = Math.random() * Math.PI * 2;
+            update();
+            updatePointerDownData(pointer, touches[i].identifier, posX, posY);
+          }
 
-      // Simple harmonic speed modulation: oscillates between 0.5x and 1.5x base speed
-      const speedPhase = Math.random() * Math.PI * 2;
+          document.body.removeEventListener('touchstart', handleFirstTouchStart);
+        }
+      );
 
-      setInterval(() => {
-        const speedScale = 1.0 + 0.5 * Math.sin(0.3 * t + speedPhase);
-        t += 0.13 * speedScale;
+      window.addEventListener('touchstart', (e) => {
+        const touches = e.targetTouches;
+        let pointer = pointers[0];
+        for (let i = 0; i < touches.length; i++) {
+          let posX = scaleByPixelRatio(touches[i].clientX);
+          let posY = scaleByPixelRatio(touches[i].clientY);
+          updatePointerDownData(pointer, touches[i].identifier, posX, posY);
+        }
+      });
 
-        const x = 0.5 + ax1 * Math.sin(fx1 * t + px1) + ax2 * Math.sin(fx2 * t + px2);
-        const y = 0.5 + ay1 * Math.cos(fy1 * t + py1) + ay2 * Math.cos(fy2 * t + py2);
-        const dx = (x - prevX) * config.SPLAT_FORCE;
-        const dy = -(y - prevY) * config.SPLAT_FORCE;
+      window.addEventListener(
+        'touchmove',
+        (e) => {
+          const touches = e.targetTouches;
+          let pointer = pointers[0];
+          for (let i = 0; i < touches.length; i++) {
+            let posX = scaleByPixelRatio(touches[i].clientX);
+            let posY = scaleByPixelRatio(touches[i].clientY);
+            updatePointerMoveData(pointer, posX, posY, pointer.color);
+          }
+        },
+        false
+      );
 
-        const color = generateColor();
-        splat(x, y, dx, dy, color);
+      window.addEventListener('touchend', (e) => {
+        const touches = e.changedTouches;
+        let pointer = pointers[0];
 
-        prevX = x;
-        prevY = y;
-      }, 80);
+        for (let i = 0; i < touches.length; i++) {
+          updatePointerUpData(pointer);
+        }
+      });
     } else {
       // Desktop: mouse-driven fluid
       window.addEventListener('mousedown', (e) => {
