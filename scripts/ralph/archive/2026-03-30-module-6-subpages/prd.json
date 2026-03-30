@@ -1,0 +1,148 @@
+{
+  "project": "shunyuyao.github.io",
+  "branchName": "ralph/module-6-subpages",
+  "description": "Build individual sub-pages for each content module with a shared PageLayout component for consistent structure across all routes.",
+  "userStories": [
+    {
+      "id": "US-001",
+      "title": "Create the shared PageLayout component",
+      "description": "As a developer, I need a reusable page layout so all sub-pages share consistent structure (header, main content area, footer).",
+      "acceptanceCriteria": [
+        "`app/components/PageLayout.tsx` exists with a named export `PageLayout`",
+        "Props: `pathname: string`, `children: React.ReactNode`, `description?: string`",
+        "Renders outer `<div className=\"font-sans min-h-screen p-8 sm:p-20 space-y-16\">`",
+        "Contains `<Header pathname={pathname} />` at the top",
+        "Contains `<main className=\"max-w-2xl mx-auto space-y-12\">{children}</main>`",
+        "Contains `<Footer />` at the bottom",
+        "Typecheck passes (`npx tsc --noEmit`)",
+        "Lint passes (`npm run lint`)"
+      ],
+      "priority": 1,
+      "passes": true,
+      "notes": ""
+    },
+    {
+      "id": "US-002",
+      "title": "Build the /now sub-page",
+      "description": "As a user, I want a dedicated `/now` page showing all current status items with timestamps so I can see Shunyu Yao's latest activities.",
+      "acceptanceCriteria": [
+        "`app/now/page.tsx` exists with a default export",
+        "Reads from `content/now.json`",
+        "Displays all items as a list with bullet points",
+        "Shows `updatedAt` formatted as \"上次更新：{date}\" / \"Last updated: {date}\"",
+        "Uses `PageLayout` with `pathname=\"/now\"`",
+        "Page `<title>` is set to `Now | Shunyu Yao` (via Next.js `metadata` export)",
+        "Typecheck passes, lint passes"
+      ],
+      "priority": 2,
+      "passes": true,
+      "notes": ""
+    },
+    {
+      "id": "US-003",
+      "title": "Build the /work sub-page and /work/[id] detail page",
+      "description": "As a user, I want to see all work experience at `/work` and click into a project to see full details.",
+      "acceptanceCriteria": [
+        "`app/work/page.tsx` exists, lists all items from `content/work.json`",
+        "Each work item shows: name, org, period, role, description (localized), highlights as bullet list, external links",
+        "`app/work/[id]/page.tsx` exists with dynamic routing",
+        "Detail page shows: title, org, period, role, full description, all highlights, all links, related papers (by cross-referencing paper IDs if any)",
+        "Detail page has a `← Back to /work` link",
+        "`generateStaticParams` is implemented for `[id]` route (required for static export)",
+        "Both pages use `PageLayout` with correct `pathname`",
+        "Page `<title>` set correctly (e.g. `OneStory | Work | Shunyu Yao`)",
+        "Typecheck passes, lint passes"
+      ],
+      "priority": 3,
+      "passes": true,
+      "notes": ""
+    },
+    {
+      "id": "US-004",
+      "title": "Build the /papers sub-page",
+      "description": "As a user, I want to see all of Shunyu Yao's papers at `/papers` organized by year so I can evaluate his research output.",
+      "acceptanceCriteria": [
+        "`app/papers/page.tsx` exists",
+        "Papers sorted by `year` descending, grouped by year with year heading",
+        "Each paper shows: full title (not truncated), authors list with \"Shunyu Yao\" in `<strong>`, venue in accent color, all links (paper/code) as `[paper]` `[code]` links",
+        "Corresponding author indicated with `*` in author list",
+        "Uses `PageLayout` with `pathname=\"/papers\"`",
+        "Page `<title>` set to `Papers | Shunyu Yao`",
+        "All paper links have `relative z-10` and `target=\"_blank\"`",
+        "Typecheck passes, lint passes"
+      ],
+      "priority": 4,
+      "passes": true,
+      "notes": ""
+    },
+    {
+      "id": "US-005",
+      "title": "Build the /press sub-page",
+      "description": "As a user, I want to see all media appearances and press mentions at `/press`.",
+      "acceptanceCriteria": [
+        "`app/press/page.tsx` exists",
+        "Lists all items from `content/press.json`",
+        "Each item shows: title (as external link), outlet, date, type badge (video/article)",
+        "Uses `PageLayout` with `pathname=\"/press\"`",
+        "Page `<title>` set to `Press | Shunyu Yao`",
+        "Typecheck passes, lint passes"
+      ],
+      "priority": 5,
+      "passes": true,
+      "notes": ""
+    },
+    {
+      "id": "US-006",
+      "title": "Build the /awards sub-page",
+      "description": "As a user, I want to see all awards at `/awards` so I can quickly assess Shunyu Yao's recognition.",
+      "acceptanceCriteria": [
+        "`app/awards/page.tsx` exists",
+        "Lists all items from `content/awards.json`, sorted by `year` descending",
+        "Each award shows: year, title (localized), org",
+        "Uses `PageLayout` with `pathname=\"/awards\"`",
+        "Page `<title>` set to `Awards | Shunyu Yao`",
+        "Typecheck passes, lint passes"
+      ],
+      "priority": 6,
+      "passes": true,
+      "notes": ""
+    },
+    {
+      "id": "US-007",
+      "title": "Build the /about page",
+      "description": "As a user, I want to see Shunyu Yao's bio, education history, and contact info at `/about`.",
+      "acceptanceCriteria": [
+        "`app/about/page.tsx` exists",
+        "Shows avatar image (`public/images/avatar.jpg` or a placeholder if image doesn't exist yet — use `next/image` with `width={120} height={120} className=\"rounded-full\"`)",
+        "Shows name: \"Shunyu Yao · 姚顺宇\", tagline: \"AIGC Researcher & Product Builder · Shanghai\"",
+        "About bio section (2–3 sentences, hardcoded in English and Chinese)",
+        "Education section: 2020–2024 上海交通大学 信息与通信工程博士（肄业）, 2017–2020 上海交通大学 仪器科学与工程硕士, 2012–2016 西安交通大学 机械工程及自动化学士",
+        "Contact section: email `ysy2017@sjtu.edu.cn`, link to OneStory",
+        "Link to `/awards` at the bottom",
+        "Uses `PageLayout` with `pathname=\"/about\"`",
+        "Page `<title>` set to `About | Shunyu Yao`",
+        "Typecheck passes, lint passes"
+      ],
+      "priority": 7,
+      "passes": true,
+      "notes": ""
+    },
+    {
+      "id": "US-008",
+      "title": "Verify all sub-pages and build",
+      "description": "As a developer, I need to confirm all sub-pages work and the static build succeeds.",
+      "acceptanceCriteria": [
+        "All routes respond correctly: `/now`, `/work`, `/work/onestory`, `/work/voka`, `/papers`, `/press`, `/awards`, `/about`",
+        "Breadcrumbs show correctly in the header for each sub-page",
+        "All pages have correct `<title>` tags in the format `PageName | Shunyu Yao`",
+        "`generateStaticParams` is implemented for all dynamic routes",
+        "`npm run build` succeeds (no 404s, no TypeScript errors)",
+        "Typecheck passes (`npx tsc --noEmit`)",
+        "Lint passes (`npm run lint`)"
+      ],
+      "priority": 8,
+      "passes": true,
+      "notes": ""
+    }
+  ]
+}

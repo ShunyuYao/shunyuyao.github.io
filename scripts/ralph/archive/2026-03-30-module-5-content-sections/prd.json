@@ -1,0 +1,100 @@
+{
+  "project": "shunyuyao.github.io",
+  "branchName": "ralph/module-2-fluid-cursor",
+  "description": "Fluid Cursor Effect — Add a WebGL-based fluid cursor effect (rainbow smoke/fluid animation) overlaid on all content. The effect follows mouse/touch interactions, lazy-loads on first interaction, and never blocks page interactivity.",
+  "userStories": [
+    {
+      "id": "US-001",
+      "title": "Copy and configure the WebGL fluid simulation hook",
+      "description": "As a developer, I need the fluid simulation engine in the codebase so that other components can invoke it to render the effect.",
+      "acceptanceCriteria": [
+        "`lib/hooks/useFluidCursor.ts` exists, copied from Lorenzo Maiuri's repo (https://github.com/lorenzomaiuri-dev/lorenzo-maiuri-website/blob/main/lib/hooks/useFluidCursor.ts)",
+        "Config params are set: `TRANSPARENT: true`, `DENSITY_DISSIPATION: 3.5`, `VELOCITY_DISSIPATION: 2`, `COLOR_UPDATE_SPEED: 10`, `SPLAT_RADIUS: 0.2`, `SPLAT_FORCE: 6000`",
+        "Mobile performance degradation is added near the top of the hook: on touch devices (`pointer: coarse`), set `SIM_RESOLUTION: 64` and `DYE_RESOLUTION: 720`",
+        "The hook targets a canvas element with `id=\"fluid\"`",
+        "Typecheck passes (`npx tsc --noEmit`)",
+        "Lint passes (`npm run lint`)"
+      ],
+      "priority": 1,
+      "passes": true,
+      "notes": ""
+    },
+    {
+      "id": "US-002",
+      "title": "Create the FluidCursor component",
+      "description": "As a developer, I need a component that renders the full-screen canvas and initializes the WebGL simulation so the fluid effect is displayed.",
+      "acceptanceCriteria": [
+        "`app/components/FluidCursor.tsx` exists as a `\"use client\"` component with a default export",
+        "Component renders a `<div className=\"fixed inset-0 z-[2] pointer-events-none\">` containing a `<canvas id=\"fluid\">` with `pointer-events: none`",
+        "Component calls `fluidCursor()` via `useEffect` on mount",
+        "Typecheck passes (`npx tsc --noEmit`)",
+        "Lint passes (`npm run lint`)"
+      ],
+      "priority": 2,
+      "passes": true,
+      "notes": ""
+    },
+    {
+      "id": "US-003",
+      "title": "Create the FluidCursorWrapper lazy-loading component",
+      "description": "As a user, I want the fluid effect to only initialize after I first interact with the page so that initial page load is fast.",
+      "acceptanceCriteria": [
+        "`app/components/FluidCursorWrapper.tsx` exists as a `\"use client\"` component with a default export",
+        "Uses `next/dynamic` to lazy-import `FluidCursor` with `ssr: false`",
+        "Renders nothing until the first `mousemove` or `touchstart` event fires",
+        "After the first interaction event, renders the `LazyFluidCursor` component",
+        "Event listeners are cleaned up on unmount and after first trigger",
+        "Typecheck passes (`npx tsc --noEmit`)",
+        "Lint passes (`npm run lint`)"
+      ],
+      "priority": 3,
+      "passes": true,
+      "notes": ""
+    },
+    {
+      "id": "US-004",
+      "title": "Mount FluidCursorWrapper in the root layout",
+      "description": "As a user, I want the fluid effect available on every page of the site so the visual signature is consistent.",
+      "acceptanceCriteria": [
+        "`FluidCursorWrapper` is imported in `app/layout.tsx`",
+        "`<FluidCursorWrapper />` is rendered inside `<body>` (alongside `{children}`)",
+        "Typecheck passes (`npx tsc --noEmit`)",
+        "Lint passes (`npm run lint`)"
+      ],
+      "priority": 4,
+      "passes": true,
+      "notes": ""
+    },
+    {
+      "id": "US-005",
+      "title": "Apply z-index rules to ensure clickability",
+      "description": "As a user, I want to be able to click all links, buttons, and interactive elements without the fluid canvas blocking them.",
+      "acceptanceCriteria": [
+        "The fluid canvas sits at `z-[2]` with `pointer-events: none`",
+        "All clickable links and buttons across the site have `z-10` or higher (above the canvas)",
+        "Modals, toasts, and menus use `z-50` or higher",
+        "Clicking any link or button on the page works as expected with the fluid effect active",
+        "Typecheck passes (`npx tsc --noEmit`)",
+        "Verify in browser using dev-browser skill"
+      ],
+      "priority": 5,
+      "passes": true,
+      "notes": ""
+    },
+    {
+      "id": "US-006",
+      "title": "Verify full integration and performance",
+      "description": "As a user, I want to see rainbow fluid smoke when I move my mouse, with no performance penalty on initial load.",
+      "acceptanceCriteria": [
+        "Moving mouse anywhere on the page produces rainbow fluid smoke",
+        "Touch on mobile also produces fluid effect",
+        "Chrome DevTools Performance recording shows no WebGL initialization cost on first paint (WebGL only starts after first interaction)",
+        "`npm run build` succeeds (static export works)",
+        "Verify in browser using dev-browser skill"
+      ],
+      "priority": 6,
+      "passes": true,
+      "notes": ""
+    }
+  ]
+}

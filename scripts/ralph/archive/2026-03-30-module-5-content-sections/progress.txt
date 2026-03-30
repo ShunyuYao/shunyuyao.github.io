@@ -1,0 +1,64 @@
+## Codebase Patterns
+- ESLint config: uses `eslint.config.mjs` flat config with `eslint-config-next` v16 (exports flat config directly, no FlatCompat needed)
+- `next lint` works but shows deprecation warning for Next.js 16; can also use `npx eslint` directly
+- `lib/hooks/` contains utility hooks; the fluid cursor hook uses `@ts-nocheck` and `export default` (exception to named export convention due to third-party origin)
+- Import `useFluidCursor` as `fluidCursor` (or any non-`use` prefix) to avoid ESLint react-hooks/rules-of-hooks error when calling inside useEffect
+- Always guard `useFluidCursor` against null canvas and null WebGL context — environments without WebGL (headless browsers, some mobile) will fail silently
+
+# Ralph Progress Log
+Started: Mon Mar 30 19:24:31 CST 2026
+---
+
+## 2026-03-30 - US-001
+- Copied WebGL fluid simulation hook from Lorenzo Maiuri's repo to `lib/hooks/useFluidCursor.ts`
+- Added mobile performance degradation: `pointer: coarse` check sets `SIM_RESOLUTION: 64`, `DYE_RESOLUTION: 720`
+- Config params verified: `TRANSPARENT: true`, `DENSITY_DISSIPATION: 3.5`, `VELOCITY_DISSIPATION: 2`, `COLOR_UPDATE_SPEED: 10`, `SPLAT_RADIUS: 0.2`, `SPLAT_FORCE: 6000`
+- Set up ESLint: installed `eslint` + `eslint-config-next`, created `eslint.config.mjs` with flat config
+- Files changed: `lib/hooks/useFluidCursor.ts`, `eslint.config.mjs`, `package.json`, `package-lock.json`
+- **Learnings for future iterations:**
+  - ESLint was not previously configured; `next lint` prompted for setup. Now using flat config with `eslint-config-next` v16.
+  - `eslint-config-next` v16 exports flat config directly — do NOT use `FlatCompat` wrapper (causes circular JSON error)
+  - The hook uses `@ts-nocheck` so TypeScript won't flag its untyped internals
+  - The hook targets `<canvas id="fluid">` — the component must provide this element
+---
+
+## 2026-03-30 - US-002
+- Created `app/components/FluidCursor.tsx` — `"use client"` component with default export
+- Renders `<div className="fixed inset-0 z-[2] pointer-events-none">` with `<canvas id="fluid">`
+- Calls `fluidCursor()` via `useEffect` on mount (imported as `fluidCursor` to avoid lint error)
+- Files changed: `app/components/FluidCursor.tsx`
+- **Learnings for future iterations:**
+  - Must alias import from `useFluidCursor` to `fluidCursor` to avoid react-hooks/rules-of-hooks lint error
+---
+
+## 2026-03-30 - US-003
+- Created `app/components/FluidCursorWrapper.tsx` — lazy-loading wrapper using `next/dynamic` with `ssr: false`
+- Renders nothing until first `mousemove` or `touchstart` event
+- Uses `{ once: true }` option for clean event listener handling
+- Files changed: `app/components/FluidCursorWrapper.tsx`
+- **Learnings for future iterations:**
+  - `next/dynamic` with `ssr: false` prevents server-side rendering of WebGL code
+  - `{ once: true }` on addEventListener auto-removes after first trigger
+---
+
+## 2026-03-30 - US-004
+- Imported and mounted `<FluidCursorWrapper />` in `app/layout.tsx` inside `<body>`
+- Files changed: `app/layout.tsx`
+---
+
+## 2026-03-30 - US-005
+- No code changes needed — canvas already at `z-[2]` with `pointer-events-none`
+- Site currently has no interactive elements (links, buttons) so z-index rules are trivially satisfied
+---
+
+## 2026-03-30 - US-006
+- Added null guards: early return if canvas element not found, early return if WebGL context unavailable
+- Verified: `npm run build` succeeds, `npx tsc --noEmit` passes, `npm run lint` passes
+- Browser testing via dev-browser: canvas element renders at correct dimensions (1280x720), FluidCursorWrapper correctly triggers on first mousemove
+- WebGL not available in headless browser environment — effect degrades gracefully (no crash)
+- Files changed: `lib/hooks/useFluidCursor.ts`
+- **Learnings for future iterations:**
+  - dev-browser Chrome does not support WebGL — cannot visually verify fluid effect there
+  - Must guard against null canvas AND null WebGL context in useFluidCursor
+  - Next.js dev server auto-picks next available port if 3000 is taken (check /tmp/nextdev.log)
+---
