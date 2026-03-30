@@ -7,6 +7,40 @@ const useFluidCursor = () => {
     // Mobile performance degradation: reduce resolution on touch devices
     const isTouchDevice = window.matchMedia('(pointer: coarse)').matches;
 
+    // --- Trajectory recording (desktop only, dev tool) ---
+    // Press R to start/stop recording mouse trajectory.
+    // Output is normalized (0-1) coordinates logged to console.
+    if (!isTouchDevice) {
+      let recording = false;
+      let trajectory = [];
+      let recStart = 0;
+
+      window.addEventListener('keydown', (e) => {
+        if (e.key !== 'r' && e.key !== 'R') return;
+        if (!recording) {
+          recording = true;
+          trajectory = [];
+          recStart = Date.now();
+          console.log('%c[Fluid] Recording started – move your mouse, press R again to stop', 'color: #e8d5c4; font-weight: bold');
+        } else {
+          recording = false;
+          console.log(`%c[Fluid] Recording stopped – ${trajectory.length} points`, 'color: #e8d5c4; font-weight: bold');
+          console.log(JSON.stringify(trajectory));
+        }
+      });
+
+      window.addEventListener('mousemove', (e) => {
+        if (!recording) return;
+        const now = Date.now();
+        if (trajectory.length > 0 && now - recStart - trajectory[trajectory.length - 1].t < 50) return;
+        trajectory.push({
+          t: now - recStart,
+          x: e.clientX / window.innerWidth,
+          y: e.clientY / window.innerHeight,
+        });
+      });
+    }
+
     let config = {
       SIM_RESOLUTION: isTouchDevice ? 64 : 128,
       DYE_RESOLUTION: isTouchDevice ? 720 : 1440,
