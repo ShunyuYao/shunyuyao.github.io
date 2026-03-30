@@ -38,6 +38,7 @@ export default async function AboutPage({
             alt="Shunyu Yao"
             width={120}
             height={120}
+            priority
             className="rounded-full"
           />
           <div className="space-y-2 text-center sm:text-left">
