@@ -1161,7 +1161,7 @@ const useFluidCursor = () => {
       }
 
       setInterval(() => {
-        const elapsed = Date.now() - startTime;
+        const elapsed = (Date.now() - startTime) * 0.75;
         const pos = getPosition(elapsed);
         const dx = (pos.x - prevX) * config.SPLAT_FORCE;
         const dy = -(pos.y - prevY) * config.SPLAT_FORCE;
