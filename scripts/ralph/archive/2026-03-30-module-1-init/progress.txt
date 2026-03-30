@@ -1,0 +1,117 @@
+# Ralph Progress Log
+Started: Mon Mar 30 18:29:25 CST 2026
+---
+
+## Codebase Patterns
+- Tailwind CSS v4 uses `@import "tailwindcss"` in globals.css (not `@tailwind` directives)
+- PostCSS config uses `@tailwindcss/postcss` plugin (not `tailwindcss` directly)
+- next.config.ts uses `output: "export"` for static site generation to `out/` directory
+- App Router structure: `app/layout.tsx` (root layout), `app/page.tsx` (home page), `app/globals.css` (global styles)
+- CSS custom properties defined in `:root` in globals.css; Tailwind theme extends them via `var(--name)` in tailwind.config.ts
+- Design tokens: --background (#0a0a0a), --foreground (#ededed), --muted (#737373), --border (#1f1f1f), --card (#111111), --accent (#e8d5c4)
+- Fonts loaded via `next/font/google` with `variable` option; CSS classes applied to `<html>`; referenced via `var()` in --font-sans/--font-mono fallback chains
+- In Next.js 14+, viewport settings use a separate `export const viewport: Viewport` (not inside `metadata`)
+- Components live in `app/components/` with named exports; Container/Header/Footer are the shell components
+- Content data files live in `content/` as JSON arrays; utility directories in `lib/`; static assets in `public/images/`
+- GitHub Actions: deploy workflow at `.github/workflows/deploy.yml` uses `peaceiris/actions-gh-pages@v4` to publish `out/` to gh-pages branch
+
+## 2026-03-30 - US-001
+- Initialized Next.js 15.5.14 project with React 19, TypeScript 5, and Tailwind CSS v4.2
+- Created package.json, tsconfig.json (strict mode), next.config.ts (static export), tailwind.config.ts, postcss.config.mjs
+- Created minimal app/ structure: layout.tsx, page.tsx, globals.css
+- Added .gitignore for Next.js
+- **Learnings for future iterations:**
+  - Tailwind CSS v4 no longer uses `@tailwind base/components/utilities` — use `@import "tailwindcss"` instead
+  - PostCSS plugin for Tailwind v4 is `@tailwindcss/postcss`, not the old `tailwindcss` plugin
+  - `npm run build` generates `out/` directory with static export (verified)
+  - Dev server and typecheck both pass cleanly
+---
+
+## 2026-03-30 - US-002
+- Added CSS custom properties for dark theme in `app/globals.css`: --background, --foreground, --muted, --border, --card, --accent, --font-sans, --font-mono
+- Applied background-color and color to html/body using CSS variables
+- Extended Tailwind theme in `tailwind.config.ts` to reference CSS custom properties for colors and fonts
+- Files changed: `app/globals.css`, `tailwind.config.ts`
+- **Learnings for future iterations:**
+  - CSS custom properties in `:root` are the single source of truth for design tokens; Tailwind references them via `var(--name)`
+  - `--font-sans` and `--font-mono` contain fallback chains that will be updated by US-003 when next/font is configured
+  - Browser verified: body bg = rgb(10,10,10), text = rgb(237,237,237) — matches spec
+  - Dev server used port 3001 (3000 was in use) — always check for port conflicts
+---
+
+## 2026-03-30 - US-003
+- Loaded Inter via `next/font/google` with latin and latin-ext subsets, `display: "swap"`, `variable: "--font-inter"`
+- Loaded Geist Mono via `next/font/google` with latin subset, `display: "swap"`, `variable: "--font-geist-mono"`
+- Applied both font CSS variable classes to `<html>` element in layout.tsx
+- Updated `--font-sans` fallback chain in globals.css: `var(--font-inter), -apple-system, "PingFang SC", "Noto Sans CJK SC", "Microsoft YaHei", sans-serif`
+- Updated `--font-mono` fallback chain in globals.css: `var(--font-geist-mono), "Fira Code", monospace`
+- Files changed: `app/layout.tsx`, `app/globals.css`
+- **Learnings for future iterations:**
+  - `next/font/google` with `variable` option creates a CSS class that sets the named CSS variable to the generated font-family name
+  - Apply the `.variable` classes to `<html>` so CSS variables are available globally; then reference via `var(--font-name)` in the fallback chains
+  - Geist Mono is available on Google Fonts as `Geist_Mono` (underscore, not space)
+  - Chinese system fonts (PingFang SC, Noto Sans CJK SC, Microsoft YaHei) go in the CSS fallback chain only — not loaded via next/font
+  - Typecheck and build both pass cleanly
+---
+
+## 2026-03-30 - US-004
+- Added separate `viewport` export with width: "device-width" and initialScale: 1
+- Added `antialiased` and `min-h-screen` classes to body element
+- Imported `Viewport` type from "next"
+- Files changed: `app/layout.tsx`
+- **Learnings for future iterations:**
+  - In Next.js 14+, viewport config is a separate `export const viewport: Viewport` — not part of `metadata`. Using it in `metadata` causes a type error.
+  - `antialiased` is a Tailwind utility for `-webkit-font-smoothing: antialiased`
+  - Layout is minimal — no nav or footer here; those compose in `page.tsx`
+  - Typecheck and build both pass cleanly
+---
+
+## 2026-03-30 - US-005
+- Created `app/components/container.tsx`: Container component with `mx-auto max-w-3xl px-6` for centered, padded content
+- Created `app/components/header.tsx`: Header component with site name as h1
+- Created `app/components/footer.tsx`: Footer component with dynamic copyright year and muted text color
+- All components use named exports and TypeScript typing (children prop or self-contained)
+- Files changed: `app/components/container.tsx`, `app/components/header.tsx`, `app/components/footer.tsx`
+- **Learnings for future iterations:**
+  - Components live in `app/components/` directory with named exports (not default exports)
+  - Use `var(--muted)` via `text-[var(--muted)]` for muted text color since the Tailwind theme may not have all tokens as utilities
+  - Container uses `max-w-3xl` (~48rem) for content width — consistent with academic/personal site conventions
+  - Typecheck and build both pass cleanly
+---
+
+## 2026-03-30 - US-006
+- Updated `app/page.tsx` to import and render Header, Container (wrapping content), and Footer
+- Page renders: Header with "Shunyu Yao", main section with "Coming soon", Footer with "© 2026 Shunyu Yao"
+- Browser verified: dark background (#0a0a0a), light text, no horizontal overflow on mobile (375px)
+- Files changed: `app/page.tsx`
+- **Learnings for future iterations:**
+  - Shell components (Container, Header, Footer) compose in `page.tsx`, not in `layout.tsx` — layout stays minimal
+  - Container wraps everything including Header/Footer to keep consistent horizontal padding
+  - dev-browser with `--headless` flag works for automated screenshot verification; use `saveScreenshot()` to save
+  - Typecheck and build both pass cleanly
+---
+
+## 2026-03-30 - US-007
+- Created `content/` directory with empty JSON array files: work.json, papers.json, awards.json, press.json
+- Created `lib/hooks/index.ts` as a placeholder for future custom hooks
+- Created `public/images/.gitkeep` to track the images directory in git
+- Files changed: `content/work.json`, `content/papers.json`, `content/awards.json`, `content/press.json`, `lib/hooks/index.ts`, `public/images/.gitkeep`
+- **Learnings for future iterations:**
+  - Content JSON files are plain `[]` arrays — TypeScript types for these schemas will come in later modules
+  - Use `.gitkeep` files to preserve empty directories in git (e.g., `public/images/`)
+  - Typecheck and build both pass cleanly
+---
+
+## 2026-03-30 - US-008
+- Created `.github/workflows/deploy.yml` with GitHub Actions workflow for deploying to GitHub Pages
+- Workflow triggers on push to main, uses Node.js 20, runs `npm ci` + `npm run build`, deploys `out/` via `peaceiris/actions-gh-pages@v4`
+- Added permissions (contents read, pages write, id-token write) and concurrency group
+- Files changed: `.github/workflows/deploy.yml`
+- **Learnings for future iterations:**
+  - `peaceiris/actions-gh-pages@v4` requires `github_token` and `publish_dir` parameters
+  - Workflow needs `permissions` block for GitHub Pages deployment (contents: read, pages: write, id-token: write)
+  - Use `concurrency` group to prevent parallel deployments
+  - `actions/setup-node@v4` with `cache: npm` speeds up CI by caching node_modules
+  - The actual deployment only works once merged to main and GitHub Pages is configured to serve from gh-pages branch
+  - Typecheck and build both pass cleanly
+---
