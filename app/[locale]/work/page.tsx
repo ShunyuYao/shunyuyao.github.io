@@ -5,9 +5,15 @@ import { Link } from "@/i18n/navigation";
 import { PageLayout } from "@/app/components/PageLayout";
 import workData from "@/content/work.json";
 
-export const metadata: Metadata = {
-  title: "Work | Shunyu Yao",
-};
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "work" });
+  return { title: t("heading") };
+}
 
 export default async function WorkPage({
   params,

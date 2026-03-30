@@ -3,9 +3,15 @@ import { setRequestLocale, getTranslations } from "next-intl/server";
 import { PageLayout } from "@/app/components/PageLayout";
 import nowData from "@/content/now.json";
 
-export const metadata: Metadata = {
-  title: "Now | Shunyu Yao",
-};
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "now" });
+  return { title: t("heading") };
+}
 
 export default async function NowPage({
   params,

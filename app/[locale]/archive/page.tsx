@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { setRequestLocale } from "next-intl/server";
+import { setRequestLocale, getTranslations } from "next-intl/server";
 import { PageLayout } from "@/app/components/PageLayout";
 import rawArchiveData from "@/content/archive.json";
 
@@ -36,9 +36,15 @@ function groupByYear(entries: ArchiveEntry[]) {
     }));
 }
 
-export const metadata: Metadata = {
-  title: "Archive | Shunyu Yao",
-};
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "nav" });
+  return { title: t("archive") };
+}
 
 export default async function ArchivePage({
   params,

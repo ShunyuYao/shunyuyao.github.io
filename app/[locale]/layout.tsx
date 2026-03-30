@@ -42,12 +42,24 @@ export async function generateMetadata({
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "site" });
 
+  const ogLocale = locale === "zh" ? "zh_CN" : "en_US";
+
   return {
     title: {
       default: t("title"),
       template: `%s | ${t("title")}`,
     },
     description: t("description"),
+    authors: [{ name: "Shunyu Yao", url: BASE_URL }],
+    openGraph: {
+      type: "website",
+      url: BASE_URL,
+      locale: ogLocale,
+      siteName: t("title"),
+    },
+    twitter: {
+      card: "summary_large_image",
+    },
     alternates: {
       canonical: `${BASE_URL}/${locale}`,
       languages: {
