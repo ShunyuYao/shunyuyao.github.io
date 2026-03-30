@@ -1,64 +1,126 @@
-## Codebase Patterns
-- ESLint config: uses `eslint.config.mjs` flat config with `eslint-config-next` v16 (exports flat config directly, no FlatCompat needed)
-- `next lint` works but shows deprecation warning for Next.js 16; can also use `npx eslint` directly
-- `lib/hooks/` contains utility hooks; the fluid cursor hook uses `@ts-nocheck` and `export default` (exception to named export convention due to third-party origin)
-- Import `useFluidCursor` as `fluidCursor` (or any non-`use` prefix) to avoid ESLint react-hooks/rules-of-hooks error when calling inside useEffect
-- Always guard `useFluidCursor` against null canvas and null WebGL context — environments without WebGL (headless browsers, some mobile) will fail silently
-
 # Ralph Progress Log
-Started: Mon Mar 30 19:24:31 CST 2026
+Started: Mon Mar 30 20:16:40 CST 2026
+
+## Codebase Patterns
+- Header component (`app/components/header.tsx`) accepts optional `pathname` prop; falls back to `usePathname()` hook
+- All components in `app/components/` use **named exports** except AnimatedSignature, TypewriterTitle, LanguageSwitch, FluidCursorWrapper, FluidCursor
+- Root layout (`app/layout.tsx`) is minimal (fonts, FluidCursor only); homepage uses `(home)` route group with its own layout for Container/Header/Footer; sub-pages use `PageLayout` directly
+- Sub-pages (not in a route group) must use `PageLayout` which provides Header/Footer/sizing
+- When moving pages into route groups, update relative imports to use `@/` alias
+- Design tokens are CSS custom properties in `:root` (globals.css), referenced via `var(--name)` in Tailwind classes
+- Content data lives in `content/` as JSON files: work.json, papers.json, awards.json, press.json, now.json
+- Sub-pages are Server Components by default; do NOT use event handlers (onClick etc.) in them — restructure to avoid nesting interactive elements
+- Dynamic routes (`[id]`) require `generateStaticParams` for static export; `params` is a `Promise` in Next.js 15 — must `await params`
+- Paper/PaperLink types are defined in `PapersSection.tsx` and reused in `papers/page.tsx` — keep consistent if schema changes
+- For grouping items by a field (year, type, etc.): use `reduce` to build a Record, then `Object.keys().map(Number).sort()` for ordered groups
+- Stale `.next/` cache can cause cryptic build failures — delete it and rebuild if you see "Cannot find module" errors
+
 ---
 
 ## 2026-03-30 - US-001
-- Copied WebGL fluid simulation hook from Lorenzo Maiuri's repo to `lib/hooks/useFluidCursor.ts`
-- Added mobile performance degradation: `pointer: coarse` check sets `SIM_RESOLUTION: 64`, `DYE_RESOLUTION: 720`
-- Config params verified: `TRANSPARENT: true`, `DENSITY_DISSIPATION: 3.5`, `VELOCITY_DISSIPATION: 2`, `COLOR_UPDATE_SPEED: 10`, `SPLAT_RADIUS: 0.2`, `SPLAT_FORCE: 6000`
-- Set up ESLint: installed `eslint` + `eslint-config-next`, created `eslint.config.mjs` with flat config
-- Files changed: `lib/hooks/useFluidCursor.ts`, `eslint.config.mjs`, `package.json`, `package-lock.json`
+- Created `app/components/PageLayout.tsx` with named export `PageLayout`
+- Props: `pathname: string`, `children: React.ReactNode`, `description?: string`
+- Renders outer div with `font-sans min-h-screen p-8 sm:p-20 space-y-16`
+- Contains `<Header pathname={pathname} />`, `<main>`, and `<Footer />`
+- Modified Header to accept optional `pathname` prop (falls back to usePathname hook)
+- Files changed: `app/components/PageLayout.tsx` (new), `app/components/header.tsx` (modified)
 - **Learnings for future iterations:**
-  - ESLint was not previously configured; `next lint` prompted for setup. Now using flat config with `eslint-config-next` v16.
-  - `eslint-config-next` v16 exports flat config directly — do NOT use `FlatCompat` wrapper (causes circular JSON error)
-  - The hook uses `@ts-nocheck` so TypeScript won't flag its untyped internals
-  - The hook targets `<canvas id="fluid">` — the component must provide this element
+  - Header already has an internal Breadcrumbs component that generates breadcrumbs from pathname segments
+  - Root layout already renders Header/Footer inside Container — sub-pages using PageLayout will need to either use a route group with its own layout or restructure root layout to avoid double Header/Footer
+  - Footer has no props; it's a simple copyright line
 ---
 
 ## 2026-03-30 - US-002
-- Created `app/components/FluidCursor.tsx` — `"use client"` component with default export
-- Renders `<div className="fixed inset-0 z-[2] pointer-events-none">` with `<canvas id="fluid">`
-- Calls `fluidCursor()` via `useEffect` on mount (imported as `fluidCursor` to avoid lint error)
-- Files changed: `app/components/FluidCursor.tsx`
+- Created `app/now/page.tsx` using PageLayout with `pathname="/now"`
+- Reads from `content/now.json`, displays items as bullet list with Chinese/English text
+- Shows `updatedAt` formatted as "上次更新：{date} / Last updated: {date}"
+- Sets page title to "Now | Shunyu Yao" via metadata export
+- Restructured layout architecture to avoid double Header/Footer:
+  - Root layout (`app/layout.tsx`) stripped to minimal: fonts, FluidCursor, body
+  - Created `app/(home)/layout.tsx` route group with Container/Header/Footer for homepage
+  - Moved `app/page.tsx` → `app/(home)/page.tsx` and updated imports to `@/` alias
+  - Updated `app/work/page.tsx` stub to use PageLayout
+- Files changed: `app/layout.tsx`, `app/(home)/layout.tsx` (new), `app/(home)/page.tsx` (moved), `app/now/page.tsx` (new), `app/work/page.tsx`
 - **Learnings for future iterations:**
-  - Must alias import from `useFluidCursor` to `fluidCursor` to avoid react-hooks/rules-of-hooks lint error
+  - Next.js route group layouts nest INSIDE root layout (they don't replace it), so the only way to avoid double wrapping is to strip root layout and use route groups
+  - Moving pages into route groups breaks relative imports (`./components/X`) — always use `@/` alias
+  - `.next/types/` cache can become stale when routes change; delete it if typecheck shows phantom errors
+  - `npm run build` output confirms all routes are generated correctly — use it as a smoke test
 ---
 
 ## 2026-03-30 - US-003
-- Created `app/components/FluidCursorWrapper.tsx` — lazy-loading wrapper using `next/dynamic` with `ssr: false`
-- Renders nothing until first `mousemove` or `touchstart` event
-- Uses `{ once: true }` option for clean event listener handling
-- Files changed: `app/components/FluidCursorWrapper.tsx`
+- Built `/work` list page showing all work items with logo, name, role, org, period, description, highlights, and external links
+- Built `/work/[id]` detail page with full info, back link, and `generateStaticParams` for static export
+- Both pages use `PageLayout` with correct pathname
+- Page titles set correctly (list: "Work | Shunyu Yao", detail: "{Name} | Work | Shunyu Yao")
+- Files changed: `app/work/page.tsx` (rewritten), `app/work/[id]/page.tsx` (new)
 - **Learnings for future iterations:**
-  - `next/dynamic` with `ssr: false` prevents server-side rendering of WebGL code
-  - `{ once: true }` on addEventListener auto-removes after first trigger
+  - Server Components cannot have `onClick` handlers — initial attempt to wrap list items in `<Link>` with `onClick={e => e.stopPropagation()}` on nested links failed at build time
+  - Fix: make only the title a `<Link>` to detail page, keep external links separate (not nested in another link)
+  - Next.js 15 `params` prop is a `Promise` — must use `await params` in `generateMetadata` and page components
+  - `generateStaticParams` is required for `[id]` routes with `output: "export"` — without it, build fails
 ---
 
 ## 2026-03-30 - US-004
-- Imported and mounted `<FluidCursorWrapper />` in `app/layout.tsx` inside `<body>`
-- Files changed: `app/layout.tsx`
+- Created `app/papers/page.tsx` — full papers page grouped by year descending
+- Each paper shows: full title, authors with "Shunyu Yao" in `<strong>` with `*` for corresponding author, venue in accent color, links as `[label]` format
+- Reused Paper/PaperLink type definitions from PapersSection component pattern
+- Files changed: `app/papers/page.tsx` (new)
+- **Learnings for future iterations:**
+  - The papers.json `authors` field is simple string array — "Shunyu Yao" is always first author and corresponding author
+  - Papers data currently has empty `links` arrays — the template handles them gracefully but nothing renders yet
+  - Grouping by year pattern: `reduce` to build `Record<number, Paper[]>`, then sort keys descending
+  - Consistent with PapersSection homepage component for styling (accent color for venue, `relative z-10` for links)
 ---
 
 ## 2026-03-30 - US-005
-- No code changes needed — canvas already at `z-[2]` with `pointer-events-none`
-- Site currently has no interactive elements (links, buttons) so z-index rules are trivially satisfied
+- Created `app/press/page.tsx` — press page listing all media items from `content/press.json`
+- Each item shows: title as external link, outlet, date, type badge (video/article) with pill styling
+- Uses `PageLayout` with `pathname="/press"`, title set to "Press | Shunyu Yao"
+- Files changed: `app/press/page.tsx` (new)
+- **Learnings for future iterations:**
+  - Press data has `title` (Chinese) and `titleEn` (English) fields — currently displaying Chinese title only, consistent with how other sections show primary language
+  - Type badge pattern: `rounded-full border px-2 py-0.5 text-[10px] uppercase tracking-wide` for small pill badges
+  - Simple list pages (no grouping needed) are straightforward — just map over the data array
 ---
 
 ## 2026-03-30 - US-006
-- Added null guards: early return if canvas element not found, early return if WebGL context unavailable
-- Verified: `npm run build` succeeds, `npx tsc --noEmit` passes, `npm run lint` passes
-- Browser testing via dev-browser: canvas element renders at correct dimensions (1280x720), FluidCursorWrapper correctly triggers on first mousemove
-- WebGL not available in headless browser environment — effect degrades gracefully (no crash)
-- Files changed: `lib/hooks/useFluidCursor.ts`
+- Created `app/awards/page.tsx` — awards page listing all awards sorted by year descending
+- Each award shows: year, title (Chinese), org in muted text
+- Uses `PageLayout` with `pathname="/awards"`, title set to "Awards | Shunyu Yao"
+- Files changed: `app/awards/page.tsx` (new)
 - **Learnings for future iterations:**
-  - dev-browser Chrome does not support WebGL — cannot visually verify fluid effect there
-  - Must guard against null canvas AND null WebGL context in useFluidCursor
-  - Next.js dev server auto-picks next available port if 3000 is taken (check /tmp/nextdev.log)
+  - Awards data has `title` (Chinese) and `titleEn` (English) — displaying Chinese title consistent with other pages
+  - Simple year + title + org layout works well with flex gap for alignment
+  - Awards page is a simple list (no grouping by year needed since years are shown per item)
+---
+
+## 2026-03-30 - US-007
+- Created `app/about/page.tsx` — about page with avatar, name/tagline, bio (EN+CN), education, contact, and link to awards
+- Created placeholder `public/images/avatar.jpg` (gray circle on dark background) since no avatar image existed yet
+- Uses `PageLayout` with `pathname="/about"`, title set to "About | Shunyu Yao"
+- Education data hardcoded as array: SJTU PhD (incomplete), SJTU MS, XJTU BS
+- Contact: email link + OneStory link (internal via `next/link`)
+- Files changed: `app/about/page.tsx` (new), `public/images/avatar.jpg` (new placeholder)
+- **Learnings for future iterations:**
+  - When `public/images/` directory is empty or doesn't have the needed asset, create a placeholder — `next/image` will fail at build time if the src doesn't exist
+  - PIL (Pillow) is available on this machine for generating placeholder images programmatically
+  - About page is mostly hardcoded content — no JSON data file needed; education data is a local array
+  - Internal links (to other sub-pages) use `next/link` `<Link>`, external links use `<a>` with target="_blank"
+---
+
+## 2026-03-30 - US-008
+- Verified all sub-pages exist and work correctly: /now, /work, /work/onestory, /work/voka, /papers, /press, /awards, /about
+- Verified all pages have correct metadata titles in "PageName | Shunyu Yao" format
+- Verified all pages use PageLayout with correct pathname prop
+- Verified generateStaticParams implemented for /work/[id] dynamic route
+- Typecheck passes (npx tsc --noEmit)
+- Lint passes (npm run lint)
+- Build succeeds (npm run build) — 12 static pages generated including 2 SSG pages
+- No code changes needed — all previous stories implemented correctly
+- Files changed: `scripts/ralph/prd.json` (marked US-008 passes: true), `scripts/ralph/progress.txt` (this entry)
+- **Learnings for future iterations:**
+  - Stale `.next` cache can cause build failures with "Cannot find module './507.js'" — delete `.next/` and rebuild
+  - `npm run build` output shows all generated routes and their types (Static vs SSG) — useful for final verification
+  - Build generates 12 pages total: 1 home, 1 not-found, 6 sub-pages, 2 dynamic work detail pages
 ---
