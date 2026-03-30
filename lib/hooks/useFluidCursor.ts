@@ -1133,94 +1133,13 @@ const useFluidCursor = () => {
       return radius;
     }
 
-    window.addEventListener('mousedown', (e) => {
-      let pointer = pointers[0];
-      let posX = scaleByPixelRatio(e.clientX);
-      let posY = scaleByPixelRatio(e.clientY);
-      updatePointerDownData(pointer, -1, posX, posY);
-      clickSplat(pointer);
-    });
-
-    document.body.addEventListener('mousemove', function handleFirstMouseMove(e) {
-      let pointer = pointers[0];
-      let posX = scaleByPixelRatio(e.clientX);
-      let posY = scaleByPixelRatio(e.clientY);
-      let color = generateColor();
-
-      update();
-      updatePointerMoveData(pointer, posX, posY, color);
-
-      // Remove this event listener after the first mousemove event
-      document.body.removeEventListener('mousemove', handleFirstMouseMove);
-    });
-
-    window.addEventListener('mousemove', (e) => {
-      let pointer = pointers[0];
-      let posX = scaleByPixelRatio(e.clientX);
-      let posY = scaleByPixelRatio(e.clientY);
-      let color = pointer.color;
-
-      updatePointerMoveData(pointer, posX, posY, color);
-    });
-
-    document.body.addEventListener(
-      'touchstart',
-      function handleFirstTouchStart(e) {
-        const touches = e.targetTouches;
-        let pointer = pointers[0];
-
-        for (let i = 0; i < touches.length; i++) {
-          let posX = scaleByPixelRatio(touches[i].clientX);
-          let posY = scaleByPixelRatio(touches[i].clientY);
-
-          update();
-          updatePointerDownData(pointer, touches[i].identifier, posX, posY);
-        }
-
-        // Remove this event listener after the first touchstart event
-        document.body.removeEventListener('touchstart', handleFirstTouchStart);
-      }
-    );
-
-    window.addEventListener('touchstart', (e) => {
-      const touches = e.targetTouches;
-      let pointer = pointers[0];
-      for (let i = 0; i < touches.length; i++) {
-        let posX = scaleByPixelRatio(touches[i].clientX);
-        let posY = scaleByPixelRatio(touches[i].clientY);
-        updatePointerDownData(pointer, touches[i].identifier, posX, posY);
-      }
-    });
-
-    window.addEventListener(
-      'touchmove',
-      (e) => {
-        const touches = e.targetTouches;
-        let pointer = pointers[0];
-        for (let i = 0; i < touches.length; i++) {
-          let posX = scaleByPixelRatio(touches[i].clientX);
-          let posY = scaleByPixelRatio(touches[i].clientY);
-          updatePointerMoveData(pointer, posX, posY, pointer.color);
-        }
-      },
-      false
-    );
-
-    window.addEventListener('touchend', (e) => {
-      const touches = e.changedTouches;
-      let pointer = pointers[0];
-
-      for (let i = 0; i < touches.length; i++) {
-        updatePointerUpData(pointer);
-      }
-    });
-
-    // Mobile-only: ambient fluid animation along random smooth trajectories
     if (isTouchDevice) {
+      // Mobile: ambient fluid animation along random smooth trajectories
+      update();
+
       let t = Math.random() * 1000;
       let prevX = 0.5, prevY = 0.5;
 
-      // Composite sine waves for organic Lissajous-like movement
       const ax1 = 0.30, fx1 = 0.47, px1 = Math.random() * Math.PI * 2;
       const ay1 = 0.25, fy1 = 0.31, py1 = Math.random() * Math.PI * 2;
       const ax2 = 0.12, fx2 = 1.13, px2 = Math.random() * Math.PI * 2;
@@ -1243,6 +1162,36 @@ const useFluidCursor = () => {
         prevX = x;
         prevY = y;
       }, 80);
+    } else {
+      // Desktop: mouse-driven fluid
+      window.addEventListener('mousedown', (e) => {
+        let pointer = pointers[0];
+        let posX = scaleByPixelRatio(e.clientX);
+        let posY = scaleByPixelRatio(e.clientY);
+        updatePointerDownData(pointer, -1, posX, posY);
+        clickSplat(pointer);
+      });
+
+      document.body.addEventListener('mousemove', function handleFirstMouseMove(e) {
+        let pointer = pointers[0];
+        let posX = scaleByPixelRatio(e.clientX);
+        let posY = scaleByPixelRatio(e.clientY);
+        let color = generateColor();
+
+        update();
+        updatePointerMoveData(pointer, posX, posY, color);
+
+        document.body.removeEventListener('mousemove', handleFirstMouseMove);
+      });
+
+      window.addEventListener('mousemove', (e) => {
+        let pointer = pointers[0];
+        let posX = scaleByPixelRatio(e.clientX);
+        let posY = scaleByPixelRatio(e.clientY);
+        let color = pointer.color;
+
+        updatePointerMoveData(pointer, posX, posY, color);
+      });
     }
 
     function updatePointerDownData(pointer, id, posX, posY) {
