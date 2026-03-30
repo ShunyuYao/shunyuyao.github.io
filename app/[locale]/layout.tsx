@@ -1,8 +1,15 @@
+import type { Metadata } from "next";
 import { Inter, Geist_Mono, Ma_Shan_Zheng } from "next/font/google";
 import { NextIntlClientProvider } from "next-intl";
-import { getMessages, setRequestLocale } from "next-intl/server";
+import {
+  getMessages,
+  getTranslations,
+  setRequestLocale,
+} from "next-intl/server";
 import { routing } from "@/i18n/routing";
 import FluidCursorWrapper from "@/app/components/FluidCursorWrapper";
+
+const BASE_URL = "https://shunyuyao.github.io";
 
 const inter = Inter({
   subsets: ["latin", "latin-ext"],
@@ -25,6 +32,30 @@ const maShanZheng = Ma_Shan_Zheng({
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "site" });
+
+  return {
+    title: {
+      default: t("title"),
+      template: `%s | ${t("title")}`,
+    },
+    description: t("description"),
+    alternates: {
+      canonical: `${BASE_URL}/${locale}`,
+      languages: {
+        "zh-CN": `${BASE_URL}/zh`,
+        "en-US": `${BASE_URL}/en`,
+      },
+    },
+  };
 }
 
 export default async function LocaleLayout({
