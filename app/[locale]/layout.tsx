@@ -57,9 +57,18 @@ export async function generateMetadata({
       url: BASE_URL,
       locale: ogLocale,
       siteName: t("title"),
+      images: [
+        {
+          url: `${BASE_URL}/og/default.png`,
+          width: 1200,
+          height: 630,
+          alt: "Shunyu Yao · 姚顺宇",
+        },
+      ],
     },
     twitter: {
       card: "summary_large_image",
+      images: [`${BASE_URL}/og/default.png`],
     },
     alternates: {
       canonical: `${BASE_URL}/${locale}`,
