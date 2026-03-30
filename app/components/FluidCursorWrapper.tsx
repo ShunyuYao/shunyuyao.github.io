@@ -11,16 +11,18 @@ export default function FluidCursorWrapper() {
   const [isInteracted, setIsInteracted] = useState(false);
 
   useEffect(() => {
+    // Disable on mobile/touch devices
+    const isMobile = window.matchMedia("(pointer: coarse)").matches;
+    if (isMobile) return;
+
     const handleInteraction = () => {
       setIsInteracted(true);
     };
 
     window.addEventListener("mousemove", handleInteraction, { once: true });
-    window.addEventListener("touchstart", handleInteraction, { once: true });
 
     return () => {
       window.removeEventListener("mousemove", handleInteraction);
-      window.removeEventListener("touchstart", handleInteraction);
     };
   }, []);
 
