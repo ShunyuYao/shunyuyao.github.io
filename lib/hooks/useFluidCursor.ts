@@ -1140,13 +1140,13 @@ const useFluidCursor = () => {
       let t = Math.random() * 1000;
       let prevX = 0.5, prevY = 0.5;
 
-      const ax1 = 0.30, fx1 = 0.80, px1 = Math.random() * Math.PI * 2;
-      const ay1 = 0.25, fy1 = 0.55, py1 = Math.random() * Math.PI * 2;
-      const ax2 = 0.12, fx2 = 2.00, px2 = Math.random() * Math.PI * 2;
-      const ay2 = 0.10, fy2 = 1.50, py2 = Math.random() * Math.PI * 2;
+      const ax1 = 0.30, fx1 = 0.40, px1 = Math.random() * Math.PI * 2;
+      const ay1 = 0.25, fy1 = 0.28, py1 = Math.random() * Math.PI * 2;
+      const ax2 = 0.12, fx2 = 1.00, px2 = Math.random() * Math.PI * 2;
+      const ay2 = 0.10, fy2 = 0.75, py2 = Math.random() * Math.PI * 2;
 
       setInterval(() => {
-        t += 0.2;
+        t += 0.1;
 
         const x = 0.5 + ax1 * Math.sin(fx1 * t + px1) + ax2 * Math.sin(fx2 * t + px2);
         const y = 0.5 + ay1 * Math.cos(fy1 * t + py1) + ay2 * Math.cos(fy2 * t + py2);
