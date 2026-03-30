@@ -7,40 +7,6 @@ const useFluidCursor = () => {
     // Mobile performance degradation: reduce resolution on touch devices
     const isTouchDevice = window.matchMedia('(pointer: coarse)').matches;
 
-    // --- Trajectory recording (dev tool) ---
-    // Press R to start/stop recording mouse trajectory.
-    // Output is normalized (0-1) coordinates logged to console.
-    {
-      let recording = false;
-      let trajectory = [];
-      let recStart = 0;
-
-      window.addEventListener('keydown', (e) => {
-        if (e.key !== 'r' && e.key !== 'R') return;
-        if (!recording) {
-          recording = true;
-          trajectory = [];
-          recStart = Date.now();
-          console.log('%c[Fluid] Recording started – move your mouse, press R again to stop', 'color: #e8d5c4; font-weight: bold');
-        } else {
-          recording = false;
-          console.log(`%c[Fluid] Recording stopped – ${trajectory.length} points`, 'color: #e8d5c4; font-weight: bold');
-          console.log(JSON.stringify(trajectory));
-        }
-      });
-
-      window.addEventListener('mousemove', (e) => {
-        if (!recording) return;
-        const now = Date.now();
-        if (trajectory.length > 0 && now - recStart - trajectory[trajectory.length - 1].t < 50) return;
-        trajectory.push({
-          t: now - recStart,
-          x: e.clientX / window.innerWidth,
-          y: e.clientY / window.innerHeight,
-        });
-      });
-    }
-
     let config = {
       SIM_RESOLUTION: isTouchDevice ? 64 : 128,
       DYE_RESOLUTION: isTouchDevice ? 720 : 1440,
@@ -1168,56 +1134,46 @@ const useFluidCursor = () => {
     }
 
     if (isTouchDevice) {
-      // Mobile: touch + mouse driven fluid (mouse needed for DevTools simulation)
+      // Mobile: replay recorded trajectory in a continuous loop
       update();
 
-      window.addEventListener('mousedown', (e) => {
-        let pointer = pointers[0];
-        let posX = scaleByPixelRatio(e.clientX);
-        let posY = scaleByPixelRatio(e.clientY);
-        updatePointerDownData(pointer, -1, posX, posY);
-        clickSplat(pointer);
-      });
+      const trajectory = [{"t":0,"x":0.7274,"y":0.3222},{"t":101,"x":0.7348,"y":0.3232},{"t":217,"x":0.7743,"y":0.3222},{"t":484,"x":0.8138,"y":0.3506},{"t":601,"x":0.8419,"y":0.4883},{"t":717,"x":0.7749,"y":0.5157},{"t":817,"x":0.6651,"y":0.4944},{"t":1067,"x":0.5646,"y":0.4863},{"t":1167,"x":0.3784,"y":0.5147},{"t":1267,"x":0.3001,"y":0.5826},{"t":1367,"x":0.2659,"y":0.7001},{"t":1467,"x":0.2746,"y":0.7852},{"t":1567,"x":0.3081,"y":0.8257},{"t":1667,"x":0.3664,"y":0.848},{"t":1767,"x":0.4648,"y":0.848},{"t":1884,"x":0.5593,"y":0.8409},{"t":2000,"x":0.6376,"y":0.7771},{"t":2100,"x":0.6698,"y":0.6778},{"t":2200,"x":0.6758,"y":0.5897},{"t":2300,"x":0.6571,"y":0.539},{"t":2400,"x":0.6042,"y":0.5117},{"t":2500,"x":0.5365,"y":0.5096},{"t":2600,"x":0.4454,"y":0.4995},{"t":2700,"x":0.353,"y":0.46},{"t":2800,"x":0.3175,"y":0.3921},{"t":2916,"x":0.3168,"y":0.2746},{"t":3017,"x":0.3543,"y":0.2057},{"t":3117,"x":0.4253,"y":0.1702},{"t":3234,"x":0.5452,"y":0.1702},{"t":3367,"x":0.6189,"y":0.2523},{"t":3484,"x":0.6216,"y":0.3566},{"t":3600,"x":0.5097,"y":0.385},{"t":3700,"x":0.3999,"y":0.4286},{"t":3800,"x":0.3188,"y":0.538},{"t":3900,"x":0.2927,"y":0.7011},{"t":4000,"x":0.3135,"y":0.7619},{"t":4100,"x":0.3811,"y":0.8156},{"t":4200,"x":0.491,"y":0.8399},{"t":4300,"x":0.5867,"y":0.8328},{"t":4400,"x":0.6644,"y":0.7953},{"t":4500,"x":0.714,"y":0.7619},{"t":4750,"x":0.714,"y":0.7599},{"t":4850,"x":0.6792,"y":0.8176},{"t":4950,"x":0.5666,"y":0.8845},{"t":5050,"x":0.4046,"y":0.8774},{"t":5150,"x":0.1346,"y":0.7366},{"t":5250,"x":0.1373,"y":0.5319},{"t":5350,"x":0.2177,"y":0.4559},{"t":5450,"x":0.357,"y":0.4377},{"t":5551,"x":0.5425,"y":0.3789},{"t":5667,"x":0.6577,"y":0.2614},{"t":5816,"x":0.6484,"y":0.1408},{"t":5916,"x":0.5378,"y":0.1114},{"t":6016,"x":0.43,"y":0.1084},{"t":6117,"x":0.3463,"y":0.151},{"t":6233,"x":0.3302,"y":0.2857},{"t":6333,"x":0.4133,"y":0.4063},{"t":6450,"x":0.5774,"y":0.4853},{"t":6550,"x":0.653,"y":0.4995},{"t":6650,"x":0.6885,"y":0.5289},{"t":6766,"x":0.7194,"y":0.6535},{"t":6867,"x":0.712,"y":0.769},{"t":6967,"x":0.6772,"y":0.849},{"t":7067,"x":0.6135,"y":0.8926},{"t":7167,"x":0.4722,"y":0.8926},{"t":7267,"x":0.355,"y":0.8582},{"t":7367,"x":0.2934,"y":0.7335},{"t":7483,"x":0.3463,"y":0.6282},{"t":7583,"x":0.4561,"y":0.5289},{"t":7683,"x":0.5626,"y":0.4235},{"t":7783,"x":0.6376,"y":0.2877},{"t":7883,"x":0.6571,"y":0.1753},{"t":7983,"x":0.6463,"y":0.1135},{"t":8083,"x":0.6316,"y":0.0983},{"t":8200,"x":0.5459,"y":0.078},{"t":8300,"x":0.4494,"y":0.0669},{"t":8403,"x":0.3778,"y":0.1094},{"t":8517,"x":0.3369,"y":0.2553},{"t":8617,"x":0.3952,"y":0.3972},{"t":8733,"x":0.5747,"y":0.5167},{"t":8850,"x":0.6738,"y":0.6109},{"t":8950,"x":0.6845,"y":0.7589},{"t":9050,"x":0.6209,"y":0.8734},{"t":9150,"x":0.5378,"y":0.9149},{"t":9250,"x":0.4159,"y":0.9058},{"t":9350,"x":0.3208,"y":0.8298},{"t":9450,"x":0.3001,"y":0.7416},{"t":9550,"x":0.357,"y":0.6089},{"t":9651,"x":0.4334,"y":0.5299},{"t":9767,"x":0.578,"y":0.4124},{"t":9883,"x":0.6845,"y":0.2492},{"t":9984,"x":0.6792,"y":0.1824},{"t":10084,"x":0.6222,"y":0.1378},{"t":10200,"x":0.5003,"y":0.0963},{"t":10300,"x":0.4193,"y":0.0821},{"t":10401,"x":0.3865,"y":0.0973},{"t":10517,"x":0.3429,"y":0.1945},{"t":10617,"x":0.3322,"y":0.2665},{"t":10717,"x":0.3289,"y":0.2786},{"t":10900,"x":0.3289,"y":0.2877},{"t":11000,"x":0.3838,"y":0.3779},{"t":11100,"x":0.5332,"y":0.4488},{"t":11200,"x":0.6504,"y":0.4934},{"t":11300,"x":0.6932,"y":0.6059},{"t":11400,"x":0.6798,"y":0.769},{"t":11500,"x":0.6484,"y":0.8349},{"t":11601,"x":0.5854,"y":0.8734},{"t":11717,"x":0.4829,"y":0.8693},{"t":11817,"x":0.4012,"y":0.8308},{"t":11933,"x":0.3583,"y":0.7477},{"t":12033,"x":0.3657,"y":0.6241},{"t":12134,"x":0.4441,"y":0.5481},{"t":12234,"x":0.5754,"y":0.5086},{"t":12351,"x":0.6691,"y":0.5066},{"t":12583,"x":0.6859,"y":0.4863},{"t":12684,"x":0.7207,"y":0.3627},{"t":12784,"x":0.7314,"y":0.2573},{"t":12900,"x":0.704,"y":0.1905},{"t":13000,"x":0.6236,"y":0.1297},{"t":13100,"x":0.5231,"y":0.0932},{"t":13217,"x":0.3838,"y":0.0729},{"t":13317,"x":0.361,"y":0.0709},{"t":13417,"x":0.3376,"y":0.0729},{"t":13517,"x":0.3068,"y":0.1023},{"t":13617,"x":0.28,"y":0.1986},{"t":13717,"x":0.2833,"y":0.3485},{"t":13817,"x":0.3985,"y":0.4428},{"t":13917,"x":0.649,"y":0.5198},{"t":14017,"x":0.7354,"y":0.5866},{"t":14117,"x":0.7515,"y":0.7042},{"t":14217,"x":0.7013,"y":0.8217},{"t":14317,"x":0.6095,"y":0.8744},{"t":14417,"x":0.4581,"y":0.8501},{"t":14517,"x":0.2532,"y":0.7173},{"t":14617,"x":0.2539,"y":0.6109},{"t":14717,"x":0.3684,"y":0.54},{"t":14817,"x":0.4889,"y":0.5137},{"t":14917,"x":0.6062,"y":0.4934},{"t":15017,"x":0.6517,"y":0.4833},{"t":15433,"x":0.6584,"y":0.5218},{"t":15533,"x":0.6624,"y":0.6798},{"t":15634,"x":0.6403,"y":0.8116},{"t":15750,"x":0.5713,"y":0.8896},{"t":15850,"x":0.4568,"y":0.8896},{"t":15950,"x":0.3603,"y":0.8045},{"t":16050,"x":0.3798,"y":0.616},{"t":16150,"x":0.4642,"y":0.5512},{"t":16250,"x":0.6216,"y":0.462},{"t":16350,"x":0.7328,"y":0.3121},{"t":16450,"x":0.7455,"y":0.2128},{"t":16550,"x":0.6631,"y":0.1378},{"t":16650,"x":0.5291,"y":0.0831},{"t":16750,"x":0.4648,"y":0.0628},{"t":16850,"x":0.438,"y":0.0588},{"t":17013,"x":0.4367,"y":0.0578},{"t":17117,"x":0.4066,"y":0.0628},{"t":17217,"x":0.3557,"y":0.1104},{"t":17317,"x":0.3228,"y":0.227},{"t":17417,"x":0.3396,"y":0.3465},{"t":17517,"x":0.5606,"y":0.46},{"t":17617,"x":0.6939,"y":0.4995},{"t":17717,"x":0.7234,"y":0.5127},{"t":17833,"x":0.7261,"y":0.537},{"t":17950,"x":0.7147,"y":0.7011},{"t":18050,"x":0.6651,"y":0.8085},{"t":18150,"x":0.5928,"y":0.8693},{"t":18250,"x":0.4916,"y":0.8784},{"t":18351,"x":0.3577,"y":0.8419},{"t":18467,"x":0.2981,"y":0.7427},{"t":18567,"x":0.3094,"y":0.5795},{"t":18667,"x":0.353,"y":0.4802},{"t":18820,"x":0.347,"y":0.4488},{"t":19005,"x":0.3463,"y":0.4468},{"t":19117,"x":0.3429,"y":0.3495},{"t":19217,"x":0.3697,"y":0.2128},{"t":19317,"x":0.4756,"y":0.1641},{"t":19417,"x":0.6008,"y":0.1631},{"t":19517,"x":0.6932,"y":0.2239},{"t":19617,"x":0.7348,"y":0.3029},{"t":19717,"x":0.7307,"y":0.3891},{"t":19817,"x":0.6021,"y":0.462},{"t":19933,"x":0.3376,"y":0.5258},{"t":20034,"x":0.2579,"y":0.6707},{"t":20150,"x":0.2954,"y":0.8237},{"t":20250,"x":0.418,"y":0.8551},{"t":20350,"x":0.5492,"y":0.8602},{"t":20450,"x":0.6336,"y":0.8602},{"t":20550,"x":0.6477,"y":0.8622},{"t":20650,"x":0.6496,"y":0.849},{"t":20750,"x":0.6553,"y":0.8106},{"t":20850,"x":0.6641,"y":0.7509},{"t":20950,"x":0.6752,"y":0.6756},{"t":21050,"x":0.6875,"y":0.5922},{"t":21150,"x":0.6999,"y":0.5088},{"t":21250,"x":0.711,"y":0.4335},{"t":21350,"x":0.7198,"y":0.3738},{"t":21450,"x":0.7254,"y":0.3354},{"t":21550,"x":0.7274,"y":0.3222}];
 
-      window.addEventListener('mousemove', (e) => {
-        let pointer = pointers[0];
-        let posX = scaleByPixelRatio(e.clientX);
-        let posY = scaleByPixelRatio(e.clientY);
-        updatePointerMoveData(pointer, posX, posY, pointer.color);
-      });
+      const totalDuration = trajectory[trajectory.length - 1].t;
+      let startTime = Date.now();
+      let prevX = trajectory[0].x;
+      let prevY = trajectory[0].y;
 
-      window.addEventListener('touchstart', (e) => {
-        const touches = e.targetTouches;
-        let pointer = pointers[0];
-        for (let i = 0; i < touches.length; i++) {
-          let posX = scaleByPixelRatio(touches[i].clientX);
-          let posY = scaleByPixelRatio(touches[i].clientY);
-          updatePointerDownData(pointer, touches[i].identifier, posX, posY);
+      // Interpolate position from trajectory at given time
+      function getPosition(t) {
+        const loopT = t % totalDuration;
+        // Find surrounding keyframes
+        let i = 0;
+        while (i < trajectory.length - 1 && trajectory[i + 1].t <= loopT) i++;
+        if (i >= trajectory.length - 1) return trajectory[trajectory.length - 1];
+        const a = trajectory[i];
+        const b = trajectory[i + 1];
+        const frac = (loopT - a.t) / (b.t - a.t);
+        return {
+          x: a.x + (b.x - a.x) * frac,
+          y: a.y + (b.y - a.y) * frac,
+        };
+      }
+
+      setInterval(() => {
+        const elapsed = Date.now() - startTime;
+        const pos = getPosition(elapsed);
+        const dx = (pos.x - prevX) * config.SPLAT_FORCE;
+        const dy = -(pos.y - prevY) * config.SPLAT_FORCE;
+
+        if (Math.abs(dx) > 0 || Math.abs(dy) > 0) {
+          const color = generateColor();
+          splat(pos.x, pos.y, dx, dy, color);
         }
-      });
 
-      window.addEventListener(
-        'touchmove',
-        (e) => {
-          const touches = e.targetTouches;
-          let pointer = pointers[0];
-          for (let i = 0; i < touches.length; i++) {
-            let posX = scaleByPixelRatio(touches[i].clientX);
-            let posY = scaleByPixelRatio(touches[i].clientY);
-            updatePointerMoveData(pointer, posX, posY, pointer.color);
-          }
-        },
-        false
-      );
-
-      window.addEventListener('touchend', (e) => {
-        const touches = e.changedTouches;
-        let pointer = pointers[0];
-
-        for (let i = 0; i < touches.length; i++) {
-          updatePointerUpData(pointer);
-        }
-      });
+        prevX = pos.x;
+        prevY = pos.y;
+      }, 16);
     } else {
       // Desktop: mouse-driven fluid
       window.addEventListener('mousedown', (e) => {
