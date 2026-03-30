@@ -1135,23 +1135,9 @@ const useFluidCursor = () => {
 
     if (isTouchDevice) {
       // Mobile: touch-driven fluid, same params as desktop
-      document.body.addEventListener(
-        'touchstart',
-        function handleFirstTouchStart(e) {
-          const touches = e.targetTouches;
-          let pointer = pointers[0];
-
-          for (let i = 0; i < touches.length; i++) {
-            let posX = scaleByPixelRatio(touches[i].clientX);
-            let posY = scaleByPixelRatio(touches[i].clientY);
-
-            update();
-            updatePointerDownData(pointer, touches[i].identifier, posX, posY);
-          }
-
-          document.body.removeEventListener('touchstart', handleFirstTouchStart);
-        }
-      );
+      // Start render loop immediately (component loads after first touch,
+      // so we can't rely on a touch event to start it)
+      update();
 
       window.addEventListener('touchstart', (e) => {
         const touches = e.targetTouches;
