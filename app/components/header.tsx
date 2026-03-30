@@ -2,7 +2,7 @@
 
 import { Link, usePathname } from "@/i18n/navigation";
 import AnimatedSignature from "./AnimatedSignature";
-import LanguageSwitch from "./LanguageSwitch";
+import { LanguageSwitch } from "./LanguageSwitch";
 
 function Breadcrumbs({ pathname }: { pathname: string }) {
   // Remove locale prefix for breadcrumb generation
