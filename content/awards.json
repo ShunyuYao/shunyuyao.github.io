@@ -1,1 +1,32 @@
-[]
+[
+  {
+    "year": 2026,
+    "title": "AAAI 2026 Oral Presentation",
+    "titleEn": "AAAI 2026 Oral Presentation",
+    "org": "AAAI"
+  },
+  {
+    "year": 2024,
+    "title": "上海市优秀毕业生",
+    "titleEn": "Outstanding Graduate of Shanghai",
+    "org": "Shanghai Municipal Education Commission"
+  },
+  {
+    "year": 2023,
+    "title": "国家奖学金",
+    "titleEn": "National Scholarship",
+    "org": "Ministry of Education, China"
+  },
+  {
+    "year": 2023,
+    "title": "校级一等奖学金",
+    "titleEn": "First-Class University Scholarship",
+    "org": "University"
+  },
+  {
+    "year": 2022,
+    "title": "优秀学生干部",
+    "titleEn": "Outstanding Student Leader",
+    "org": "University"
+  }
+]

@@ -1,1 +1,48 @@
-[]
+[
+  {
+    "id": "onestory",
+    "name": "OneStory",
+    "nameZh": "OneStory",
+    "org": "OneStory",
+    "orgZh": "OneStory",
+    "period": "2024 – Present",
+    "periodZh": "2024 – 至今",
+    "role": "Founder",
+    "roleZh": "创始人",
+    "description": "AI-powered interactive storytelling platform combining digital humans, multimodal generation, and immersive narrative experiences.",
+    "descriptionZh": "AI 驱动的互动叙事平台，结合数字人、多模态生成与沉浸式叙事体验。",
+    "highlights": [
+      "Built end-to-end AI pipeline for digital human content",
+      "Launched public product at onestory.art"
+    ],
+    "highlightsZh": [
+      "构建端到端 AI 数字人内容生产管线",
+      "在 onestory.art 上线公开产品"
+    ],
+    "links": [{ "label": "Website", "url": "https://www.onestory.art" }],
+    "logo": "/images/onestory-logo.png"
+  },
+  {
+    "id": "voka",
+    "name": "Voka",
+    "nameZh": "Voka",
+    "org": "Voka",
+    "orgZh": "Voka",
+    "period": "2022 – 2024",
+    "periodZh": "2022 – 2024",
+    "role": "Co-founder & CTO",
+    "roleZh": "联合创始人 & CTO",
+    "description": "AI-driven digital human and content creation startup focused on virtual influencers and branded content.",
+    "descriptionZh": "AI 驱动的数字人与内容创作初创公司，专注于虚拟偶像与品牌内容。",
+    "highlights": [
+      "Developed real-time digital human rendering system",
+      "Shipped products for enterprise clients"
+    ],
+    "highlightsZh": [
+      "研发实时数字人渲染系统",
+      "交付企业级产品"
+    ],
+    "links": [],
+    "logo": "/images/voka-logo.png"
+  }
+]
