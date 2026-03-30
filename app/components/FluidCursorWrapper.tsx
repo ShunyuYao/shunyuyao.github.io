@@ -11,16 +11,22 @@ export default function FluidCursorWrapper() {
   const [isInteracted, setIsInteracted] = useState(false);
 
   useEffect(() => {
+    // On touch devices, load immediately (no interaction needed)
+    const isTouchDevice = window.matchMedia("(pointer: coarse)").matches;
+    if (isTouchDevice) {
+      requestAnimationFrame(() => setIsInteracted(true));
+      return;
+    }
+
+    // On desktop, wait for first mouse move
     const handleInteraction = () => {
       setIsInteracted(true);
     };
 
     window.addEventListener("mousemove", handleInteraction, { once: true });
-    window.addEventListener("touchstart", handleInteraction, { once: true });
 
     return () => {
       window.removeEventListener("mousemove", handleInteraction);
-      window.removeEventListener("touchstart", handleInteraction);
     };
   }, []);
 
