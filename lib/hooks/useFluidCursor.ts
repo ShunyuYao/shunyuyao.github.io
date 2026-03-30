@@ -1140,13 +1140,17 @@ const useFluidCursor = () => {
       let t = Math.random() * 1000;
       let prevX = 0.5, prevY = 0.5;
 
-      const ax1 = 0.30, fx1 = 0.40, px1 = Math.random() * Math.PI * 2;
-      const ay1 = 0.25, fy1 = 0.28, py1 = Math.random() * Math.PI * 2;
-      const ax2 = 0.12, fx2 = 1.00, px2 = Math.random() * Math.PI * 2;
-      const ay2 = 0.10, fy2 = 0.75, py2 = Math.random() * Math.PI * 2;
+      const ax1 = 0.30, fx1 = 0.52, px1 = Math.random() * Math.PI * 2;
+      const ay1 = 0.25, fy1 = 0.36, py1 = Math.random() * Math.PI * 2;
+      const ax2 = 0.12, fx2 = 1.30, px2 = Math.random() * Math.PI * 2;
+      const ay2 = 0.10, fy2 = 0.98, py2 = Math.random() * Math.PI * 2;
+
+      // Simple harmonic speed modulation: oscillates between 0.5x and 1.5x base speed
+      const speedPhase = Math.random() * Math.PI * 2;
 
       setInterval(() => {
-        t += 0.1;
+        const speedScale = 1.0 + 0.5 * Math.sin(0.3 * t + speedPhase);
+        t += 0.13 * speedScale;
 
         const x = 0.5 + ax1 * Math.sin(fx1 * t + px1) + ax2 * Math.sin(fx2 * t + px2);
         const y = 0.5 + ay1 * Math.cos(fy1 * t + py1) + ay2 * Math.cos(fy2 * t + py2);
