@@ -32,8 +32,9 @@ function Breadcrumbs({ pathname }: { pathname: string }) {
   );
 }
 
-export function Header() {
-  const pathname = usePathname();
+export function Header({ pathname: pathnameProp }: { pathname?: string } = {}) {
+  const pathnameHook = usePathname();
+  const pathname = pathnameProp ?? pathnameHook;
   return (
     <header className="relative py-8">
       <Link href="/" className="inline-block w-40 sm:w-48">
