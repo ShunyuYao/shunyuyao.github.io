@@ -1133,116 +1133,88 @@ const useFluidCursor = () => {
       return radius;
     }
 
-    window.addEventListener('mousedown', (e) => {
-      let pointer = pointers[0];
-      let posX = scaleByPixelRatio(e.clientX);
-      let posY = scaleByPixelRatio(e.clientY);
-      updatePointerDownData(pointer, -1, posX, posY);
-      clickSplat(pointer);
-    });
+    if (isTouchDevice) {
+      // Mobile: touch-driven fluid, same params as desktop
+      document.body.addEventListener(
+        'touchstart',
+        function handleFirstTouchStart(e) {
+          const touches = e.targetTouches;
+          let pointer = pointers[0];
 
-    document.body.addEventListener('mousemove', function handleFirstMouseMove(e) {
-      let pointer = pointers[0];
-      let posX = scaleByPixelRatio(e.clientX);
-      let posY = scaleByPixelRatio(e.clientY);
-      let color = generateColor();
+          for (let i = 0; i < touches.length; i++) {
+            let posX = scaleByPixelRatio(touches[i].clientX);
+            let posY = scaleByPixelRatio(touches[i].clientY);
 
-      update();
-      updatePointerMoveData(pointer, posX, posY, color);
+            update();
+            updatePointerDownData(pointer, touches[i].identifier, posX, posY);
+          }
 
-      // Remove this event listener after the first mousemove event
-      document.body.removeEventListener('mousemove', handleFirstMouseMove);
-    });
+          document.body.removeEventListener('touchstart', handleFirstTouchStart);
+        }
+      );
 
-    window.addEventListener('mousemove', (e) => {
-      let pointer = pointers[0];
-      let posX = scaleByPixelRatio(e.clientX);
-      let posY = scaleByPixelRatio(e.clientY);
-      let color = pointer.color;
-
-      updatePointerMoveData(pointer, posX, posY, color);
-    });
-
-    document.body.addEventListener(
-      'touchstart',
-      function handleFirstTouchStart(e) {
+      window.addEventListener('touchstart', (e) => {
         const touches = e.targetTouches;
         let pointer = pointers[0];
-
         for (let i = 0; i < touches.length; i++) {
           let posX = scaleByPixelRatio(touches[i].clientX);
           let posY = scaleByPixelRatio(touches[i].clientY);
-
-          update();
           updatePointerDownData(pointer, touches[i].identifier, posX, posY);
         }
+      });
 
-        // Remove this event listener after the first touchstart event
-        document.body.removeEventListener('touchstart', handleFirstTouchStart);
-      }
-    );
-
-    window.addEventListener('touchstart', (e) => {
-      const touches = e.targetTouches;
-      let pointer = pointers[0];
-      for (let i = 0; i < touches.length; i++) {
-        let posX = scaleByPixelRatio(touches[i].clientX);
-        let posY = scaleByPixelRatio(touches[i].clientY);
-        updatePointerDownData(pointer, touches[i].identifier, posX, posY);
-      }
-    });
-
-    window.addEventListener(
-      'touchmove',
-      (e) => {
-        const touches = e.targetTouches;
-        let pointer = pointers[0];
-        for (let i = 0; i < touches.length; i++) {
-          let posX = scaleByPixelRatio(touches[i].clientX);
-          let posY = scaleByPixelRatio(touches[i].clientY);
-          updatePointerMoveData(pointer, posX, posY, pointer.color);
-        }
-      },
-      false
-    );
-
-    window.addEventListener('touchend', (e) => {
-      const touches = e.changedTouches;
-      let pointer = pointers[0];
-
-      for (let i = 0; i < touches.length; i++) {
-        updatePointerUpData(pointer);
-      }
-    });
-
-    // Mobile-only: generate fluid splats from scroll events
-    if (isTouchDevice) {
-      let lastScrollY = window.scrollY;
-
-      window.addEventListener('scroll', () => {
-        const scrollY = window.scrollY;
-        const scrollDelta = scrollY - lastScrollY;
-
-        if (Math.abs(scrollDelta) > 2) {
-          const speed = Math.min(Math.abs(scrollDelta), 60);
-          const direction = scrollDelta > 0 ? -1 : 1;
-
-          const numSplats = speed > 20 ? 2 : 1;
-          for (let i = 0; i < numSplats; i++) {
-            const x = 0.15 + Math.random() * 0.7;
-            const y = 0.2 + Math.random() * 0.6;
-            const dx = (Math.random() - 0.5) * speed * 2;
-            const dy = direction * speed * 3;
-            const color = generateColor();
-            color.r *= 5.0;
-            color.g *= 5.0;
-            color.b *= 5.0;
-            splat(x, y, dx, dy, color);
+      window.addEventListener(
+        'touchmove',
+        (e) => {
+          const touches = e.targetTouches;
+          let pointer = pointers[0];
+          for (let i = 0; i < touches.length; i++) {
+            let posX = scaleByPixelRatio(touches[i].clientX);
+            let posY = scaleByPixelRatio(touches[i].clientY);
+            updatePointerMoveData(pointer, posX, posY, pointer.color);
           }
-        }
+        },
+        false
+      );
 
-        lastScrollY = scrollY;
-      }, { passive: true });
+      window.addEventListener('touchend', (e) => {
+        const touches = e.changedTouches;
+        let pointer = pointers[0];
+
+        for (let i = 0; i < touches.length; i++) {
+          updatePointerUpData(pointer);
+        }
+      });
+    } else {
+      // Desktop: mouse-driven fluid
+      window.addEventListener('mousedown', (e) => {
+        let pointer = pointers[0];
+        let posX = scaleByPixelRatio(e.clientX);
+        let posY = scaleByPixelRatio(e.clientY);
+        updatePointerDownData(pointer, -1, posX, posY);
+        clickSplat(pointer);
+      });
+
+      document.body.addEventListener('mousemove', function handleFirstMouseMove(e) {
+        let pointer = pointers[0];
+        let posX = scaleByPixelRatio(e.clientX);
+        let posY = scaleByPixelRatio(e.clientY);
+        let color = generateColor();
+
+        update();
+        updatePointerMoveData(pointer, posX, posY, color);
+
+        document.body.removeEventListener('mousemove', handleFirstMouseMove);
+      });
+
+      window.addEventListener('mousemove', (e) => {
+        let pointer = pointers[0];
+        let posX = scaleByPixelRatio(e.clientX);
+        let posY = scaleByPixelRatio(e.clientY);
+        let color = pointer.color;
+
+        updatePointerMoveData(pointer, posX, posY, color);
+      });
     }
 
     function updatePointerDownData(pointer, id, posX, posY) {
