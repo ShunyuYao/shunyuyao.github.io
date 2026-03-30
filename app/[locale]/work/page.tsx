@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import Link from "next/link";
+import { setRequestLocale, getTranslations } from "next-intl/server";
+import { Link } from "@/i18n/navigation";
 import { PageLayout } from "@/app/components/PageLayout";
 import workData from "@/content/work.json";
 
@@ -8,11 +9,19 @@ export const metadata: Metadata = {
   title: "Work | Shunyu Yao",
 };
 
-export default function WorkPage() {
+export default async function WorkPage({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  setRequestLocale(locale);
+  const t = await getTranslations("work");
+
   return (
     <PageLayout pathname="/work">
       <section className="space-y-8">
-        <h1 className="text-2xl font-bold">Work</h1>
+        <h1 className="text-2xl font-bold">{t("heading")}</h1>
         <ul className="space-y-8">
           {workData.map((item) => (
             <li key={item.id} className="space-y-2">
@@ -31,20 +40,24 @@ export default function WorkPage() {
                     href={`/work/${item.id}`}
                     className="text-lg font-semibold hover:text-[var(--accent)] transition-colors"
                   >
-                    {item.nameZh} / {item.name}
+                    {locale === "zh" ? item.nameZh : item.name}
                   </Link>
                   <p className="text-sm text-[var(--foreground)]/60">
-                    {item.roleZh} · {item.orgZh} · {item.periodZh}
+                    {locale === "zh"
+                      ? `${item.roleZh} · ${item.orgZh} · ${item.periodZh}`
+                      : `${item.role} · ${item.org} · ${item.period}`}
                   </p>
                 </div>
               </div>
               <p className="text-sm text-[var(--foreground)]/80">
-                {item.descriptionZh} / {item.description}
+                {locale === "zh" ? item.descriptionZh : item.description}
               </p>
               <ul className="list-disc list-inside text-sm text-[var(--foreground)]/60 space-y-1">
-                {item.highlightsZh.map((h, i) => (
-                  <li key={i}>{h}</li>
-                ))}
+                {(locale === "zh" ? item.highlightsZh : item.highlights).map(
+                  (h, i) => (
+                    <li key={i}>{h}</li>
+                  )
+                )}
               </ul>
               {item.links.length > 0 && (
                 <div className="flex gap-3 pt-1">

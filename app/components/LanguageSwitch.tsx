@@ -1,17 +1,16 @@
 "use client";
 
-import { usePathname, useRouter } from "next/navigation";
+import { useLocale } from "next-intl";
+import { usePathname, useRouter } from "@/i18n/navigation";
 
-export default function LanguageSwitch() {
+export function LanguageSwitch() {
+  const locale = useLocale();
   const pathname = usePathname();
   const router = useRouter();
-  const isChinese = pathname.startsWith("/zh");
 
   function handleClick() {
-    const targetPath = isChinese
-      ? pathname.replace(/^\/zh/, "") || "/"
-      : "/zh" + pathname;
-    router.push(targetPath);
+    const targetLocale = locale === "zh" ? "en" : "zh";
+    router.push(pathname, { locale: targetLocale });
   }
 
   return (
@@ -19,7 +18,7 @@ export default function LanguageSwitch() {
       onClick={handleClick}
       className="relative z-10 text-sm font-medium hover:opacity-70 transition-opacity"
     >
-      {isChinese ? "EN" : "中文"}
+      {locale === "zh" ? "EN" : "中文"}
     </button>
   );
 }
