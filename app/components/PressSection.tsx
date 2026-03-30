@@ -29,7 +29,7 @@ export function PressSection({ lang = "zh" }: PressSectionProps) {
       linkText="See all →"
       lang={lang}
     >
-      <ul className="space-y-3">
+      <ul className="space-y-4">
         {items.map((item) => (
           <li key={item.id}>
             <a
@@ -38,10 +38,10 @@ export function PressSection({ lang = "zh" }: PressSectionProps) {
               rel="noopener noreferrer"
               className="relative z-10 group/link"
             >
-              <p className="text-sm text-neutral-300 hover:text-neutral-100">
+              <p className="text-base text-neutral-300 hover:text-neutral-100">
                 {lang === "zh" ? item.title : item.titleEn}
               </p>
-              <p className="text-xs text-neutral-500">
+              <p className="text-sm text-neutral-500">
                 {item.outlet} · {item.date}
               </p>
             </a>

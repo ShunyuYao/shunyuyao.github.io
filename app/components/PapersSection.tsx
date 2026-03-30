@@ -36,11 +36,11 @@ export function PapersSection({ lang = "zh" }: PapersSectionProps) {
       linkText="See all →"
       lang={lang}
     >
-      <ul className="space-y-3">
+      <ul className="space-y-4">
         {items.map((paper) => (
           <li key={paper.id}>
-            <p className="text-sm text-neutral-300 truncate">{paper.title}</p>
-            <div className="flex items-center gap-2 text-xs">
+            <p className="text-base text-neutral-300 truncate">{paper.title}</p>
+            <div className="flex items-center gap-2 text-sm">
               <span className="text-[var(--accent)]">
                 {paper.venue} {paper.year}
               </span>

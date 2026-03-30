@@ -14,9 +14,9 @@ export function NowSection({ lang = "zh" }: NowSectionProps) {
       linkText="See all →"
       lang={lang}
     >
-      <ul className="list-disc marker:text-neutral-500 pl-5 space-y-1">
+      <ul className="list-disc marker:text-neutral-500 pl-5 space-y-4">
         {nowData.items.map((item, i) => (
-          <li key={i} className="text-sm text-neutral-300">
+          <li key={i} className="text-base text-neutral-300">
             {lang === "zh" ? item.text : item.textEn}
           </li>
         ))}

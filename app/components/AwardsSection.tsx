@@ -26,13 +26,13 @@ export function AwardsSection({ lang = "zh" }: AwardsSectionProps) {
       linkText="See all →"
       lang={lang}
     >
-      <ul className="space-y-2">
+      <ul className="space-y-3">
         {items.map((award, index) => (
           <li key={index} className="flex items-baseline gap-3">
-            <span className="text-xs text-neutral-500 font-mono shrink-0">
+            <span className="text-sm text-neutral-500 font-mono shrink-0">
               {award.year}
             </span>
-            <span className="text-sm text-neutral-300">
+            <span className="text-base text-neutral-300">
               {lang === "zh" ? award.title : award.titleEn}
             </span>
           </li>

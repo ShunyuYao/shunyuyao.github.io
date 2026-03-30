@@ -17,10 +17,12 @@ export default async function Home({
   const lang = locale as "zh" | "en";
 
   return (
-    <main className="max-w-5xl mx-auto px-8 sm:px-16 py-12 space-y-32">
+    <main className="space-y-32">
       <HeroSection lang={lang} />
-      <NowSection lang={lang} />
-      <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-16">
+      <div className="max-w-lg mx-auto">
+        <NowSection lang={lang} />
+      </div>
+      <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-18">
         <WorkSection lang={lang} />
         <PapersSection lang={lang} />
         <PressSection lang={lang} />

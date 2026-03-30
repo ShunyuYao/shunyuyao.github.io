@@ -1,30 +1,14 @@
-export default function AnimatedSignature() {
+import Image from "next/image";
+
+export default function AnimatedSignature({ className = "w-full h-auto" }: { className?: string }) {
   return (
-    <svg
-      viewBox="0 0 300 80"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth={2}
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-label="Shunyu Yao signature"
-      className="w-full h-auto"
-    >
-      {/* Stylized "Shunyu Yao" signature path */}
-      <path
-        className="signature-path"
-        d="M10,55 C15,50 20,30 25,25 C30,20 32,22 30,35 C28,48 25,55 30,55
-           C35,55 40,25 48,22 C50,21 52,25 50,40 C48,52 46,55 50,55
-           C55,55 58,30 62,25 C66,20 68,22 68,35 C68,48 65,55 70,55
-           C75,55 78,22 84,20 C88,18 90,25 88,40 C86,52 84,55 88,55
-           C92,55 96,28 102,22 C106,18 110,20 108,35 C106,48 104,58 108,55
-           C112,52 118,28 122,22 C126,18 128,20 128,35 C128,48 125,55 130,55
-           M150,55 C155,50 158,25 162,20 C166,15 168,18 165,35 C162,50 158,55 165,55
-           C172,55 178,25 184,20 C188,18 190,22 188,38 C186,50 182,55 188,58
-           M200,50 C205,35 210,20 215,18 C220,16 225,20 222,35 C219,50 212,58 218,58
-           C224,58 230,30 238,22 C242,18 246,22 244,38 C242,50 238,58 244,58
-           C250,58 256,28 264,20 C268,16 272,22 268,40 C264,55 258,60 265,58"
-      />
-    </svg>
+    <Image
+      src="/images/signature_v1.png"
+      alt="Shunyu Yao signature"
+      width={200}
+      height={200}
+      className={className}
+      priority
+    />
   );
 }

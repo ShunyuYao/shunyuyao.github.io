@@ -17,14 +17,14 @@ export function WorkSection({ lang = "zh" }: WorkSectionProps) {
       linkText="See all →"
       lang={lang}
     >
-      <ul className="space-y-3">
+      <ul className="space-y-4">
         {items.map((item) => (
           <li key={item.id} className="flex items-start gap-3">
             <div>
-              <p className="text-sm text-neutral-300">
+              <p className="text-base text-neutral-300">
                 {lang === "zh" ? item.nameZh : item.name}
               </p>
-              <p className="text-xs text-neutral-500">
+              <p className="text-sm text-neutral-500">
                 {lang === "zh" ? item.orgZh : item.org} ·{" "}
                 {lang === "zh" ? item.periodZh : item.period}
               </p>
