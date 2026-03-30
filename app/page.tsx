@@ -5,7 +5,7 @@ import { Footer } from "./components/footer";
 export default function Home() {
   return (
     <Container>
-      <Header />
+      <Header pathname="/" />
       <main className="py-8">
         <p>Coming soon</p>
       </main>
