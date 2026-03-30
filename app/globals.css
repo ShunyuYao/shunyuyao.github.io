@@ -1,1 +1,20 @@
 @import "tailwindcss";
+
+:root {
+  --background: #0a0a0a;
+  --foreground: #ededed;
+  --muted: #737373;
+  --border: #1f1f1f;
+  --card: #111111;
+  --accent: #e8d5c4;
+
+  --font-sans: -apple-system, "PingFang SC", "Noto Sans CJK SC",
+    "Microsoft YaHei", sans-serif;
+  --font-mono: "Fira Code", monospace;
+}
+
+html,
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+}
