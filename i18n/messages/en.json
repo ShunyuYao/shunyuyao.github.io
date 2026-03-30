@@ -1,1 +1,75 @@
-{}
+{
+  "site": {
+    "title": "Shunyu Yao",
+    "description": "Personal website of Shunyu Yao"
+  },
+  "nav": {
+    "home": "Home",
+    "now": "Now",
+    "work": "Work",
+    "papers": "Papers",
+    "press": "Press",
+    "awards": "Awards",
+    "about": "About",
+    "archive": "Archive"
+  },
+  "hero": {
+    "titles": ["AIGC Researcher", "Product Builder", "AI Content Creator", "Digital Human Engineer"],
+    "subtitle": "Shanghai · AI · Content · Digital Human",
+    "cta_primary": "OneStory",
+    "cta_secondary": "View My Work"
+  },
+  "now": {
+    "heading": "Now",
+    "sectionTitle": "now",
+    "description": "What I'm focused on right now.",
+    "seeAll": "See all →",
+    "lastUpdated": "Last updated: {date}"
+  },
+  "work": {
+    "heading": "Work",
+    "sectionTitle": "work",
+    "description": "My professional journey so far.",
+    "seeAll": "See all →",
+    "backToWork": "← Back to /work",
+    "highlights": "Highlights",
+    "links": "Links"
+  },
+  "papers": {
+    "heading": "Papers",
+    "sectionTitle": "papers",
+    "description": "Selected academic publications.",
+    "seeAll": "See all →"
+  },
+  "press": {
+    "heading": "Press",
+    "sectionTitle": "press",
+    "description": "Media appearances and coverage.",
+    "seeAll": "See all →"
+  },
+  "awards": {
+    "heading": "Awards",
+    "sectionTitle": "awards",
+    "description": "Selected honors and awards.",
+    "seeAll": "See all →",
+    "viewAwards": "View Awards →"
+  },
+  "about": {
+    "heading": "About",
+    "name": "Shunyu Yao · 姚顺宇",
+    "tagline": "AIGC Researcher & Product Builder · Shanghai",
+    "sectionAbout": "About",
+    "bio": "Shunyu Yao is an AIGC researcher and product builder based in Shanghai. He focuses on AI-generated content, multimodal learning, and building products that bridge research and real-world applications.",
+    "sectionEducation": "Education",
+    "education": [
+      { "period": "2020–2024", "school": "Shanghai Jiao Tong University", "degree": "Ph.D. in Information and Communication Engineering (incomplete)" },
+      { "period": "2017–2020", "school": "Shanghai Jiao Tong University", "degree": "M.S. in Instrument Science and Engineering" },
+      { "period": "2012–2016", "school": "Xi'an Jiaotong University", "degree": "B.S. in Mechanical Engineering and Automation" }
+    ],
+    "sectionContact": "Contact",
+    "email": "Email: "
+  },
+  "footer": {
+    "copyright": "© {year} Shunyu Yao"
+  }
+}

@@ -1,1 +1,75 @@
-{}
+{
+  "site": {
+    "title": "姚顺宇",
+    "description": "姚顺宇的个人网站"
+  },
+  "nav": {
+    "home": "首页",
+    "now": "近况",
+    "work": "工作经历",
+    "papers": "论文",
+    "press": "媒体",
+    "awards": "荣誉",
+    "about": "关于",
+    "archive": "归档"
+  },
+  "hero": {
+    "titles": ["AIGC 研究者", "产品负责人", "AI 内容创作者", "数字人技术专家"],
+    "subtitle": "上海 · AI · 内容创作 · 数字人",
+    "cta_primary": "OneStory",
+    "cta_secondary": "查看作品"
+  },
+  "now": {
+    "heading": "近况",
+    "sectionTitle": "now",
+    "description": "我目前正在做的事。",
+    "seeAll": "查看全部 →",
+    "lastUpdated": "上次更新：{date}"
+  },
+  "work": {
+    "heading": "工作经历",
+    "sectionTitle": "work",
+    "description": "我的职业经历。",
+    "seeAll": "查看全部 →",
+    "backToWork": "← 返回 /work",
+    "highlights": "亮点",
+    "links": "链接"
+  },
+  "papers": {
+    "heading": "论文",
+    "sectionTitle": "papers",
+    "description": "部分学术论文。",
+    "seeAll": "查看全部 →"
+  },
+  "press": {
+    "heading": "媒体",
+    "sectionTitle": "press",
+    "description": "媒体报道与出镜。",
+    "seeAll": "查看全部 →"
+  },
+  "awards": {
+    "heading": "荣誉",
+    "sectionTitle": "awards",
+    "description": "部分荣誉与奖项。",
+    "seeAll": "查看全部 →",
+    "viewAwards": "查看荣誉 →"
+  },
+  "about": {
+    "heading": "关于",
+    "name": "Shunyu Yao · 姚顺宇",
+    "tagline": "AIGC 研究者 & 产品构建者 · 上海",
+    "sectionAbout": "关于",
+    "bio": "姚顺宇是一位 AIGC 研究者与产品构建者，现居上海。他专注于AI生成内容、多模态学习，以及将前沿研究转化为实际产品。",
+    "sectionEducation": "教育经历",
+    "education": [
+      { "period": "2020–2024", "school": "上海交通大学", "degree": "信息与通信工程博士（肄业）" },
+      { "period": "2017–2020", "school": "上海交通大学", "degree": "仪器科学与工程硕士" },
+      { "period": "2012–2016", "school": "西安交通大学", "degree": "机械工程及自动化学士" }
+    ],
+    "sectionContact": "联系方式",
+    "email": "邮箱："
+  },
+  "footer": {
+    "copyright": "© {year} Shunyu Yao"
+  }
+}
