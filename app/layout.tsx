@@ -2,9 +2,6 @@ import type { Metadata, Viewport } from "next";
 import { Inter, Geist_Mono, Ma_Shan_Zheng } from "next/font/google";
 import "./globals.css";
 import FluidCursorWrapper from "@/app/components/FluidCursorWrapper";
-import { Container } from "@/app/components/container";
-import { Header } from "@/app/components/header";
-import { Footer } from "@/app/components/footer";
 
 const inter = Inter({
   subsets: ["latin", "latin-ext"],
@@ -44,11 +41,7 @@ export default function RootLayout({
     <html lang="en" className={`${inter.variable} ${geistMono.variable} ${maShanZheng.variable}`}>
       <body className="antialiased min-h-screen">
         <FluidCursorWrapper />
-        <Container>
-          <Header />
-          {children}
-          <Footer />
-        </Container>
+        {children}
       </body>
     </html>
   );
