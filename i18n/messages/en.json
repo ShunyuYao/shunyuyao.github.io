@@ -67,7 +67,8 @@
       { "period": "2012–2016", "school": "Xi'an Jiaotong University", "degree": "B.S. in Mechanical Engineering and Automation" }
     ],
     "sectionContact": "Contact",
-    "email": "Email: "
+    "email": "Email: ",
+    "viewAwards": "View Awards →"
   },
   "footer": {
     "copyright": "© {year} Shunyu Yao"

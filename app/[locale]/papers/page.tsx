@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { setRequestLocale, getTranslations } from "next-intl/server";
 import { PageLayout } from "@/app/components/PageLayout";
 import rawPapersData from "@/content/papers.json";
 
@@ -23,7 +24,15 @@ export const metadata: Metadata = {
   title: "Papers | Shunyu Yao",
 };
 
-export default function PapersPage() {
+export default async function PapersPage({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  setRequestLocale(locale);
+  const t = await getTranslations("papers");
+
   const sorted = [...papersData].sort((a, b) => b.year - a.year);
 
   const grouped = sorted.reduce<Record<number, Paper[]>>((acc, paper) => {
@@ -39,7 +48,7 @@ export default function PapersPage() {
   return (
     <PageLayout pathname="/papers">
       <section className="space-y-10">
-        <h1 className="text-2xl font-bold">Papers</h1>
+        <h1 className="text-2xl font-bold">{t("heading")}</h1>
         {years.map((year) => (
           <div key={year} className="space-y-4">
             <h2 className="text-lg font-semibold text-[var(--foreground)]/70">

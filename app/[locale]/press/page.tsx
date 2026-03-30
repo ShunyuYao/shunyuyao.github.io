@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { setRequestLocale, getTranslations } from "next-intl/server";
 import { PageLayout } from "@/app/components/PageLayout";
 import rawPressData from "@/content/press.json";
 
@@ -18,11 +19,19 @@ export const metadata: Metadata = {
   title: "Press | Shunyu Yao",
 };
 
-export default function PressPage() {
+export default async function PressPage({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  setRequestLocale(locale);
+  const t = await getTranslations("press");
+
   return (
     <PageLayout pathname="/press">
       <section className="space-y-8">
-        <h1 className="text-2xl font-bold">Press</h1>
+        <h1 className="text-2xl font-bold">{t("heading")}</h1>
         <ul className="space-y-5">
           {pressData.map((item) => (
             <li key={item.id} className="space-y-1">
@@ -32,7 +41,7 @@ export default function PressPage() {
                 rel="noopener noreferrer"
                 className="relative z-10 text-sm hover:text-[var(--accent)] transition-colors"
               >
-                {item.title}
+                {locale === "zh" ? item.title : item.titleEn}
               </a>
               <div className="flex items-center gap-2 text-xs text-[var(--foreground)]/60">
                 <span>{item.outlet}</span>

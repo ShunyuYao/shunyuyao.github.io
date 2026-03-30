@@ -67,7 +67,8 @@
       { "period": "2012–2016", "school": "西安交通大学", "degree": "机械工程及自动化学士" }
     ],
     "sectionContact": "联系方式",
-    "email": "邮箱："
+    "email": "邮箱：",
+    "viewAwards": "查看荣誉 →"
   },
   "footer": {
     "copyright": "© {year} Shunyu Yao"

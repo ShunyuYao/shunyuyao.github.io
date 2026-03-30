@@ -1,13 +1,12 @@
 "use client";
 
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { Link, usePathname } from "@/i18n/navigation";
 import AnimatedSignature from "./AnimatedSignature";
 import LanguageSwitch from "./LanguageSwitch";
 
 function Breadcrumbs({ pathname }: { pathname: string }) {
   // Remove locale prefix for breadcrumb generation
-  const cleanPath = pathname.replace(/^\/zh/, "") || "/";
+  const cleanPath = pathname.replace(/^\/(zh|en)/, "") || "/";
   const segments = cleanPath.split("/").filter(Boolean);
 
   if (segments.length === 0) return null;
