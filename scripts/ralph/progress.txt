@@ -13,6 +13,7 @@ Started: Mon Mar 30 18:29:25 CST 2026
 - In Next.js 14+, viewport settings use a separate `export const viewport: Viewport` (not inside `metadata`)
 - Components live in `app/components/` with named exports; Container/Header/Footer are the shell components
 - Content data files live in `content/` as JSON arrays; utility directories in `lib/`; static assets in `public/images/`
+- GitHub Actions: deploy workflow at `.github/workflows/deploy.yml` uses `peaceiris/actions-gh-pages@v4` to publish `out/` to gh-pages branch
 
 ## 2026-03-30 - US-001
 - Initialized Next.js 15.5.14 project with React 19, TypeScript 5, and Tailwind CSS v4.2
@@ -98,6 +99,19 @@ Started: Mon Mar 30 18:29:25 CST 2026
 - **Learnings for future iterations:**
   - Content JSON files are plain `[]` arrays — TypeScript types for these schemas will come in later modules
   - Use `.gitkeep` files to preserve empty directories in git (e.g., `public/images/`)
-  - `lib/hooks/index.ts` uses `export {}` as a minimal placeholder to satisfy TypeScript
+  - Typecheck and build both pass cleanly
+---
+
+## 2026-03-30 - US-008
+- Created `.github/workflows/deploy.yml` with GitHub Actions workflow for deploying to GitHub Pages
+- Workflow triggers on push to main, uses Node.js 20, runs `npm ci` + `npm run build`, deploys `out/` via `peaceiris/actions-gh-pages@v4`
+- Added permissions (contents read, pages write, id-token write) and concurrency group
+- Files changed: `.github/workflows/deploy.yml`
+- **Learnings for future iterations:**
+  - `peaceiris/actions-gh-pages@v4` requires `github_token` and `publish_dir` parameters
+  - Workflow needs `permissions` block for GitHub Pages deployment (contents: read, pages: write, id-token: write)
+  - Use `concurrency` group to prevent parallel deployments
+  - `actions/setup-node@v4` with `cache: npm` speeds up CI by caching node_modules
+  - The actual deployment only works once merged to main and GitHub Pages is configured to serve from gh-pages branch
   - Typecheck and build both pass cleanly
 ---

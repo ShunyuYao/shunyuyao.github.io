@@ -132,7 +132,7 @@
         "npm run build still succeeds (sanity check)"
       ],
       "priority": 8,
-      "passes": false,
+      "passes": true,
       "notes": "The workflow publishes from the out/ directory to the gh-pages branch. Use peaceiris/actions-gh-pages@v4. The actual deployment will only work once the branch is merged and GitHub Pages is configured to serve from gh-pages branch."
     }
   ]
