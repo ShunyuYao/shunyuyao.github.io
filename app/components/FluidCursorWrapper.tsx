@@ -19,9 +19,8 @@ export default function FluidCursorWrapper() {
 
   useEffect(() => {
     if (isCoarse) {
-      // eslint-disable-next-line react-hooks/set-state-in-effect -- one-time init, no cascading render
-      setIsReady(true);
-      return;
+      const id = requestAnimationFrame(() => setIsReady(true));
+      return () => cancelAnimationFrame(id);
     }
 
     // Desktop: defer until first mousemove
