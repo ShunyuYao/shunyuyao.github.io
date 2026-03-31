@@ -35,7 +35,7 @@ export default async function WorkDetailPage({ params }: WorkDetailProps) {
       <section className="space-y-6">
         <Link
           href="/work"
-          className="text-sm text-[var(--foreground)]/50 hover:text-[var(--accent)] transition-colors"
+          className="text-base text-[var(--foreground)]/50 hover:text-[var(--accent)] transition-colors"
         >
           {t("backToWork")}
         </Link>
@@ -54,7 +54,7 @@ export default async function WorkDetailPage({ params }: WorkDetailProps) {
             <h1 className="text-2xl font-bold">
               {locale === "zh" ? item.nameZh : item.name}
             </h1>
-            <p className="text-sm text-[var(--foreground)]/60 mt-1">
+            <p className="text-base text-[var(--foreground)]/60 mt-1">
               {locale === "zh"
                 ? `${item.roleZh} · ${item.orgZh} · ${item.periodZh}`
                 : `${item.role} · ${item.org} · ${item.period}`}

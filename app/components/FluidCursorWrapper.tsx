@@ -13,15 +13,15 @@ function useIsCoarsePointer() {
 
 export default function FluidCursorWrapper() {
   const isCoarse = useIsCoarsePointer();
-  const [isInteracted, setIsInteracted] = useState(false);
+  const [isReady, setIsReady] = useState(false);
 
-  const handleInteraction = useCallback(() => setIsInteracted(true), []);
+  const handleInteraction = useCallback(() => setIsReady(true), []);
 
   useEffect(() => {
     if (isCoarse) {
-      // Mobile: listen for first touch
-      window.addEventListener("touchstart", handleInteraction, { once: true });
-      return () => window.removeEventListener("touchstart", handleInteraction);
+      // Mobile: load immediately
+      setIsReady(true);
+      return;
     }
 
     // Desktop: defer until first mousemove
@@ -29,7 +29,7 @@ export default function FluidCursorWrapper() {
     return () => window.removeEventListener("mousemove", handleInteraction);
   }, [isCoarse, handleInteraction]);
 
-  if (!isInteracted) return null;
+  if (!isReady) return null;
 
   return <LazyFluidCursor />;
 }

@@ -43,7 +43,7 @@ export default async function AboutPage({
           />
           <div className="space-y-2 text-center sm:text-left">
             <h1 className="text-2xl font-bold">{t("name")}</h1>
-            <p className="text-sm text-[var(--foreground)]/60">
+            <p className="text-base text-[var(--foreground)]/60">
               {t("tagline")}
             </p>
           </div>
@@ -51,7 +51,7 @@ export default async function AboutPage({
 
         <div className="space-y-4">
           <h2 className="text-lg font-semibold">{t("sectionAbout")}</h2>
-          <div className="space-y-2 text-sm text-[var(--foreground)]/80">
+          <div className="space-y-2 text-base text-[var(--foreground)]/80">
             <p>{t("bio")}</p>
           </div>
         </div>
@@ -60,13 +60,13 @@ export default async function AboutPage({
           <h2 className="text-lg font-semibold">{t("sectionEducation")}</h2>
           <ul className="space-y-3">
             {education.map((edu, i) => (
-              <li key={i} className="flex gap-4 text-sm">
+              <li key={i} className="flex gap-4 text-base">
                 <span className="shrink-0 text-[var(--foreground)]/60">
                   {edu.period}
                 </span>
                 <div>
                   <div>{edu.school}</div>
-                  <div className="text-xs text-[var(--foreground)]/60">
+                  <div className="text-sm text-[var(--foreground)]/60">
                     {edu.degree}
                   </div>
                 </div>
@@ -77,7 +77,7 @@ export default async function AboutPage({
 
         <div className="space-y-4">
           <h2 className="text-lg font-semibold">{t("sectionContact")}</h2>
-          <ul className="space-y-2 text-sm text-[var(--foreground)]/80">
+          <ul className="space-y-2 text-base text-[var(--foreground)]/80">
             <li>
               {t("email")}
               <a
@@ -101,7 +101,7 @@ export default async function AboutPage({
         <div className="pt-4">
           <Link
             href="/awards"
-            className="text-sm text-[var(--accent)] hover:underline"
+            className="text-base text-[var(--accent)] hover:underline"
           >
             {t("viewAwards")}
           </Link>

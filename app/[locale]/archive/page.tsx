@@ -72,8 +72,8 @@ export default async function ArchivePage({
                   locale === "zh" ? entry.title : entry.titleEn;
 
                 return (
-                  <li key={i} className="flex items-baseline gap-2 text-sm">
-                    <span className="text-neutral-500 font-mono text-xs w-8 shrink-0">
+                  <li key={i} className="flex items-baseline gap-2 text-base">
+                    <span className="text-neutral-500 font-mono text-sm w-8 shrink-0">
                       {month}
                     </span>
                     <span className="shrink-0">{typeEmoji[entry.type]}</span>

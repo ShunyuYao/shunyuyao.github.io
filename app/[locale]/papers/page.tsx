@@ -69,7 +69,7 @@ export default async function PapersPage({
               {grouped[year].map((paper) => (
                 <li key={paper.id} className="space-y-1.5">
                   <p className="text-lg font-medium">{paper.title}</p>
-                  <p className="text-sm text-neutral-500">
+                  <p className="text-base text-neutral-500">
                     {paper.authors.map((author, i) => (
                       <span key={i}>
                         {i > 0 && ", "}
@@ -81,7 +81,7 @@ export default async function PapersPage({
                       </span>
                     ))}
                   </p>
-                  <div className="flex items-center gap-2 text-sm">
+                  <div className="flex items-center gap-2 text-base">
                     <span className="text-[var(--accent)]">{paper.venue}</span>
                     {paper.note && (
                       <span className="text-neutral-500">· {paper.note}</span>

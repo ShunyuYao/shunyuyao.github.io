@@ -1,8 +1,10 @@
 {
-  "updatedAt": "2026-03",
+  "updatedAt": "2026-04",
   "items": [
-    { "text": "正在构建 OneStory — AI 驱动的互动叙事平台", "textEn": "Building OneStory — an AI-powered interactive storytelling platform" },
-    { "text": "探索数字人与多模态 AI 技术", "textEn": "Exploring digital human and multimodal AI technologies" },
-    { "text": "生活在上海，热爱内容创作与开源", "textEn": "Based in Shanghai, passionate about content creation and open source" }
+    { "text": "正在经历短暂的休息，感受变革、思考人生当中 🤔", "textEn": "Taking a brief pause — feeling the change, reflecting on life 🤔" },
+    { "text": "利用电子缰绳 (Harness Engineering) 构建软件开发流程 🐮🐎", "textEn": "Building software dev workflows with Harness Engineering 🐮🐎" },
+    { "text": "开发 AI native 游戏 ing... 🎮", "textEn": "Developing an AI-native game... 🎮" },
+    { "text": "正在学习精神分析和心理学相关知识 📖", "textEn": "Studying psychoanalysis & psychology 📖" },
+    { "text": "考驾照进行时 🚗", "textEn": "Getting my driver's license 🚗" }
   ]
 }

@@ -3,13 +3,8 @@
 import { useState, useEffect } from "react";
 
 const titles = {
-  zh: ["AIGC 研究者", "产品负责人", "AI 内容创作者", "数字人技术专家"],
-  en: [
-    "AIGC Researcher",
-    "Product Builder",
-    "AI Content Creator",
-    "Digital Human Engineer",
-  ],
+  zh: ["AI + 内容创业者", "Agentic AI研究者", "AI技术leader"],
+  en: ["AI + Content Entrepreneur", "Agentic AI Researcher", "AI Tech Leader"],
 };
 
 export default function TypewriterTitle({

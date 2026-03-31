@@ -2,8 +2,8 @@ import { Link } from "@/i18n/navigation";
 import TypewriterTitle from "./TypewriterTitle";
 
 const subtitles = {
-  zh: "上海 · AI · 内容创作 · 数字人",
-  en: "Shanghai · AI · Content · Digital Human",
+  zh: "Agentic AI · 六边形战士 · 连续创业者 · 上海",
+  en: "Agentic AI · Hexagonal Warrior · Serial Entrepreneur · Shanghai",
 };
 
 const ctaLabels = {

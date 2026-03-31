@@ -37,13 +37,13 @@ export default async function AwardsPage({
         <h1 className="text-2xl font-bold">{t("heading")}</h1>
         <ul className="space-y-4">
           {awardsData.map((award, i) => (
-            <li key={i} className="flex gap-4 text-sm">
+            <li key={i} className="flex gap-4 text-base">
               <span className="shrink-0 text-[var(--foreground)]/60">
                 {award.year}
               </span>
               <div>
                 <div>{locale === "zh" ? award.title : award.titleEn}</div>
-                <div className="text-xs text-[var(--foreground)]/60">
+                <div className="text-sm text-[var(--foreground)]/60">
                   {award.org}
                 </div>
               </div>

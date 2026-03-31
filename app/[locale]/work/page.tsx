@@ -48,17 +48,17 @@ export default async function WorkPage({
                   >
                     {locale === "zh" ? item.nameZh : item.name}
                   </Link>
-                  <p className="text-sm text-[var(--foreground)]/60">
+                  <p className="text-base text-[var(--foreground)]/60">
                     {locale === "zh"
                       ? `${item.roleZh} · ${item.orgZh} · ${item.periodZh}`
                       : `${item.role} · ${item.org} · ${item.period}`}
                   </p>
                 </div>
               </div>
-              <p className="text-sm text-[var(--foreground)]/80">
+              <p className="text-base text-[var(--foreground)]/80">
                 {locale === "zh" ? item.descriptionZh : item.description}
               </p>
-              <ul className="list-disc list-inside text-sm text-[var(--foreground)]/60 space-y-1">
+              <ul className="list-disc list-inside text-base text-[var(--foreground)]/60 space-y-1">
                 {(locale === "zh" ? item.highlightsZh : item.highlights).map(
                   (h, i) => (
                     <li key={i}>{h}</li>
@@ -73,7 +73,7 @@ export default async function WorkPage({
                       href={link.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="relative z-10 text-xs text-[var(--accent)] hover:underline"
+                      className="relative z-10 text-sm text-[var(--accent)] hover:underline"
                     >
                       [{link.label}]
                     </a>

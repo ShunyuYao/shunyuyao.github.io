@@ -33,7 +33,7 @@ export default async function NowPage({
             </li>
           ))}
         </ul>
-        <p className="text-sm text-[var(--foreground)]/50">
+        <p className="text-base text-[var(--foreground)]/50">
           {t("lastUpdated", { date: nowData.updatedAt })}
         </p>
       </section>

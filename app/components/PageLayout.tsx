@@ -40,10 +40,10 @@ export function PageLayout({ pathname, title, children, description, navLinks }:
         {(description || navLinks) && (
           <div className="text-center space-y-4 mt-6">
             {description && (
-              <p className="text-sm text-neutral-500 max-w-md mx-auto">{description}</p>
+              <p className="text-base text-neutral-500 max-w-md mx-auto">{description}</p>
             )}
             {navLinks && navLinks.length > 0 && (
-              <nav className="flex items-center justify-center gap-4 text-xs text-neutral-500">
+              <nav className="flex items-center justify-center gap-4 text-sm text-neutral-500">
                 {navLinks.map((link) => (
                   <a
                     key={link.label}

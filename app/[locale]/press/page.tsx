@@ -45,15 +45,15 @@ export default async function PressPage({
                 href={item.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="relative z-10 text-sm hover:text-[var(--accent)] transition-colors"
+                className="relative z-10 text-base hover:text-[var(--accent)] transition-colors"
               >
                 {locale === "zh" ? item.title : item.titleEn}
               </a>
-              <div className="flex items-center gap-2 text-xs text-[var(--foreground)]/60">
+              <div className="flex items-center gap-2 text-sm text-[var(--foreground)]/60">
                 <span>{item.outlet}</span>
                 <span>·</span>
                 <span>{item.date}</span>
-                <span className="rounded-full border border-[var(--foreground)]/20 px-2 py-0.5 text-[10px] uppercase tracking-wide">
+                <span className="rounded-full border border-[var(--foreground)]/20 px-2 py-0.5 text-xs uppercase tracking-wide">
                   {item.type}
                 </span>
               </div>
