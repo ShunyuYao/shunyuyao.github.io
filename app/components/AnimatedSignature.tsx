@@ -7,7 +7,7 @@ export default function AnimatedSignature({ className = "w-full h-auto" }: { cla
       muted
       playsInline
       className={className}
-      style={{ background: "transparent" }}
+      style={{ mixBlendMode: "screen" }}
     />
   );
 }
