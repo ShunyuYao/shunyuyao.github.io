@@ -13,12 +13,16 @@ function useIsCoarsePointer() {
 
 export default function FluidCursorWrapper() {
   const isCoarse = useIsCoarsePointer();
-  const [isReady, setIsReady] = useState(isCoarse);
+  const [isReady, setIsReady] = useState(false);
 
   const handleInteraction = useCallback(() => setIsReady(true), []);
 
   useEffect(() => {
-    if (isCoarse) return;
+    if (isCoarse) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- one-time init, no cascading render
+      setIsReady(true);
+      return;
+    }
 
     // Desktop: defer until first mousemove
     window.addEventListener("mousemove", handleInteraction, { once: true });
