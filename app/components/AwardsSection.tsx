@@ -28,7 +28,7 @@ export function AwardsSection({ lang = "zh" }: AwardsSectionProps) {
     >
       <ul className="space-y-3">
         {items.map((award, index) => (
-          <li key={index} className="flex items-baseline gap-3 px-3 py-2 -mx-3 rounded-md hover:bg-neutral-800/50 transition-colors">
+          <li key={index} className="flex items-baseline gap-3">
             <span className="text-sm text-neutral-500 font-mono shrink-0">
               {award.year}
             </span>
