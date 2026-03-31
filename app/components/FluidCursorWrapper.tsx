@@ -13,16 +13,12 @@ function useIsCoarsePointer() {
 
 export default function FluidCursorWrapper() {
   const isCoarse = useIsCoarsePointer();
-  const [isReady, setIsReady] = useState(false);
+  const [isReady, setIsReady] = useState(isCoarse);
 
   const handleInteraction = useCallback(() => setIsReady(true), []);
 
   useEffect(() => {
-    if (isCoarse) {
-      // Mobile: load immediately
-      setIsReady(true);
-      return;
-    }
+    if (isCoarse) return;
 
     // Desktop: defer until first mousemove
     window.addEventListener("mousemove", handleInteraction, { once: true });
