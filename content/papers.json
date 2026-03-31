@@ -2,50 +2,56 @@
   {
     "id": "lamic-aaai2026",
     "title": "LAMIC: Language-Based Automatic Music Imagination and Composition",
-    "authors": ["Shunyu Yao", "et al."],
+    "authors": ["Shunyu Yao*", "et al."],
     "venue": "AAAI 2026",
     "year": 2026,
+    "url": "https://arxiv.org/abs/2508.00477",
     "links": [],
-    "note": "Corresponding author · Poster"
+    "note": "Corresponding Author · Poster"
+  },
+  {
+    "id": "poxture",
+    "title": "Poxture: Human Posture Imitation Using Neural Texture",
+    "authors": ["Chen Yang", "Shun-Yu Yao", "Zan-Wei Zhou", "Wei Shen"],
+    "venue": "IEEE TCSVT 2022",
+    "year": 2022,
+    "url": "https://doi.org/10.1109/TCSVT.2022.3190875",
+    "links": []
   },
   {
     "id": "dialoguenerf",
-    "title": "DialogueNeRF: Dialogue-Driven Neural Radiance Fields for Talking Head Synthesis",
-    "authors": ["Shunyu Yao", "et al."],
+    "title": "DialogueNeRF: Towards Realistic Avatar Face-to-Face Conversation Video Generation",
+    "authors": ["Yichao Yan", "Zanwei Zhou", "Shunyu Yao", "Zi Wang", "Jingnan Gao", "Xiaokang Yang"],
     "venue": "arXiv 2022",
     "year": 2022,
+    "url": "https://arxiv.org/abs/2203.07931",
     "links": []
   },
   {
     "id": "dfa-nerf",
     "title": "DFA-NeRF: Personalized Talking Head Generation via Disentangled Face Attributes Neural Rendering",
-    "authors": ["Shunyu Yao", "et al."],
+    "authors": ["Shunyu Yao", "RuiZhe Zhong", "Yichao Yan", "Guangtao Zhai", "Xiaokang Yang"],
     "venue": "arXiv 2022",
     "year": 2022,
-    "links": []
-  },
-  {
-    "id": "poxture",
-    "title": "Poxture: Human Posture Estimation for Customized Textile Design",
-    "authors": ["Shunyu Yao", "et al."],
-    "venue": "IEEE TCSVT 2022",
-    "year": 2022,
+    "url": "https://arxiv.org/abs/2201.00791",
     "links": []
   },
   {
     "id": "deep-av-fusion",
-    "title": "Deep Audio-Visual Fusion for Robust Speech Recognition",
-    "authors": ["Shunyu Yao", "et al."],
+    "title": "Deep Audio-Visual Fusion Neural Network for Saliency Estimation",
+    "authors": ["Shunyu Yao", "Xiongkuo Min", "Guangtao Zhai"],
     "venue": "IEEE ICIP 2021",
     "year": 2021,
+    "url": "https://doi.org/10.1109/ICIP42928.2021.9506089",
     "links": []
   },
   {
     "id": "hpof",
-    "title": "HPOF: High-Performance Object Following for Autonomous Vehicles",
-    "authors": ["Shunyu Yao", "et al."],
+    "title": "HPOF: 3D Human Pose Recovery from Monocular Video with Optical Flow",
+    "authors": ["Bin Ji", "Chen Yang", "Shunyu Yao", "Ye Pan"],
     "venue": "ICMR 2021",
     "year": 2021,
+    "url": "https://dl.acm.org/doi/10.1145/3460426.3463605",
     "links": []
   }
 ]

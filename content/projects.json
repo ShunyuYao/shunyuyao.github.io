@@ -1,5 +1,22 @@
 [
   {
+    "id": "infinity-valley",
+    "name": "Infinity Valley",
+    "nameZh": "无限谷",
+    "category": "product",
+    "description": "An AI emotional companion App with gamified features. Provides companionship through text, voice, and video chat, along with personified tool features like memos, alarms, and listening to music together. Led the full AI system rebuild including sync/async Agent architecture and Agentic memory system.",
+    "descriptionZh": "AI 情感陪伴类、带有游戏化属性的 App 产品。通过文字、语音、视频聊天提供情感陪伴，并以AI Native交互方式提供备忘录、闹钟、一起听音乐等工具功能。",
+    "highlights": ["Full AI system architecture rebuild", "Sync/async Agent system design", "Agentic memory system"],
+    "highlightsZh": ["AI 系统整体架构重构", "同步和异步 Agent 系统设计与构建", "Agentic 记忆系统搭建"],
+    "links": [
+      { "label": "TapTap", "labelEn": "TapTap", "url": "https://www.taptap.cn/app/792727" }
+    ],
+    "org": "Infinity Valley",
+    "orgZh": "无限谷",
+    "period": "2025 – 2026",
+    "periodZh": "2025 – 2026"
+  },
+  {
     "id": "onestory",
     "name": "OneStory",
     "nameZh": "OneStory",
@@ -14,8 +31,8 @@
     ],
     "org": "Chuangyi Technology",
     "orgZh": "创壹科技",
-    "period": "2022 – present",
-    "periodZh": "2022 至今"
+    "period": "2023 – 2025",
+    "periodZh": "2023 – 2025"
   },
   {
     "id": "aigc-videos",
@@ -33,8 +50,8 @@
     ],
     "org": "Chuangyi Technology",
     "orgZh": "创壹科技",
-    "period": "2022 – 2024",
-    "periodZh": "2022 – 2024"
+    "period": "2023 – 2025",
+    "periodZh": "2023 – 2025"
   },
   {
     "id": "voka",
@@ -46,7 +63,7 @@
     "highlights": [],
     "highlightsZh": [],
     "links": [
-      { "label": "视频 Demo", "labelEn": "Video Demo", "url": "https://pan.quark.cn/s/cddbaf0b31c4" }
+      { "label": "视频 Demo", "labelEn": "Video Demo", "url": "https://pan.quark.cn/s/031a270cac54" }
     ],
     "org": "Voka Technology",
     "orgZh": "我咖科技",

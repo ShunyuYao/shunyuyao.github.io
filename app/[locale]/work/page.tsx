@@ -48,7 +48,7 @@ export default async function WorkPage({
                   >
                     {locale === "zh" ? item.nameZh : item.name}
                   </Link>
-                  <p className="text-base text-[var(--foreground)]/60">
+                  <p className="text-sm text-[var(--foreground)]/60">
                     {locale === "zh"
                       ? `${item.roleZh} · ${item.orgZh} · ${item.periodZh}`
                       : `${item.role} · ${item.org} · ${item.period}`}

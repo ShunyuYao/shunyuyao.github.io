@@ -7,5 +7,23 @@
     "date": "2024",
     "url": "https://www.bilibili.com/video/BV1Y1ymBAE5k/",
     "type": "video"
+  },
+  {
+    "id": "ainewrank-salon",
+    "title": "「头号玩家沙龙」第四期：AI技术的迭代是一次次刷新起跑线的过程",
+    "titleEn": "Top Player Salon #4: AI Iteration Keeps Resetting the Starting Line",
+    "outlet": "AI新榜",
+    "date": "2025",
+    "url": "https://mp.weixin.qq.com/s/R9hYfZ_PEd2SiqRD0JlDJQ",
+    "type": "article"
+  },
+  {
+    "id": "aibx-talk-podcast",
+    "title": "对话姚顺宇：提示词写不好不能怪用户，好产品怎样帮用户做好内容？",
+    "titleEn": "Interview: How Good Products Help Users Create Better Content",
+    "outlet": "AIBX TALK",
+    "date": "2025",
+    "url": "https://www.xiaoyuzhoufm.com/episode/67c3d5c1b0167b8db9e384f4",
+    "type": "podcast"
   }
 ]

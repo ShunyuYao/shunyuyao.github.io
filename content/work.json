@@ -1,14 +1,39 @@
 [
   {
+    "id": "infinityvalley",
+    "name": "Infinity Valley",
+    "nameZh": "无限谷",
+    "org": "Infinity Valley",
+    "orgZh": "无限谷",
+    "period": "2025 – 2026",
+    "periodZh": "2025 – 2026",
+    "role": "AI Lead",
+    "roleZh": "AI Agent负责人",
+    "description": "An AI emotional companion App with gamified features. Led the full AI system rebuild including sync/async Agent architecture and Agentic memory system.",
+    "descriptionZh": "AI 情感陪伴类、带有游戏化属性的 App 产品。",
+    "highlights": [
+      "Full AI system architecture rebuild",
+      "Sync/async Agent system design",
+      "Agentic memory system"
+    ],
+    "highlightsZh": [
+      "AI 系统整体架构重构",
+      "同步和异步 Agent 系统设计与构建",
+      "Agentic 记忆系统搭建"
+    ],
+    "links": [{ "label": "TapTap", "url": "https://www.taptap.cn/app/792727" }],
+    "logo": "/images/logos/infinityvalley.jpeg"
+  },
+  {
     "id": "onestory",
     "name": "OneStory",
     "nameZh": "OneStory",
-    "org": "OneStory",
-    "orgZh": "OneStory",
-    "period": "2024 – Present",
-    "periodZh": "2024 – 至今",
-    "role": "Founder",
-    "roleZh": "创始人",
+    "org": "Chuangyi Technology",
+    "orgZh": "创壹科技",
+    "period": "2023 – 2025",
+    "periodZh": "2023 – 2025",
+    "role": "CTO",
+    "roleZh": "CTO",
     "description": "AI-powered interactive storytelling platform combining digital humans, multimodal generation, and immersive narrative experiences.",
     "descriptionZh": "AI 驱动的互动叙事平台，结合数字人、多模态生成与沉浸式叙事体验。",
     "highlights": [
@@ -17,19 +42,19 @@
     ],
     "highlightsZh": [
       "构建端到端 AI 数字人内容生产管线",
-      "在 onestory.art 上线公开产品"
+      "上线 onestory.art，一站式AI故事视频生成工具"
     ],
     "links": [{ "label": "Website", "url": "https://www.onestory.art" }],
-    "logo": "/images/onestory-logo.png"
+    "logo": "/images/logos/onestory.png"
   },
   {
     "id": "voka",
     "name": "Voka",
     "nameZh": "Voka",
-    "org": "Voka",
-    "orgZh": "Voka",
-    "period": "2022 – 2024",
-    "periodZh": "2022 – 2024",
+    "org": "Voka Technology",
+    "orgZh": "我咖科技",
+    "period": "2019 – 2022",
+    "periodZh": "2019 – 2022",
     "role": "Co-founder & CTO",
     "roleZh": "联合创始人 & CTO",
     "description": "AI-driven digital human and content creation startup focused on virtual influencers and branded content.",
@@ -40,9 +65,9 @@
     ],
     "highlightsZh": [
       "研发实时数字人渲染系统",
-      "交付企业级产品"
+      "Vtuber实时直播平台"
     ],
     "links": [],
-    "logo": "/images/voka-logo.png"
+    "logo": "/images/logos/voka.png"
   }
 ]

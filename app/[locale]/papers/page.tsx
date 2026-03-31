@@ -14,6 +14,7 @@ interface Paper {
   authors: string[];
   venue: string;
   year: number;
+  url?: string;
   links: PaperLink[];
   note?: string;
 }
@@ -73,8 +74,8 @@ export default async function PapersPage({
                     {paper.authors.map((author, i) => (
                       <span key={i}>
                         {i > 0 && ", "}
-                        {author === "Shunyu Yao" ? (
-                          <strong className="text-neutral-300">Shunyu Yao*</strong>
+                        {/Shun-?yu Yao/i.test(author) ? (
+                          <strong className="text-neutral-300">{author}</strong>
                         ) : (
                           author
                         )}
@@ -82,7 +83,18 @@ export default async function PapersPage({
                     ))}
                   </p>
                   <div className="flex items-center gap-2 text-base">
-                    <span className="text-[var(--accent)]">{paper.venue}</span>
+                    {paper.url ? (
+                      <a
+                        href={paper.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-[var(--accent)] hover:underline"
+                      >
+                        {paper.venue}
+                      </a>
+                    ) : (
+                      <span className="text-[var(--accent)]">{paper.venue}</span>
+                    )}
                     {paper.note && (
                       <span className="text-neutral-500">· {paper.note}</span>
                     )}

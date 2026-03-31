@@ -12,6 +12,7 @@ interface Paper {
   authors: string[];
   venue: string;
   year: number;
+  url?: string;
   links: PaperLink[];
   note?: string;
 }
@@ -42,11 +43,8 @@ export function PapersSection({ lang = "zh" }: PapersSectionProps) {
             <p className="text-base text-neutral-300 text-fade">{paper.title}</p>
             <div className="flex items-center gap-2 text-sm">
               <span className="text-[var(--accent)]">
-                {paper.venue} {paper.year}
+                {paper.venue}
               </span>
-              {paper.note && (
-                <span className="text-neutral-500">· {paper.note}</span>
-              )}
               {paper.links.map((link) => (
                 <a
                   key={link.label}
