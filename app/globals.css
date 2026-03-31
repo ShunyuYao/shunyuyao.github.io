@@ -31,6 +31,14 @@ body::after {
   background-repeat: repeat;
 }
 
+/* Text fade-out: gradient mask instead of ellipsis for overflow */
+.text-fade {
+  overflow: hidden;
+  white-space: nowrap;
+  mask-image: linear-gradient(to right, black calc(100% - 3rem), transparent);
+  -webkit-mask-image: linear-gradient(to right, black calc(100% - 3rem), transparent);
+}
+
 /* Signature draw animation */
 .signature-path {
   stroke-dasharray: 2000;

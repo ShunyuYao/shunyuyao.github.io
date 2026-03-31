@@ -42,7 +42,7 @@ export function ArchivePreview({ lang = "zh" }: ArchivePreviewProps) {
               {entry.date}
             </span>
             <span className="shrink-0">{typeEmoji[entry.type]}</span>
-            <span className="text-base text-neutral-300 truncate">
+            <span className="text-base text-neutral-300 text-fade">
               {lang === "zh" ? entry.title : entry.titleEn}
             </span>
           </li>
