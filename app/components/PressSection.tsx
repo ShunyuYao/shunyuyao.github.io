@@ -31,7 +31,7 @@ export function PressSection({ lang = "zh" }: PressSectionProps) {
     >
       <ul className="space-y-4">
         {items.map((item) => (
-          <li key={item.id}>
+          <li key={item.id} className="px-3 py-2 -mx-3 rounded-md hover:bg-neutral-800/50 transition-colors">
             <a
               href={item.url}
               target="_blank"

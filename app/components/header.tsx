@@ -41,7 +41,7 @@ export function Header({ pathname: pathnameProp }: { pathname?: string } = {}) {
           <AnimatedSignature />
         </Link>
         <p className="mt-1 text-3xl tracking-widest text-[var(--foreground)]/60 font-[var(--font-ma-shan-zheng)]">
-          姚顺宇
+          Yao Shunyu
         </p>
       </div>
       <Breadcrumbs pathname={pathname} />

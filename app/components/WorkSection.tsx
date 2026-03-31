@@ -19,7 +19,7 @@ export function WorkSection({ lang = "zh" }: WorkSectionProps) {
     >
       <ul className="space-y-4">
         {items.map((item) => (
-          <li key={item.id} className="flex items-start gap-3">
+          <li key={item.id} className="flex items-start gap-3 px-3 py-2 -mx-3 rounded-md hover:bg-neutral-800/50 transition-colors">
             <div>
               <p className="text-base text-neutral-300">
                 {lang === "zh" ? item.nameZh : item.name}

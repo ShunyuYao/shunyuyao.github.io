@@ -37,12 +37,12 @@ export function ArchivePreview({ lang = "zh" }: ArchivePreviewProps) {
     >
       <ul className="space-y-4">
         {items.map((entry, i) => (
-          <li key={i} className="flex items-baseline gap-2">
+          <li key={i} className="flex items-baseline gap-2 px-3 py-2 -mx-3 rounded-md hover:bg-neutral-800/50 transition-colors">
             <span className="font-mono text-neutral-500 text-sm w-18 shrink-0">
               {entry.date}
             </span>
             <span className="shrink-0">{typeEmoji[entry.type]}</span>
-            <span className="text-base text-neutral-300 truncate">
+            <span className="text-base text-neutral-300 text-fade">
               {lang === "zh" ? entry.title : entry.titleEn}
             </span>
           </li>
