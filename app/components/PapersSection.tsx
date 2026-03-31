@@ -38,7 +38,7 @@ export function PapersSection({ lang = "zh" }: PapersSectionProps) {
     >
       <ul className="space-y-4">
         {items.map((paper) => (
-          <li key={paper.id} className="px-3 py-2 -mx-3 rounded-md hover:bg-neutral-800/50 transition-colors">
+          <li key={paper.id}>
             <p className="text-base text-neutral-300 text-fade">{paper.title}</p>
             <div className="flex items-center gap-2 text-sm">
               <span className="text-[var(--accent)]">

@@ -16,7 +16,7 @@
         "Build succeeds (npm run build)"
       ],
       "priority": 1,
-      "passes": true,
+      "passes": false,
       "notes": ""
     },
     {
@@ -33,7 +33,7 @@
         "Build succeeds (npm run build)"
       ],
       "priority": 2,
-      "passes": true,
+      "passes": false,
       "notes": ""
     },
     {
@@ -49,7 +49,7 @@
         "Build succeeds (npm run build)"
       ],
       "priority": 3,
-      "passes": true,
+      "passes": false,
       "notes": ""
     },
     {
@@ -64,7 +64,7 @@
         "Build succeeds (npm run build)"
       ],
       "priority": 4,
-      "passes": true,
+      "passes": false,
       "notes": ""
     }
   ]
