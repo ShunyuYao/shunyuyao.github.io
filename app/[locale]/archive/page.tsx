@@ -53,11 +53,12 @@ export default async function ArchivePage({
 }) {
   const { locale } = await params;
   setRequestLocale(locale);
+  const t = await getTranslations({ locale, namespace: "nav" });
 
   const grouped = groupByYear(archiveData);
 
   return (
-    <PageLayout pathname="/archive">
+    <PageLayout pathname="/archive" title={t("archive")}>
       <section className="space-y-10">
         {grouped.map(({ year, items }) => (
           <div key={year} className="space-y-3">

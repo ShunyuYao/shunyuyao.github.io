@@ -23,7 +23,7 @@ export function Footer({ lang }: { lang?: "zh" | "en" } = {}) {
       <div className="mx-auto w-px h-16 bg-neutral-800" />
 
       <Link href="/" aria-label="Home" className="block w-16 mx-auto mt-8">
-        <AnimatedSignature />
+        <AnimatedSignature lang={l} />
       </Link>
 
       <p className="mt-4 text-xs uppercase font-mono tracking-wider text-neutral-500">

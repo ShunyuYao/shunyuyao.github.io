@@ -1,4 +1,4 @@
-import { setRequestLocale } from "next-intl/server";
+import { setRequestLocale, getTranslations } from "next-intl/server";
 import { PageLayout } from "@/app/components/PageLayout";
 import projectsData from "@/content/projects.json";
 
@@ -21,9 +21,10 @@ export default async function ProjectsPage({
   const { locale } = await params;
   setRequestLocale(locale);
   const lang = locale as "zh" | "en";
+  const t = await getTranslations("nav");
 
   return (
-    <PageLayout pathname="/projects">
+    <PageLayout pathname="/projects" title={lang === "zh" ? "作品" : "Projects"}>
       <h1 className="text-2xl font-bold text-foreground mb-12">
         {lang === "zh" ? "作品" : "Projects"}
       </h1>

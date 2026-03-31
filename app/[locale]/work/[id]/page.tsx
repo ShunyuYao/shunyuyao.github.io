@@ -31,7 +31,7 @@ export default async function WorkDetailPage({ params }: WorkDetailProps) {
   if (!item) notFound();
 
   return (
-    <PageLayout pathname={`/work/${id}`}>
+    <PageLayout pathname={`/work/${id}`} title={locale === "zh" ? item.nameZh : item.name}>
       <section className="space-y-6">
         <Link
           href="/work"

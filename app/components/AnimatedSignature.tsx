@@ -1,13 +1,21 @@
 import Image from "next/image";
 
-export default function AnimatedSignature({ className = "w-full h-auto" }: { className?: string }) {
+export default function AnimatedSignature({
+  className = "w-full h-auto",
+  lang = "zh",
+}: {
+  className?: string;
+  lang?: "zh" | "en";
+}) {
+  const src = lang === "en" ? "/images/signature_v2_eng.png" : "/images/signature_v2_chn.png";
+
   return (
     <Image
-      src="/images/signature_v1.png"
+      src={src}
       alt="Shunyu Yao signature"
-      width={200}
-      height={200}
-      className={className}
+      width={400}
+      height={400}
+      className={`${className} ${lang === "en" ? "translate-x-5" : ""}`}
       priority
     />
   );

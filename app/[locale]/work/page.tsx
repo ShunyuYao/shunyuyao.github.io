@@ -25,7 +25,7 @@ export default async function WorkPage({
   const t = await getTranslations("work");
 
   return (
-    <PageLayout pathname="/work">
+    <PageLayout pathname="/work" title={t("heading")}>
       <section className="space-y-8">
         <h1 className="text-2xl font-bold">{t("heading")}</h1>
         <ul className="space-y-8">

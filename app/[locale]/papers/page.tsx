@@ -37,7 +37,7 @@ export default async function PapersPage({
 }) {
   const { locale } = await params;
   setRequestLocale(locale);
-  const t = await getTranslations("papers");
+  const t = await getTranslations("nav");
 
   const sorted = [...papersData].sort((a, b) => b.year - a.year);
 
@@ -52,36 +52,39 @@ export default async function PapersPage({
     .sort((a, b) => b - a);
 
   return (
-    <PageLayout pathname="/papers">
-      <section className="space-y-10">
-        <h1 className="text-2xl font-bold">{t("heading")}</h1>
+    <PageLayout
+      pathname="/papers"
+      title={t("papers")}
+      description="Selected academic publications on AI-generated content, multimodal learning, and digital humans."
+      navLinks={[
+        { label: "GitHub", href: "https://github.com/ShunyuYao", icon: "github" },
+        { label: "Blog", href: `/${locale}/blog`, icon: "blog" },
+      ]}
+    >
+      <div className="space-y-8">
         {years.map((year) => (
           <div key={year} className="space-y-4">
-            <h2 className="text-lg font-semibold text-[var(--foreground)]/70">
-              {year}
-            </h2>
-            <ul className="space-y-5">
+            <h2 className="text-lg font-medium text-neutral-500">{year}</h2>
+            <ul className="space-y-6">
               {grouped[year].map((paper) => (
-                <li key={paper.id} className="space-y-1">
-                  <p className="text-sm">{paper.title}</p>
-                  <p className="text-xs text-[var(--foreground)]/60">
+                <li key={paper.id} className="space-y-1.5">
+                  <p className="text-lg font-medium">{paper.title}</p>
+                  <p className="text-sm text-neutral-500">
                     {paper.authors.map((author, i) => (
                       <span key={i}>
                         {i > 0 && ", "}
                         {author === "Shunyu Yao" ? (
-                          <strong>Shunyu Yao*</strong>
+                          <strong className="text-neutral-300">Shunyu Yao*</strong>
                         ) : (
                           author
                         )}
                       </span>
                     ))}
                   </p>
-                  <div className="flex items-center gap-2 text-xs">
+                  <div className="flex items-center gap-2 text-sm">
                     <span className="text-[var(--accent)]">{paper.venue}</span>
                     {paper.note && (
-                      <span className="text-[var(--foreground)]/50">
-                        · {paper.note}
-                      </span>
+                      <span className="text-neutral-500">· {paper.note}</span>
                     )}
                     {paper.links.map((link) => (
                       <a
@@ -89,7 +92,7 @@ export default async function PapersPage({
                         href={link.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="relative z-10 text-[var(--foreground)]/50 hover:text-[var(--foreground)] transition-colors"
+                        className="text-neutral-400 hover:text-neutral-200 transition-colors"
                       >
                         [{link.label}]
                       </a>
@@ -100,7 +103,7 @@ export default async function PapersPage({
             </ul>
           </div>
         ))}
-      </section>
+      </div>
     </PageLayout>
   );
 }

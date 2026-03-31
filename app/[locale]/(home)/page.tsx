@@ -2,6 +2,7 @@ import { setRequestLocale } from "next-intl/server";
 import HeroSection from "@/app/components/HeroSection";
 import { NowSection } from "@/app/components/NowSection";
 import { WorkSection } from "@/app/components/WorkSection";
+import { WorkExperienceSection } from "@/app/components/WorkExperienceSection";
 import { PapersSection } from "@/app/components/PapersSection";
 import { PressSection } from "@/app/components/PressSection";
 import { AwardsSection } from "@/app/components/AwardsSection";
@@ -24,6 +25,7 @@ export default async function Home({
       </div>
       <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-18">
         <WorkSection lang={lang} />
+        <WorkExperienceSection lang={lang} />
         <PapersSection lang={lang} />
         <PressSection lang={lang} />
         <AwardsSection lang={lang} />

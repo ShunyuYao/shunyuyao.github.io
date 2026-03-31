@@ -30,7 +30,7 @@ export default async function AboutPage({
   }>;
 
   return (
-    <PageLayout pathname="/about">
+    <PageLayout pathname="/about" title={t("heading")}>
       <section className="space-y-10">
         <div className="flex flex-col items-center gap-6 sm:flex-row sm:items-start">
           <Image

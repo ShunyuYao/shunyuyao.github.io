@@ -10,8 +10,7 @@ export function NowSection({ lang = "zh" }: NowSectionProps) {
     <SectionContainer
       title="now"
       subtitle="/now"
-      description="What I'm focused on right now."
-      linkText="See all →"
+      clickable={false}
       lang={lang}
     >
       <ul className="list-disc marker:text-neutral-500 pl-5 space-y-4">

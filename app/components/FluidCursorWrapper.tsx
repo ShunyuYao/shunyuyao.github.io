@@ -8,21 +8,20 @@ const LazyFluidCursor = dynamic(() => import("@/app/components/FluidCursor"), {
 });
 
 export default function FluidCursorWrapper() {
-  // Mobile: start as interacted so FluidCursor mounts immediately (animation loop starts on init)
-  // Desktop: defer until first mousemove (original behavior)
-  const [isInteracted, setIsInteracted] = useState(() => {
-    if (typeof window === "undefined") return false;
-    return window.matchMedia("(pointer: coarse)").matches;
-  });
+  const [isInteracted, setIsInteracted] = useState(false);
 
   useEffect(() => {
-    if (isInteracted) return;
+    // Mobile: mount immediately since touch is the primary input
+    if (window.matchMedia("(pointer: coarse)").matches) {
+      setIsInteracted(true);
+      return;
+    }
 
     // Desktop: defer until first mousemove
     const handleMouseMove = () => setIsInteracted(true);
     window.addEventListener("mousemove", handleMouseMove, { once: true });
     return () => window.removeEventListener("mousemove", handleMouseMove);
-  }, [isInteracted]);
+  }, []);
 
   if (!isInteracted) return null;
 

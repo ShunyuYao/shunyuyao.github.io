@@ -41,7 +41,7 @@ export default function HeroSection({
         </a>
 
         <Link
-          href="/work"
+          href="/projects"
           className="relative z-10 inline-flex items-center justify-center rounded-full border border-[var(--foreground)]/20 px-6 py-3 font-medium transition-opacity hover:opacity-70"
         >
           {ctaLabels[lang].work}

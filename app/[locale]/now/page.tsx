@@ -23,7 +23,7 @@ export default async function NowPage({
   const t = await getTranslations("now");
 
   return (
-    <PageLayout pathname="/now">
+    <PageLayout pathname="/now" title={t("heading")}>
       <section className="space-y-6">
         <h1 className="text-2xl font-bold">{t("heading")}</h1>
         <ul className="list-disc list-inside space-y-2 text-[var(--foreground)]/80">
