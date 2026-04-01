@@ -9,7 +9,9 @@
     "highlights": ["Full AI system architecture rebuild", "Sync/async Agent system design", "Agentic memory system"],
     "highlightsZh": ["AI 系统整体架构重构", "同步和异步 Agent 系统设计与构建", "Agentic 记忆系统搭建"],
     "links": [
-      { "label": "TapTap", "labelEn": "TapTap", "url": "https://www.taptap.cn/app/792727" }
+      { "label": "TapTap", "labelEn": "TapTap", "url": "https://www.taptap.cn/app/792727" },
+      { "label": "2D PV", "labelEn": "2D PV", "url": "https://www.bilibili.com/video/BV1iNsUz6E5q/?share_source=copy_web&vd_source=547cd2cb29e354bd4959722bbf7010e3" },
+      { "label": "3D PV", "labelEn": "3D PV", "url": "https://www.bilibili.com/video/BV18mwpziEzs/?share_source=copy_web&vd_source=547cd2cb29e354bd4959722bbf7010e3" }
     ],
     "org": "Infinity Valley",
     "orgZh": "无限谷",

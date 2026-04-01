@@ -4,7 +4,7 @@
     "name": "Infinity Valley",
     "nameZh": "无限谷",
     "org": "Infinity Valley",
-    "orgZh": "无限谷",
+    "orgZh": "无限星",
     "period": "2025 – 2026",
     "periodZh": "2025 – 2026",
     "role": "AI Lead",
@@ -21,7 +21,7 @@
       "同步和异步 Agent 系统设计与构建",
       "Agentic 记忆系统搭建"
     ],
-    "links": [{ "label": "TapTap", "url": "https://www.taptap.cn/app/792727" }],
+    "links": [{ "label": "TapTap", "url": "https://www.taptap.cn/app/792727" }, { "label": "2D PV", "url": "https://www.bilibili.com/video/BV1iNsUz6E5q/?share_source=copy_web&vd_source=547cd2cb29e354bd4959722bbf7010e3" }, { "label": "3D PV", "url": "https://www.bilibili.com/video/BV18mwpziEzs/?share_source=copy_web&vd_source=547cd2cb29e354bd4959722bbf7010e3" }],
     "logo": "/images/logos/infinityvalley.jpeg"
   },
   {

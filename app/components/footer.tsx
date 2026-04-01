@@ -10,8 +10,8 @@ const navLinks = [
   { href: "/papers", label: "Papers", labelZh: "论文" },
   { href: "/press", label: "Press", labelZh: "媒体" },
   { href: "/awards", label: "Awards", labelZh: "荣誉" },
-  { href: "/about", label: "About", labelZh: "关于" },
-  { href: "/archive", label: "Archive", labelZh: "存档" },
+  { href: "/about", label: "About", labelZh: "生涯" },
+  // { href: "/archive", label: "Archive", labelZh: "存档" },
 ] as const;
 
 export function Footer({ lang }: { lang?: "zh" | "en" } = {}) {
@@ -28,7 +28,7 @@ export function Footer({ lang }: { lang?: "zh" | "en" } = {}) {
 
       <p className="mt-4 text-xs uppercase font-mono tracking-wider text-neutral-500">
         {l === "zh"
-          ? "AIGC 研究者 & 产品负责人 · 上海"
+          ? "Agentic AI 研究者 & 技术Leader · 上海"
           : "AIGC Researcher & Product Builder · Shanghai"}
       </p>
 

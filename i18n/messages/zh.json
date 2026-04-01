@@ -10,8 +10,7 @@
     "papers": "论文",
     "press": "媒体",
     "awards": "荣誉",
-    "about": "关于",
-    "archive": "归档"
+    "about": "生涯"
   },
   "hero": {
     "titles": ["AI + 内容创业者", "Agentic AI研究者", "AI技术leader"],
@@ -55,16 +54,16 @@
     "viewAwards": "查看荣誉 →"
   },
   "about": {
-    "heading": "关于",
+    "heading": "生涯",
     "name": "Shunyu Yao · 姚顺宇",
-    "tagline": "AIGC 研究者 & 产品构建者 · 上海",
-    "sectionAbout": "关于",
-    "bio": "姚顺宇是一位 AIGC 研究者与产品构建者，现居上海。他专注于AI生成内容、多模态学习，以及将前沿研究转化为实际产品。",
+    "tagline": "Agentic AI 研究者 & 技术Leader · 上海",
+    "sectionAbout": "生涯",
+    "bio": "我致力于研究 Agentic AI,特别是将其运用在内容生产领域。\n\n我的职业生涯基本都在自己创业，或者和创业团队一起做一些有创新性的事情。我认为人所有的探索，最终都会转化为对自己内部的探索。\n\n如果你对 AI 感兴趣，或者对人生有感悟，欢迎与我交流。",
     "sectionEducation": "教育经历",
     "education": [
-      { "period": "2020–2024", "school": "上海交通大学", "degree": "信息与通信工程博士（肄业）" },
-      { "period": "2017–2020", "school": "上海交通大学", "degree": "仪器科学与工程硕士" },
-      { "period": "2012–2016", "school": "西安交通大学", "degree": "机械工程及自动化学士" }
+      { "period": "2020–2024", "school": "上海交通大学", "degree": "博士（肄业）" },
+      { "period": "2017–2020", "school": "上海交通大学", "degree": "硕士" },
+      { "period": "2012–2016", "school": "西安交通大学", "degree": "本科" }
     ],
     "sectionContact": "联系方式",
     "email": "邮箱：",

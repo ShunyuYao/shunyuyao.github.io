@@ -34,12 +34,12 @@ export default async function AboutPage({
       <section className="space-y-10">
         <div className="flex flex-col items-center gap-6 sm:flex-row sm:items-start">
           <Image
-            src="/images/avatar.jpg"
+            src="/images/avatar.jpeg"
             alt="Shunyu Yao"
             width={120}
             height={120}
             priority
-            className="rounded-full"
+            className="w-[120px] h-[120px] rounded-full object-cover shrink-0"
           />
           <div className="space-y-2 text-center sm:text-left">
             <h1 className="text-2xl font-bold">{t("name")}</h1>
@@ -51,8 +51,10 @@ export default async function AboutPage({
 
         <div className="space-y-4">
           <h2 className="text-lg font-semibold">{t("sectionAbout")}</h2>
-          <div className="space-y-2 text-base text-[var(--foreground)]/80">
-            <p>{t("bio")}</p>
+          <div className="space-y-4 text-base text-[var(--foreground)]/80">
+            {t("bio").split("\n\n").map((paragraph: string, i: number) => (
+              <p key={i}>{paragraph}</p>
+            ))}
           </div>
         </div>
 
@@ -60,16 +62,14 @@ export default async function AboutPage({
           <h2 className="text-lg font-semibold">{t("sectionEducation")}</h2>
           <ul className="space-y-3">
             {education.map((edu, i) => (
-              <li key={i} className="flex gap-4 text-base">
-                <span className="shrink-0 text-[var(--foreground)]/60">
+              <li key={i} className="grid grid-cols-[5.5rem_6rem_auto] gap-x-4 text-base">
+                <span className="text-[var(--foreground)]/60">
                   {edu.period}
                 </span>
-                <div>
-                  <div>{edu.school}</div>
-                  <div className="text-sm text-[var(--foreground)]/60">
-                    {edu.degree}
-                  </div>
-                </div>
+                <span>{edu.school}</span>
+                <span className="text-[var(--foreground)]/60">
+                  {edu.degree}
+                </span>
               </li>
             ))}
           </ul>
@@ -81,30 +81,13 @@ export default async function AboutPage({
             <li>
               {t("email")}
               <a
-                href="mailto:ysy2017@sjtu.edu.cn"
+                href="mailto:demosama2333@outlook.com"
                 className="text-[var(--accent)] hover:underline"
               >
-                ysy2017@sjtu.edu.cn
+                demosama2333@outlook.com
               </a>
             </li>
-            <li>
-              <Link
-                href="/work/onestory"
-                className="text-[var(--accent)] hover:underline"
-              >
-                OneStory →
-              </Link>
-            </li>
           </ul>
-        </div>
-
-        <div className="pt-4">
-          <Link
-            href="/awards"
-            className="text-base text-[var(--accent)] hover:underline"
-          >
-            {t("viewAwards")}
-          </Link>
         </div>
       </section>
     </PageLayout>

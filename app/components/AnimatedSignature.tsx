@@ -15,7 +15,7 @@ export default function AnimatedSignature({
       alt="Shunyu Yao signature"
       width={400}
       height={400}
-      className={`${className} ${lang === "en" ? "translate-x-5" : ""}`}
+      className={`${className} scale-[0.9] ${lang === "en" ? "translate-x-5" : ""}`}
       priority
     />
   );

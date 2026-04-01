@@ -6,7 +6,8 @@ import { WorkExperienceSection } from "@/app/components/WorkExperienceSection";
 import { PapersSection } from "@/app/components/PapersSection";
 import { PressSection } from "@/app/components/PressSection";
 import { AwardsSection } from "@/app/components/AwardsSection";
-import { ArchivePreview } from "@/app/components/ArchivePreview";
+// import { ArchivePreview } from "@/app/components/ArchivePreview";
+import { AboutSection } from "@/app/components/AboutSection";
 
 export default async function Home({
   params,
@@ -28,8 +29,9 @@ export default async function Home({
         <WorkExperienceSection lang={lang} />
         <PapersSection lang={lang} />
         <PressSection lang={lang} />
+        <AboutSection lang={lang} />
         <AwardsSection lang={lang} />
-        <ArchivePreview lang={lang} />
+        {/* <ArchivePreview lang={lang} /> */}
       </div>
     </main>
   );
